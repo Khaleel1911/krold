@@ -34,36 +34,7 @@ const SLIDES = [
 ]
 
 const AUTO_ADVANCE_MS = 6000
-
-// Deterministic jagged "torn edge" — a fine, irregular texture built from two
-// overlapping sine frequencies (not a handful of big chevrons). Offsets are in
-// % of each panel's OWN height, at the edge where the two panels meet.
-const TEAR_SEGMENTS = 28
-const TEAR_OFFSETS = Array.from({ length: TEAR_SEGMENTS + 1 }, (_, i) => {
-  if (i === 0 || i === TEAR_SEGMENTS) return 0
-  const t = i / TEAR_SEGMENTS
-  return Math.sin(t * Math.PI * 7 + 1.3) * 5 + Math.sin(t * Math.PI * 13 + 0.4) * 3
-})
-
-function tearClipPath(baseline, fromTop) {
-  const edge = TEAR_OFFSETS.map((offset, i) => {
-    const x = (i / TEAR_SEGMENTS) * 100
-    return `${x}% ${baseline + offset}%`
-  })
-  // Walk the jagged edge right-to-left, then close along the panel's own outer edge.
-  edge.reverse()
-  return fromTop
-    ? `polygon(0% 0%, 100% 0%, ${edge.join(', ')})`
-    : `polygon(0% 100%, 100% 100%, ${edge.join(', ')})`
-}
-
-// Panels are sized to their actual coverage (not the full section) so that a
-// translateY of their own height maps linearly to on-screen coverage — a
-// clip-path baseline near the panel's outer edge would otherwise make most of
-// the reveal invisible until the very end of the tween.
-const TEAR_PANEL_HEIGHT = 65 // vh-independent: % of the section
-const TEAR_TOP_CLIP = tearClipPath(90, true)
-const TEAR_BOTTOM_CLIP = tearClipPath(10, false)
+const BAR_COUNT = 14
 
 const STATS = [
   { label: 'Assets Under Advisory', value: '₹500Cr+' },
@@ -78,8 +49,7 @@ export default function Hero() {
   const textRef = useRef(null)
   const stageWrapRef = useRef(null)
   const contentRowRef = useRef(null)
-  const tearTopRef = useRef(null)
-  const tearBottomRef = useRef(null)
+  const barRefs = useRef([])
   const progressRefs = useRef([])
   const progressTweenRef = useRef(null)
   const isTransitioningRef = useRef(false)
@@ -93,8 +63,7 @@ export default function Hero() {
   // Entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(tearTopRef.current, { yPercent: -100, rotate: -2 })
-      gsap.set(tearBottomRef.current, { yPercent: 100, rotate: 2 })
+      gsap.set(barRefs.current, { scaleY: 0 })
 
       gsap.from(textRef.current.children, {
         opacity: 0,
@@ -145,24 +114,33 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
-  // Unified page-tear transition — two jagged full-screen panels tear inward from
-  // top and bottom, meet in the middle covering everything, the slide swaps while
-  // hidden, then both panels tear back open revealing the new slide together.
+  // Unified vertical-bars transition — a row of full-height bars sweeps left to
+  // right rising up to cover the whole screen, the slide swaps while hidden,
+  // then the same sweep continues, bars dropping away to reveal the next slide.
   const goToSlide = (index) => {
     const nextIndex = ((index % SLIDES.length) + SLIDES.length) % SLIDES.length
     if (nextIndex === active || isTransitioningRef.current) return
     isTransitioningRef.current = true
 
-    const top = tearTopRef.current
-    const bottom = tearBottomRef.current
+    const bars = barRefs.current
 
     gsap
       .timeline({ onComplete: () => (isTransitioningRef.current = false) })
-      .to(top, { yPercent: 0, rotate: 0, duration: 0.95, ease: 'power3.inOut' }, 0)
-      .to(bottom, { yPercent: 0, rotate: 0, duration: 0.95, ease: 'power3.inOut' }, 0)
+      .set(bars, { transformOrigin: 'top' })
+      .to(bars, {
+        scaleY: 1,
+        duration: 0.6,
+        ease: 'power3.inOut',
+        stagger: { each: 0.035, from: 'start' },
+      })
       .call(() => setActive(nextIndex))
-      .to(top, { yPercent: -100, rotate: 2, duration: 1, ease: 'power3.inOut' }, '+=0.3')
-      .to(bottom, { yPercent: 100, rotate: -2, duration: 1, ease: 'power3.inOut' }, '<')
+      .set(bars, { transformOrigin: 'bottom' }, '+=0.3')
+      .to(bars, {
+        scaleY: 0,
+        duration: 0.6,
+        ease: 'power3.inOut',
+        stagger: { each: 0.035, from: 'start' },
+      })
   }
 
   // Auto-advance progress bar
@@ -212,19 +190,22 @@ export default function Hero() {
     >
       <AnimatedBackground />
 
-      {/* Page-tear transition — full-screen jagged panels, independent of content width */}
-      <div
-        ref={tearTopRef}
-        className="pointer-events-none absolute inset-x-0 top-0 z-40 bg-gradient-to-br from-primary-50 via-white to-white dark:from-primary-500/15 dark:via-neutral-950 dark:to-neutral-950"
-        style={{ height: `${TEAR_PANEL_HEIGHT}%`, clipPath: TEAR_TOP_CLIP }}
-        aria-hidden="true"
-      />
-      <div
-        ref={tearBottomRef}
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-40 bg-gradient-to-tl from-secondary-50 via-white to-white dark:from-secondary-500/15 dark:via-neutral-950 dark:to-neutral-950"
-        style={{ height: `${TEAR_PANEL_HEIGHT}%`, clipPath: TEAR_BOTTOM_CLIP }}
-        aria-hidden="true"
-      />
+      {/* Vertical-bars transition — full-screen, independent of content width */}
+      <div className="pointer-events-none absolute inset-0 z-40 flex" aria-hidden="true">
+        {Array.from({ length: BAR_COUNT }).map((_, i) => (
+          <div
+            key={i}
+            ref={(el) => (barRefs.current[i] = el)}
+            className={`h-full flex-1 scale-y-0 ${
+              i % 5 === 0
+                ? 'bg-gradient-to-b from-primary-500 to-primary-600'
+                : i % 5 === 3
+                  ? 'bg-gradient-to-b from-secondary-500 to-secondary-600'
+                  : 'bg-white dark:bg-neutral-950'
+            }`}
+          />
+        ))}
+      </div>
 
       <div
         ref={contentRowRef}
