@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import logo from '../assets/logo.png'
 import ThemeToggle from './ThemeToggle'
 
 const NAV_ITEMS = [
-  { name: 'Home', href: '#home' },
-  { name: 'About Us', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Contact Us', href: '#contact' },
-  { name: 'Calculators', href: '#calculators' },
+  { name: 'Home', href: '/#home' },
+  { name: 'About Us', href: '/#about' },
+  { name: 'Services', href: '/services' },
+  { name: 'Contact Us', href: '/#contact' },
+  { name: 'Calculators', href: '/#calculators' },
 ]
 
 export default function Navbar() {
@@ -41,13 +42,15 @@ export default function Navbar() {
 
   // Scroll shrink / glass effect
   useEffect(() => {
+    gsap.set(navRef.current, { paddingTop: 28, paddingBottom: 28 })
+
     const onScroll = () => {
       const isScrolled = window.scrollY > 8
       setScrolled((prev) => {
         if (prev !== isScrolled) {
           gsap.to(navRef.current, {
-            paddingTop: isScrolled ? 10 : 20,
-            paddingBottom: isScrolled ? 10 : 20,
+            paddingTop: isScrolled ? 14 : 28,
+            paddingBottom: isScrolled ? 14 : 28,
             duration: 0.35,
             ease: 'power2.out',
           })
@@ -112,16 +115,16 @@ export default function Navbar() {
           : 'bg-white/60 dark:bg-neutral-950/60 backdrop-blur-md'
       } border-b border-primary-100/70 dark:border-white/10`}
     >
-      <div className="flex items-center justify-between px-5 lg:px-10 py-5">
+      <div className="flex items-center justify-between px-5 lg:px-10">
         {/* Logo */}
-        <a
+        <Link
           ref={logoRef}
-          href="#home"
+          to="/#home"
           onClick={() => handleNavClick(0)}
           className="flex items-center shrink-0 transition-transform duration-300 hover:scale-[1.03]"
         >
           <img src={logo} alt="Krold Mfins Private Limited" className="h-9 lg:h-11 w-auto" />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <ul className="hidden lg:flex items-center gap-1">
@@ -131,8 +134,8 @@ export default function Navbar() {
               ref={(el) => (desktopItemsRef.current[index] = el)}
               className="relative"
             >
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 onClick={() => handleNavClick(index)}
                 className={`group relative px-4 py-2 text-[15px] font-medium transition-colors duration-300 ${
                   activeIndex === index
@@ -146,7 +149,7 @@ export default function Navbar() {
                     activeIndex === index ? 'scale-x-100' : ''
                   }`}
                 />
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -154,13 +157,13 @@ export default function Navbar() {
         {/* Desktop right side */}
         <div className="hidden lg:flex items-center gap-2">
           <ThemeToggle />
-          <a
-            href="#contact"
+          <Link
+            to="/#contact"
             onClick={() => handleNavClick(3)}
             className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-2.5 text-[15px] font-semibold text-white shadow-md shadow-primary-200 dark:shadow-black/40 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0"
           >
             Get in Touch
-          </a>
+          </Link>
         </div>
 
         {/* Mobile right side */}
@@ -199,8 +202,8 @@ export default function Navbar() {
         <ul className="flex flex-col gap-1 px-5 py-4">
           {NAV_ITEMS.map((item, index) => (
             <li key={item.name} ref={(el) => (mobileItemsRef.current[index] = el)}>
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 onClick={() => handleNavClick(index)}
                 className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors duration-300 ${
                   activeIndex === index
@@ -209,17 +212,17 @@ export default function Navbar() {
                 }`}
               >
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
           <li ref={(el) => (mobileItemsRef.current[NAV_ITEMS.length] = el)} className="pt-2">
-            <a
-              href="#contact"
+            <Link
+              to="/#contact"
               onClick={() => handleNavClick(3)}
               className="block rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-4 py-3 text-center text-base font-semibold text-white shadow-md shadow-primary-200"
             >
               Get in Touch
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

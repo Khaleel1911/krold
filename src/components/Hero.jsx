@@ -34,7 +34,6 @@ const SLIDES = [
 ]
 
 const AUTO_ADVANCE_MS = 6000
-const BAR_COUNT = 14
 
 const STATS = [
   { label: 'Assets Under Advisory', value: '₹500Cr+' },
@@ -49,7 +48,6 @@ export default function Hero() {
   const textRef = useRef(null)
   const stageWrapRef = useRef(null)
   const contentRowRef = useRef(null)
-  const barRefs = useRef([])
   const progressRefs = useRef([])
   const progressTweenRef = useRef(null)
   const isTransitioningRef = useRef(false)
@@ -63,8 +61,6 @@ export default function Hero() {
   // Entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(barRefs.current, { scaleY: 0 })
-
       gsap.from(textRef.current.children, {
         opacity: 0,
         y: 24,
@@ -114,33 +110,17 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
-  // Unified vertical-bars transition — a row of full-height bars sweeps left to
-  // right rising up to cover the whole screen, the slide swaps while hidden,
-  // then the same sweep continues, bars dropping away to reveal the next slide.
+  // Simple crossfade — fade the whole content row out, swap the slide, fade back in.
   const goToSlide = (index) => {
     const nextIndex = ((index % SLIDES.length) + SLIDES.length) % SLIDES.length
     if (nextIndex === active || isTransitioningRef.current) return
     isTransitioningRef.current = true
 
-    const bars = barRefs.current
-
     gsap
       .timeline({ onComplete: () => (isTransitioningRef.current = false) })
-      .set(bars, { transformOrigin: 'top' })
-      .to(bars, {
-        scaleY: 1,
-        duration: 0.6,
-        ease: 'power3.inOut',
-        stagger: { each: 0.035, from: 'start' },
-      })
+      .to(contentRowRef.current, { opacity: 0, duration: 0.35, ease: 'power2.inOut' })
       .call(() => setActive(nextIndex))
-      .set(bars, { transformOrigin: 'bottom' }, '+=0.3')
-      .to(bars, {
-        scaleY: 0,
-        duration: 0.6,
-        ease: 'power3.inOut',
-        stagger: { each: 0.035, from: 'start' },
-      })
+      .to(contentRowRef.current, { opacity: 1, duration: 0.35, ease: 'power2.inOut' })
   }
 
   // Auto-advance progress bar
@@ -189,23 +169,6 @@ export default function Hero() {
       className="relative flex min-h-[88vh] items-center overflow-hidden py-16 lg:min-h-[85vh]"
     >
       <AnimatedBackground />
-
-      {/* Vertical-bars transition — full-screen, independent of content width */}
-      <div className="pointer-events-none absolute inset-0 z-40 flex" aria-hidden="true">
-        {Array.from({ length: BAR_COUNT }).map((_, i) => (
-          <div
-            key={i}
-            ref={(el) => (barRefs.current[i] = el)}
-            className={`h-full flex-1 scale-y-0 ${
-              i % 5 === 0
-                ? 'bg-gradient-to-b from-primary-500 to-primary-600'
-                : i % 5 === 3
-                  ? 'bg-gradient-to-b from-secondary-500 to-secondary-600'
-                  : 'bg-white dark:bg-neutral-950'
-            }`}
-          />
-        ))}
-      </div>
 
       <div
         ref={contentRowRef}

@@ -35,3 +35,21 @@
     @apply bg-white text-black dark:bg-neutral-950 dark:text-white transition-colors duration-300;
   }
 }
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

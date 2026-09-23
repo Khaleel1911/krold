@@ -367,7 +367,7 @@ export function PlanningArt() {
           </g>
         ))}
 
-        <text ref={resultRef} x="85" y="322" fontSize="32" fontWeight="700" className="fill-black dark:fill-white">
+        <text ref={resultRef} x="85" y="322" fontSize="32" fontWeight="700" className="fill-black">
           ₹0.0 Cr
         </text>
         <g ref={badgeRef} transform="translate(295,312)">
