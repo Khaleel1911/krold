@@ -51,13 +51,10 @@ export default function GetInTouch() {
   }
 
   return (
-    <section id="contact" ref={sectionRef} className="relative py-20 lg:py-28">
+    <section id="contact" ref={sectionRef} className="relative py-10 lg:py-14">
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div data-animate className="mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center rounded-full border border-primary-200 dark:border-primary-400/30 bg-primary-50 dark:bg-primary-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
-            Get in Touch
-          </span>
-          <h2 className="mt-4 text-3xl font-semibold text-black dark:text-white sm:text-4xl">
+          <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">
             Let&rsquo;s talk about your{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
               financial goals

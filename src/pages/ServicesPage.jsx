@@ -32,13 +32,7 @@ export default function ServicesPage() {
   return (
     <main ref={pageRef} className="relative pb-24 pt-36 lg:pt-40">
       <div className="mx-auto max-w-3xl px-5 text-center lg:px-10">
-        <span
-          data-animate
-          className="inline-flex items-center rounded-full border border-primary-200 dark:border-primary-400/30 bg-primary-50 dark:bg-primary-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400"
-        >
-          Products &amp; Services
-        </span>
-        <h1 data-animate className="mt-4 text-3xl font-semibold text-black dark:text-white sm:text-4xl lg:text-5xl">
+        <h1 data-animate className="text-3xl font-semibold text-black dark:text-white sm:text-4xl lg:text-5xl">
           Everything you need to{' '}
           <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
             grow and protect

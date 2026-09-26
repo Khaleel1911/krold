@@ -58,11 +58,7 @@ export default function Hero() {
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:gap-6 lg:px-10">
         {/* Text column */}
         <div ref={textRef}>
-          <span className="inline-flex items-center rounded-full border border-primary-200 dark:border-primary-400/30 bg-primary-50 dark:bg-primary-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
-            Krold Mfins Private Limited
-          </span>
-
-          <h1 className="mt-6 text-4xl font-semibold leading-[1.1] text-black dark:text-white sm:text-5xl lg:text-[3.4rem]">
+          <h1 className="text-4xl font-semibold leading-[1.1] text-black dark:text-white sm:text-5xl lg:text-[3.4rem]">
             One place for every part of your{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
               wealth
