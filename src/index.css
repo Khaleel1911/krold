@@ -53,3 +53,129 @@
     transform: translateX(0);
   }
 }
+
+/* ─── Hero city palette (see src/components/hero/city) ─────────────── */
+.krold-city {
+  --city-plate-top: #f3f9fd;
+  --city-plate-left: #d3e9f5;
+  --city-plate-right: #b7d9ec;
+  --city-lot: #e1f2e0;
+  --city-road: #dbe8f0;
+  --city-road-line: #ffffff;
+  --city-plaza: #eef4f8;
+  --city-edge: rgba(39, 116, 157, 0.16);
+  --city-shadow: rgba(39, 116, 157, 0.12);
+  --city-door: #27749d;
+  --city-label: #27749d;
+  --city-ticker: #10283a;
+  --city-water: #6ebbe4;
+  --city-reflect: rgba(255, 255, 255, 0.28);
+  --city-trunk: #b08a6c;
+
+  --city-bldg-top: #ffffff;
+  --city-bldg-left: #edf5fa;
+  --city-bldg-right: #d4e7f2;
+  --city-slab-top: #e4ecf1;
+  --city-slab-left: #c9d6de;
+  --city-slab-right: #b3c3cd;
+  --city-glass-top: #dbeef8;
+  --city-glass-left: #9fd2ed;
+  --city-glass-right: #6ebbe4;
+  --city-blue-top: #6ebbe4;
+  --city-blue-left: #36a1da;
+  --city-blue-right: #2a86b8;
+  --city-green-top: #84cd80;
+  --city-green-left: #54ba4f;
+  --city-green-right: #449c40;
+  --city-amber-top: #f7c65b;
+  --city-amber-left: #eaa93a;
+  --city-amber-right: #cf8f26;
+  --city-red-top: #f07a70;
+  --city-red-left: #e25d52;
+  --city-red-right: #c44a40;
+  --city-gold-top: #f8cf4f;
+  --city-gold-right: #c9961f;
+  --city-tree-top: #7ccf77;
+  --city-tree-right: #54ba4f;
+
+  --city-win: #c6e4f4;
+  --city-win-lit: #c6e4f4;
+  --city-glass: #bfe1f3;
+  --city-glass-lit: #d7eef9;
+
+  --city-sun: #ffcf5c;
+  --city-crater-opacity: 0;
+  --city-star-opacity: 0;
+  --city-cloud: #ffffff;
+  --city-cloud-opacity: 0.95;
+  --city-lamp: #fff1c2;
+  --city-glow: 0;
+  --city-carglass: #3a5a70;
+  --city-tyre: #1f2a33;
+  --city-hub: #b8c6cf;
+  --city-headlight: #fff6d5;
+  --city-taillight: #e5483d;
+}
+
+.dark .krold-city {
+  --city-plate-top: #18242f;
+  --city-plate-left: #111b24;
+  --city-plate-right: #0c141b;
+  --city-lot: #16281c;
+  --city-road: #22313e;
+  --city-road-line: #3d5263;
+  --city-plaza: #243442;
+  --city-edge: rgba(0, 0, 0, 0.35);
+  --city-shadow: rgba(0, 0, 0, 0.35);
+  --city-door: #0d1720;
+  --city-label: #9fd2ed;
+  --city-ticker: #081520;
+  --city-water: #3f9bd0;
+  --city-reflect: rgba(255, 255, 255, 0.06);
+  --city-trunk: #6b5543;
+
+  --city-bldg-top: #354a5d;
+  --city-bldg-left: #27394a;
+  --city-bldg-right: #1d2c3a;
+  --city-slab-top: #3b4a57;
+  --city-slab-left: #2c3945;
+  --city-slab-right: #222d37;
+  --city-glass-top: #2f5d7c;
+  --city-glass-left: #1f4b69;
+  --city-glass-right: #183b53;
+  --city-tree-top: #3f9a3b;
+  --city-tree-right: #2e772b;
+
+  --city-win: #2b4255;
+  --city-win-lit: #ffd27a;
+  --city-glass: #26557a;
+  --city-glass-lit: #ffd98f;
+
+  --city-sun: #e9eef5;
+  --city-crater-opacity: 0.08;
+  --city-star-opacity: 0.9;
+  --city-cloud: #5d7185;
+  --city-cloud-opacity: 0.3;
+  --city-lamp: #ffd27a;
+  --city-glow: 0.35;
+  --city-carglass: #0e1b25;
+  --city-tyre: #0a0f14;
+  --city-hub: #5b6b77;
+  --city-headlight: #ffe9a8;
+  --city-taillight: #ff5a4c;
+}
+
+.krold-city .city-win { fill: var(--city-win); }
+.krold-city .city-win-lit { fill: var(--city-win-lit); }
+.krold-city .city-glass { fill: var(--city-glass); }
+.krold-city .city-glass-lit { fill: var(--city-glass-lit); }
+
+.krold-city .city-bldg { transition: opacity 0.35s ease; }
+.krold-city .city-bldg.is-link { cursor: pointer; }
+.krold-city .city-lift { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.krold-city[data-active] .city-bldg:not(.is-active) { opacity: 0.5; }
+.krold-city .city-bldg.is-active .city-lift { transform: translateY(-6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .krold-city .city-lift, .krold-city .city-bldg { transition: none; }
+}
