@@ -17,17 +17,6 @@ function Coin({ x, y, r = 4.5 }) {
   )
 }
 
-function CoinStack({ gx, gy, n = 4 }) {
-  const [x, y] = iso(gx, gy)
-  return (
-    <g stroke="var(--city-gold-right)" strokeWidth="0.6">
-      {Array.from({ length: n }, (_, i) => (
-        <ellipse key={i} cx={x} cy={y - i * 2.2} rx="4.2" ry="2.1" fill="var(--city-gold-top)" />
-      ))}
-    </g>
-  )
-}
-
 /* ─── PMS / AIF — a private glass tower ─────────────────────────────── */
 
 export const PmsTower = memo(function PmsTower() {
@@ -422,13 +411,13 @@ export const InsuredHome = memo(function InsuredHome() {
   )
 })
 
-/* ─── Savings Schemes — post office with a vault ────────────────────── */
+/* ─── Life & Health Insurance — a neighbourhood clinic ───────────────── */
 
-export const PostOffice = memo(function PostOffice() {
+export const Clinic = memo(function Clinic() {
   const b = { x: 5.6, y: 9.8, w: 1.8, d: 1.7, h: 30 }
   return (
     <g>
-      <CoinStack gx={5.75} gy={12.2} n={3} />
+      <Tree gx={5.4} gy={12.2} s={0.7} />
       <IsoBox {...b} />
       <PlaneX gx={b.x} gy={b.y + b.d} z={b.h}>
         <rect x="0" y="6" width={b.w * U} height="3" fill="var(--city-green-left)" />
@@ -438,29 +427,17 @@ export const PostOffice = memo(function PostOffice() {
       </PlaneX>
       <PlaneY gx={b.x + b.w} gy={b.y + b.d} z={b.h}>
         <g transform={`translate(${b.d * U * 0.5} 15)`}>
-          <circle r="9.5" fill="var(--city-gold-top)" stroke="var(--city-gold-right)" strokeWidth="1.2" />
-          <circle r="6" fill="none" stroke="var(--city-gold-right)" strokeWidth="0.8" />
-          {[0, 60, 120].map((a) => (
-            <line key={a} x1="-6" y1="0" x2="6" y2="0" transform={`rotate(${a})`} stroke="var(--city-gold-right)" strokeWidth="0.8" />
-          ))}
-          <circle r="1.8" fill="var(--city-gold-right)" />
+          <circle r="9.5" fill="#fff" stroke="var(--city-red-left)" strokeWidth="1.2" />
+          <path d="M-2 -6.5h4v4.5h4.5v4h-4.5v4.5h-4v-4.5h-4.5v-4h4.5z" fill="var(--city-red-left)" />
         </g>
       </PlaneY>
       <IsoBox x={5.55} y={9.75} w={1.9} d={1.8} z={b.h} h={6} tone="blue" />
       <PlaneX gx={5.55} gy={11.55} z={b.h + 6}>
         <text x={0.95 * U} y="4.6" textAnchor="middle" fontSize="4.4" fill="#fff" style={label}>
-          SAVINGS
+          CLINIC
         </text>
       </PlaneX>
-      <CoinStack gx={6.25} gy={12.35} n={5} />
-      <Cylinder gx={7.5} gy={12.35} r={4.5} h={14} tone="red" />
-      <path
-        d={(() => {
-          const [x, y] = iso(7.5, 12.35, 14)
-          return `M${x - 4.5},${y} A4.5,4.5 0 0 1 ${x + 4.5},${y} Z`
-        })()}
-        fill="var(--city-red-top)"
-      />
+      <Tree gx={7.6} gy={12.3} s={0.75} />
     </g>
   )
 })

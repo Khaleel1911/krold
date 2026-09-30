@@ -9,13 +9,13 @@ export default function Testimonials() {
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">
-            Trusted by families{' '}
+            Our journey,{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
-              across generations
+              built on trust
             </span>
           </h2>
           <p className="mt-3 text-black/60 dark:text-white/60">
-            Real feedback from clients we&rsquo;ve worked alongside on their wealth journey.
+            From the first conversation to every milestone ahead, we strive to build relationships that last.
           </p>
         </div>
       </div>

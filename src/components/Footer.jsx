@@ -4,7 +4,7 @@ import ServiceIcon from './icons/ServiceIcons'
 import ContactIcon from './icons/ContactIcons'
 import SocialIcon from './icons/SocialIcons'
 import { SERVICES } from '../data/services'
-import { CONTACT_INFO } from '../data/contactInfo'
+import { CONTACT_INFO, OFFICES } from '../data/contactInfo'
 
 const QUICK_LINKS = [
   { name: 'Home', href: '/#home' },
@@ -104,10 +104,14 @@ export default function Footer() {
                   {CONTACT_INFO.email}
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <ContactIcon name="pin" className="mt-0.5 h-4 w-4 shrink-0 text-primary-400" />
-                <span className="text-sm text-white/60">{CONTACT_INFO.address}</span>
-              </li>
+              {OFFICES.map((office) => (
+                <li key={office.id} className="flex items-start gap-3">
+                  <ContactIcon name="pin" className="mt-0.5 h-4 w-4 shrink-0 text-primary-400" />
+                  <span className="text-sm text-white/60">
+                    <span className="font-semibold text-white/80">{office.type}</span> &ndash; {office.address}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

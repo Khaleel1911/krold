@@ -168,7 +168,7 @@ export default function TestimonialBurst() {
 
         <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
           <div ref={badgeRef}>
-            <CenterBadge count={HAPPY_CLIENTS_COUNT} label="Happy Clients" />
+            <CenterBadge count={HAPPY_CLIENTS_COUNT} label="Happy Families" />
           </div>
         </div>
       </div>

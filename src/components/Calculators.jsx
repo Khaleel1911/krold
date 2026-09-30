@@ -140,14 +140,14 @@ export default function Calculators() {
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div data-animate className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">
-            Plan your{' '}
+            Turn your goals into a{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
-              financial goals
+              financial plan
             </span>
           </h2>
           <p className="mt-3 text-black/60 dark:text-white/60">
-            Interactive tools to model your investments before you commit — drag the sliders and watch the numbers
-            update live.
+            Interactive calculators that help you understand your investments, model potential outcomes and plan with
+            greater clarity.
           </p>
         </div>
 

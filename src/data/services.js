@@ -3,7 +3,7 @@ export const SERVICES = [
     slug: 'mutual-funds',
     icon: 'mutualFunds',
     title: 'Mutual Fund Distribution',
-    short: 'Goal-based access to Equity, Debt, Hybrid and Tax-Saving (ELSS) funds.',
+    short: 'Goal-based access to diversified mutual fund solutions, tailored to your financial objectives and risk profile.',
     description:
       'We help you choose from a wide universe of Equity, Debt, Hybrid and Tax-Saving (ELSS) mutual funds, matched to your risk profile and financial goals. Onboarding is fully digital, and every portfolio is tracked and reviewed on an ongoing basis so your allocation stays aligned as markets and goals evolve.',
     points: [
@@ -17,7 +17,7 @@ export const SERVICES = [
     slug: 'insurance',
     icon: 'insurance',
     title: 'Life & Health Insurance',
-    short: 'Life and health cover from India’s leading insurance providers.',
+    short: 'Comprehensive life and health insurance solutions designed to protect you, your family and your financial future.',
     description:
       'We work with leading life and health insurers to help you build the right protection layer for your family — before you focus on growth. Plans are chosen for genuine coverage fit, not just premium size.',
     points: [
@@ -31,7 +31,7 @@ export const SERVICES = [
     slug: 'pms-aif',
     icon: 'pmsAif',
     title: 'PMS / AIF',
-    short: 'Dedicated, manager-led strategies for high-net-worth portfolios.',
+    short: 'Sophisticated, professionally managed investment solutions for investors seeking access to specialised strategies.',
     description:
       'For investors ready to go beyond mutual funds, we offer access to Portfolio Management Services and Alternative Investment Funds — customised strategies run by dedicated fund managers, spanning private equity, venture capital and real estate.',
     points: [
@@ -42,10 +42,24 @@ export const SERVICES = [
     ],
   },
   {
+    slug: 'general-insurance',
+    icon: 'generalInsurance',
+    title: 'General Insurance',
+    short: 'Protect your health, home, vehicle, business and other valuable assets with comprehensive general insurance solutions.',
+    description:
+      'Beyond life and health, we help you protect what you have built — your home, vehicles, business and other valuable assets — with general insurance from leading insurers, chosen for the right coverage and backed by support when you need to claim.',
+    points: [
+      'Motor insurance for cars and two-wheelers',
+      'Home and property insurance',
+      'Business, shop and commercial cover',
+      'Travel insurance and claims assistance',
+    ],
+  },
+  {
     slug: 'annuity',
     icon: 'annuity',
     title: 'Annuity Plans',
-    short: 'Guaranteed income for life, without market-linked risk.',
+    short: 'Structured income solutions designed to provide financial stability and a dependable income stream for the future.',
     description:
       'Annuity plans convert a lump sum into a guaranteed income stream for life — a steady, predictable option for retirement income planning that sits outside market volatility.',
     points: [
@@ -59,7 +73,7 @@ export const SERVICES = [
     slug: 'bonds',
     icon: 'bonds',
     title: 'Bonds',
-    short: 'Government, corporate and tax-free bonds for stable returns.',
+    short: 'Explore government and corporate bonds for predictable income, diversification and portfolio stability.',
     description:
       'For investors prioritising capital preservation, we offer access to Government Bonds, Corporate Bonds, Tax-Free Bonds, RBI Floating Rate Bonds and Debentures/NCDs — a way to diversify a portfolio with steadier, more predictable returns.',
     points: [
@@ -73,7 +87,7 @@ export const SERVICES = [
     slug: 'stock-broking',
     icon: 'stockBroking',
     title: 'Stock Broking',
-    short: 'Equity, derivatives, IPOs and ETFs with research-backed support.',
+    short: 'Access equities, IPOs, ETFs and other market opportunities with informed guidance and research-backed support.',
     description:
       'Trade equities, derivatives, IPOs, ETFs and index funds through a single account, backed by research and advisory support and real-time market access.',
     points: [
@@ -87,7 +101,7 @@ export const SERVICES = [
     slug: 'unlisted-shares',
     icon: 'unlistedShares',
     title: 'Unlisted Shares',
-    short: 'Early access to pre-IPO and private companies.',
+    short: 'Explore opportunities in promising companies before they enter the public markets, with informed investment guidance.',
     description:
       'Get early access to pre-IPO and private companies with strong growth potential — a specialised, medium-to-long-horizon allocation for investors comfortable with the additional risk and illiquidity of unlisted equity.',
     points: [
@@ -95,20 +109,6 @@ export const SERVICES = [
       'Private, unlisted equity opportunities',
       'Medium-to-long investment horizon',
       'Suited to sophisticated investors',
-    ],
-  },
-  {
-    slug: 'savings-schemes',
-    icon: 'savingsSchemes',
-    title: 'Other Savings & Investment Schemes',
-    short: 'FDs, RDs, PPF, NSC and Post Office schemes, handled end to end.',
-    description:
-      'For the safer, tax-efficient core of a portfolio, we help set up and manage Fixed Deposits, Recurring Deposits, PPF, NSC and Post Office savings schemes — including tax-planning guidance and regulatory paperwork.',
-    points: [
-      'Fixed Deposits and Recurring Deposits',
-      'Public Provident Fund (PPF) and NSC',
-      'Post Office savings schemes',
-      'Tax-planning assistance and compliance checks',
     ],
   },
 ]

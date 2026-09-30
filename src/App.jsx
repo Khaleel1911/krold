@@ -5,6 +5,8 @@ import Footer from './components/Footer'
 import ScrollToHash from './components/ScrollToHash'
 import Home from './pages/Home'
 import ServicesPage from './pages/ServicesPage'
+import BlogPage from './pages/BlogPage'
+import NriPage from './pages/NriPage'
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/nri" element={<NriPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -50,30 +50,35 @@ export default function PmsAifCard({ service, cardRef }) {
       service={service}
       area="pms"
       cardRef={cardRef}
-      className="bg-gradient-to-b from-[#0b1826] to-[#10263b] text-white max-sm:pb-40 ring-1 ring-[#d9b25f]/30 hover:shadow-2xl hover:shadow-black/40 hover:ring-[#d9b25f]/60"
+      className="bg-gradient-to-br from-[#0b1826] to-[#10263b] text-white ring-1 ring-[#d9b25f]/30 hover:shadow-2xl hover:shadow-black/40 hover:ring-[#d9b25f]/60 sm:flex-row sm:items-stretch sm:gap-6"
     >
       <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#d9b25f] to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 opacity-90 transition-transform duration-500 group-hover:-translate-y-1">
-        <Skyline />
+
+      <div className="relative flex flex-1 flex-col">
+        <IconBadge name={service.icon} className="bg-[#d9b25f]/15 text-[#e8c97c] ring-1 ring-[#d9b25f]/35" />
+        <p className="relative mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#e8c97c]">Private wealth</p>
+        <CardText service={service} onDark className="mt-1" />
+        <LearnMore className="text-[#e8c97c]" />
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#0b1826]/80 via-transparent to-[#0b1826]" />
 
-      <IconBadge name={service.icon} className="bg-[#d9b25f]/15 text-[#e8c97c] ring-1 ring-[#d9b25f]/35" />
-      <p className="relative mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#e8c97c]">Private wealth</p>
-      <CardText service={service} onDark className="mt-1" />
-
-      <dl className="relative mt-4 divide-y divide-[#d9b25f]/20 rounded-xl border border-[#d9b25f]/25 bg-white/[0.03] text-xs">
-        <div className="flex items-center justify-between px-3 py-2">
-          <dt className="text-white/70">PMS</dt>
-          <dd className="font-semibold text-[#e8c97c]">Min ₹50 Lacs</dd>
+      <div className="relative mt-4 flex flex-col sm:mt-0 sm:w-[44%] sm:shrink-0">
+        <dl className="relative divide-y divide-[#d9b25f]/20 rounded-xl border border-[#d9b25f]/25 bg-white/[0.03] text-xs">
+          <div className="flex items-center justify-between px-3 py-2">
+            <dt className="text-white/70">PMS</dt>
+            <dd className="font-semibold text-[#e8c97c]">Min ₹50 Lacs</dd>
+          </div>
+          <div className="flex items-center justify-between px-3 py-2">
+            <dt className="text-white/70">AIF</dt>
+            <dd className="font-semibold text-[#e8c97c]">Min ₹1 Crore</dd>
+          </div>
+        </dl>
+        <div className="relative mt-3 h-28 overflow-hidden rounded-xl sm:h-auto sm:min-h-24 sm:flex-1">
+          <div className="absolute inset-0 opacity-90 transition-transform duration-500 group-hover:-translate-y-1">
+            <Skyline />
+          </div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b1826]/70 via-transparent to-[#0b1826]/60" />
         </div>
-        <div className="flex items-center justify-between px-3 py-2">
-          <dt className="text-white/70">AIF</dt>
-          <dd className="font-semibold text-[#e8c97c]">Min ₹1 Crore</dd>
-        </div>
-      </dl>
-
-      <LearnMore className="text-[#e8c97c]" />
+      </div>
     </CardShell>
   )
 }

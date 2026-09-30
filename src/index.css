@@ -186,7 +186,7 @@
   display: grid;
   gap: 16px;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: 'mf' 'pms' 'ann' 'ins' 'bond' 'unl' 'sav' 'stk';
+  grid-template-areas: 'mf' 'ins' 'pms' 'gi' 'ann' 'bond' 'stk' 'unl';
 }
 @media (min-width: 640px) {
   .svc-bento {
@@ -195,12 +195,12 @@
     grid-template-areas:
       'mf   mf'
       'mf   mf'
-      'pms  ann'
-      'pms  ann'
       'ins  ins'
-      'bond unl'
-      'sav  sav'
-      'stk  stk';
+      'pms  pms'
+      'gi   gi'
+      'ann  bond'
+      'stk  stk'
+      'unl  unl';
   }
 }
 @media (min-width: 1024px) {
@@ -208,10 +208,10 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-auto-rows: minmax(236px, auto);
     grid-template-areas:
-      'mf   mf   pms  ann'
-      'mf   mf   pms  ann'
-      'bond ins  ins  unl'
-      'sav  sav  stk  stk';
+      'mf   mf   ins  ins'
+      'mf   mf   pms  pms'
+      'ann  bond gi   gi'
+      'stk  stk  unl  unl';
   }
 }
 
@@ -288,3 +288,40 @@
 @media (prefers-reduced-motion: reduce) {
   .tm-lift { transition: none; }
 }
+
+/* ─── Office map pins (see src/components/contact/OfficeMap.jsx) ───── */
+.office-map { background: #eef4f8; font: inherit; }
+.dark .office-map { background: #1a1f24; }
+.dark .office-map .leaflet-tile-pane { filter: invert(0.92) hue-rotate(180deg) contrast(1.1) grayscale(0.35); }
+.office-pin {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+.office-pin-label {
+  white-space: nowrap;
+  border-radius: 9999px;
+  background: #fff;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f5f82;
+  box-shadow: 0 4px 12px rgba(16, 40, 58, 0.18);
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+.office-pin-dot {
+  margin-top: 4px;
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  border: 3px solid #fff;
+  background: linear-gradient(135deg, #36a1da, #54ba4f);
+  box-shadow: 0 0 0 4px rgba(54, 161, 218, 0.25);
+}
+.office-pin:hover .office-pin-label { transform: translateY(-2px); }
+.office-pin.is-active .office-pin-label { background: linear-gradient(90deg, #36a1da, #54ba4f); color: #fff; }

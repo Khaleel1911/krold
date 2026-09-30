@@ -81,15 +81,12 @@ function UnlistedSharesIcon(props) {
   )
 }
 
-function SavingsSchemesIcon(props) {
+function GeneralInsuranceIcon(props) {
   return (
     <svg {...shared} {...props}>
-      <ellipse cx="12" cy="13" rx="7" ry="5" />
-      <path d="M9 8.5c1-1.2 2-1.8 3-1.8s2 .6 3 1.8" />
-      <path d="M11 9.3h2" />
-      <circle cx="15.5" cy="12" r="0.6" fill="currentColor" stroke="none" />
-      <path d="M8 17.5v2M16 17.5v2" />
-      <path d="M5.2 13.2c-1 0-1.7-.8-1.7-1.7" />
+      <path d="M3 12a9 9 0 0 1 18 0c-1.5-1.2-3-1.2-4.5 0-1.5-1.2-3-1.2-4.5 0-1.5-1.2-3-1.2-4.5 0-1.5-1.2-3-1.2-4.5 0Z" />
+      <path d="M12 3v1.5" />
+      <path d="M12 12v6.5a2 2 0 0 1-4 0" />
     </svg>
   )
 }
@@ -98,11 +95,11 @@ export const SERVICE_ICONS = {
   mutualFunds: MutualFundsIcon,
   insurance: InsuranceIcon,
   pmsAif: PmsAifIcon,
+  generalInsurance: GeneralInsuranceIcon,
   annuity: AnnuityIcon,
   bonds: BondsIcon,
   stockBroking: StockBrokingIcon,
   unlistedShares: UnlistedSharesIcon,
-  savingsSchemes: SavingsSchemesIcon,
 }
 
 export default function ServiceIcon({ name, className }) {

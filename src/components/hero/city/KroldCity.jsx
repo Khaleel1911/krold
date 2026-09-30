@@ -14,7 +14,7 @@ import {
   Plaza,
   ConstructionSite,
   InsuredHome,
-  PostOffice,
+  Clinic,
   RetirementCottage,
 } from './Buildings'
 
@@ -27,8 +27,8 @@ const SPOTS = [
   { slug: 'bonds', label: 'Bonds', anchor: [11, 2, 92], Building: BondsBank },
   { slug: null, Building: Plaza },
   { slug: 'unlisted-shares', label: 'Pre-IPO', anchor: [1.8, 10.9, 88], Building: ConstructionSite },
-  { slug: 'insurance', label: 'Insurance', anchor: [11, 6.5, 86], Building: InsuredHome },
-  { slug: 'savings-schemes', label: 'Savings', anchor: [6.5, 10.65, 50], Building: PostOffice },
+  { slug: 'general-insurance', label: 'General Insurance', anchor: [11, 6.5, 86], Building: InsuredHome },
+  { slug: 'insurance', label: 'Life & Health', anchor: [6.5, 10.65, 50], Building: Clinic },
   { slug: 'annuity', label: 'Annuity', anchor: [11.05, 10.75, 52], Building: RetirementCottage },
 ].map((spot) => {
   if (!spot.slug) return spot
@@ -43,8 +43,10 @@ const SPOTS = [
 
 const PINS = SPOTS.filter((s) => s.slug)
 
-export default function KroldCity() {
+export default function KroldCity({ highlight = [] }) {
   const [active, setActive] = useState(null)
+  // A hovered/focused building wins; otherwise spotlight whatever the hero asks for.
+  const focus = active ? [active] : highlight
   const navigate = useNavigate()
   const rootRef = useRef(null)
   const groundRef = useRef(null)
@@ -105,7 +107,7 @@ export default function KroldCity() {
         ref={rootRef}
         className="krold-city relative w-full select-none"
         style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}
-        data-active={active ? '' : undefined}
+        data-active={focus.length ? '' : undefined}
         onPointerLeave={(e) => e.pointerType === 'mouse' && setActive(null)}
       >
         <svg
@@ -126,7 +128,7 @@ export default function KroldCity() {
           {SPOTS.map(({ slug, Building }, i) => (
             <g key={slug ?? 'plaza'} ref={(el) => (bldgRefs.current[i] = el)}>
               <g
-                className={`city-bldg ${slug ? 'is-link' : ''} ${slug && slug === active ? 'is-active' : ''}`}
+                className={`city-bldg ${slug ? 'is-link' : ''} ${slug && focus.includes(slug) ? 'is-active' : ''}`}
                 onPointerEnter={slug ? hover(slug) : undefined}
                 onClick={slug ? () => navigate(`/services#${slug}`) : undefined}
               >
@@ -151,14 +153,14 @@ export default function KroldCity() {
                     onFocus={(e) => e.currentTarget.matches(':focus-visible') && setActive(spot.slug)}
                     onBlur={() => setActive(null)}
                     className={`city-pin pointer-events-auto group flex items-center gap-1.5 rounded-full border bg-white/95 p-1 shadow-md shadow-primary-700/10 backdrop-blur transition-all duration-300 dark:bg-neutral-900/90 dark:shadow-black/40 sm:pr-2.5 ${
-                      active === spot.slug
+                      focus.includes(spot.slug)
                         ? 'border-primary-400 -translate-y-1 dark:border-primary-400'
                         : 'border-primary-100 dark:border-white/10'
                     }`}
                   >
                     <span
                       className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors duration-300 ${
-                        active === spot.slug
+                        focus.includes(spot.slug)
                           ? 'bg-gradient-to-br from-primary-500 to-secondary-500 text-white'
                           : 'bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-400'
                       }`}

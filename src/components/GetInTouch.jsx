@@ -1,18 +1,14 @@
-import { useRef, useState } from 'react'
+import { lazy, Suspense, useRef, useState } from 'react'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 import ContactIcon from './icons/ContactIcons'
-import { CONTACT_INFO as CONTACT_DETAILS } from '../data/contactInfo'
+import { CONTACT_INFO as CONTACT_DETAILS, OFFICES } from '../data/contactInfo'
 
-// The share link Google gives you (`/maps?cid=...&source=embed`) sets
-// X-Frame-Options: SAMEORIGIN and refuses to load in a third-party iframe.
-// The `/maps/embed?pb=...` endpoint (what `output=embed` redirects to) is the
-// one actually meant for embedding, so we use its resolved form directly.
-const MAP_SRC = 'https://www.google.com/maps/embed?origin=mfe&pb=!1m3!3m2!1m1!4s17107091593126190035'
+// Leaflet is only needed for the map, so keep it out of the main bundle.
+const OfficeMap = lazy(() => import('./contact/OfficeMap'))
 
 const CONTACT_INFO = [
   { icon: 'phone', label: 'Call us', value: CONTACT_DETAILS.phoneDisplay, href: CONTACT_DETAILS.phoneHref },
   { icon: 'mail', label: 'Email us', value: CONTACT_DETAILS.email, href: `mailto:${CONTACT_DETAILS.email}` },
-  { icon: 'pin', label: 'Visit us', value: CONTACT_DETAILS.address, href: null },
 ]
 
 function Field({ label, textarea, ...props }) {
@@ -37,6 +33,14 @@ export default function GetInTouch() {
   })
 
   const [form, setForm] = useState(initialForm)
+  // `officeId` drives the address shown; `mapFocus` is null while the map shows both offices.
+  const [officeId, setOfficeId] = useState(OFFICES[0].id)
+  const [mapFocus, setMapFocus] = useState(null)
+  const office = OFFICES.find((o) => o.id === officeId)
+  const selectOffice = (id) => {
+    setOfficeId(id)
+    setMapFocus(id)
+  }
   const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => {
@@ -92,21 +96,61 @@ export default function GetInTouch() {
                     </div>
                   </li>
                 ))}
+                <li className="flex items-start gap-4">
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30">
+                    <ContactIcon name="pin" className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="text-xs font-medium uppercase tracking-wide text-black/40 dark:text-white/40">
+                        Visit us
+                      </p>
+                      <div
+                        role="group"
+                        aria-label="Choose office"
+                        className="inline-flex rounded-full border border-primary-100 bg-primary-50/60 p-0.5 dark:border-white/10 dark:bg-white/5"
+                      >
+                        {OFFICES.map((o) => (
+                          <button
+                            key={o.id}
+                            type="button"
+                            aria-pressed={o.id === officeId}
+                            onClick={() => selectOffice(o.id)}
+                            className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors duration-300 ${
+                              o.id === officeId
+                                ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-sm'
+                                : 'text-black/60 hover:text-primary-600 dark:text-white/60 dark:hover:text-primary-400'
+                            }`}
+                          >
+                            {o.city}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">
+                      {office.type}
+                    </p>
+                    <p className="mt-0.5 text-sm font-medium text-black dark:text-white">{office.address}</p>
+                    <a
+                      href={office.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                    >
+                      Get directions
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="h-3 w-3" aria-hidden="true">
+                        <path d="M7 17 17 7M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  </div>
+                </li>
               </ul>
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-primary-100/60 dark:border-white/10">
-              <iframe
-                title="Krold Mfins office location"
-                src={MAP_SRC}
-                width="100%"
-                height="320"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                className="h-[320px] w-full grayscale-[15%] dark:grayscale-[40%] dark:contrast-125 dark:invert-[0.92] dark:hue-rotate-180"
-              />
+              <Suspense fallback={<div className="office-map h-[320px] w-full" />}>
+                <OfficeMap selected={mapFocus} onSelect={selectOffice} onReset={() => setMapFocus(null)} />
+              </Suspense>
             </div>
           </div>
 

@@ -10,6 +10,8 @@ const NAV_ITEMS = [
   { name: 'Services', href: '/services' },
   { name: 'Contact Us', href: '/#contact' },
   { name: 'Calculators', href: '/#calculators' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'NRI', href: '/nri' },
 ]
 
 export default function Navbar() {

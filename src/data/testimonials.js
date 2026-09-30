@@ -1,10 +1,12 @@
-// Placeholder testimonials — original fictional content for layout/animation
+// Placeholder testimonials — original fictional content (names, companies and locations included) for layout/animation
 // purposes only. Swap in real, approved client quotes and photos before launch.
 export const TESTIMONIALS = [
   {
     id: 't1',
     name: 'Rohan Kapoor',
     designation: 'Business Owner',
+    company: 'Kapoor Textiles',
+    location: 'Kolkata',
     description:
       'Planning my investments used to feel overwhelming. Now I get clear, honest advice and I actually understand where my money is going.',
   },
@@ -12,6 +14,8 @@ export const TESTIMONIALS = [
     id: 't2',
     name: 'Anjali Verma',
     designation: 'IT Professional',
+    company: 'Nexora Technologies',
+    location: 'Bengaluru',
     description:
       'What stood out was the patience — every option was explained properly before I had to decide anything. No pressure, just clarity.',
   },
@@ -19,6 +23,8 @@ export const TESTIMONIALS = [
     id: 't3',
     name: 'Devansh Mehta',
     designation: 'Entrepreneur',
+    company: 'Mehta Foods',
+    location: 'Mumbai',
     description:
       'My SIPs have been running smoothly for three years now, with regular reviews that actually make sense for my goals.',
   },
@@ -26,6 +32,8 @@ export const TESTIMONIALS = [
     id: 't4',
     name: 'Sneha Iyer',
     designation: 'Marketing Manager',
+    company: 'Brightline Media',
+    location: 'Chennai',
     description:
       'I finally have a retirement plan that feels realistic. The whole process was simple and genuinely well explained.',
   },
@@ -33,6 +41,8 @@ export const TESTIMONIALS = [
     id: 't5',
     name: 'Vikram Nair',
     designation: 'Retired Professional',
+    company: 'Eastern Coastal Shipping',
+    location: 'Kochi',
     description:
       "Managing my savings after retirement felt risky on my own. Having a steady, dependable plan in place gave me real peace of mind.",
   },
@@ -40,9 +50,11 @@ export const TESTIMONIALS = [
     id: 't6',
     name: 'Priya Chatterjee',
     designation: 'Chartered Accountant',
+    company: 'Chatterjee & Associates',
+    location: 'Kolkata',
     description:
       'Even as a finance professional myself, I value having someone track and rebalance my portfolio objectively.',
   },
 ]
 
-export const HAPPY_CLIENTS_COUNT = 300
+export const HAPPY_CLIENTS_COUNT = 200

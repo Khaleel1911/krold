@@ -11,11 +11,28 @@ export default function TestimonialCard({ testimonial, index = 0, className = ''
       <p className="mt-3 flex-1 text-sm leading-relaxed text-black/70 dark:text-white/70">
         {testimonial.description}
       </p>
-      <div className="mt-4 flex items-center gap-3 border-t border-black/5 dark:border-white/10 pt-4">
+      <div className="mt-4 flex items-start gap-3 border-t border-black/5 dark:border-white/10 pt-4">
         <Avatar name={testimonial.name} index={index} className="h-10 w-10 text-sm" />
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-semibold text-black dark:text-white">{testimonial.name}</p>
-          <p className="text-xs text-black/50 dark:text-white/50">{testimonial.designation}</p>
+          <p className="flex flex-wrap items-center gap-x-1.5 text-xs text-black/60 dark:text-white/60">
+            <span>{testimonial.designation}</span>
+            {testimonial.location && (
+              <>
+                <span className="text-black/25 dark:text-white/25" aria-hidden="true">|</span>
+                <span className="inline-flex items-center gap-1 text-black/45 dark:text-white/45">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3 shrink-0" aria-hidden="true">
+                    <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" strokeLinejoin="round" />
+                    <circle cx="12" cy="10" r="2.2" />
+                  </svg>
+                  {testimonial.location}
+                </span>
+              </>
+            )}
+          </p>
+          {testimonial.company && (
+            <p className="text-xs font-medium text-primary-600 dark:text-primary-400">{testimonial.company}</p>
+          )}
         </div>
       </div>
     </div>
