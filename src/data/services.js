@@ -45,14 +45,14 @@ export const SERVICES = [
     slug: 'general-insurance',
     icon: 'generalInsurance',
     title: 'General Insurance',
-    short: 'Protect your health, home, vehicle, business and other valuable assets with comprehensive general insurance solutions.',
+    short: 'Protect your business, warehouse, machinery, profits and other valuable assets with comprehensive general insurance solutions.',
     description:
-      'Beyond life and health, we help you protect what you have built — your home, vehicles, business and other valuable assets — with general insurance from leading insurers, chosen for the right coverage and backed by support when you need to claim.',
+      'Beyond life and health, we help you protect what you have built — your business, warehouse and stock, machinery, profits, vehicles and home — with general insurance from leading insurers, chosen for the right coverage and backed by support when you need to claim.',
     points: [
-      'Motor insurance for cars and two-wheelers',
-      'Home and property insurance',
       'Business, shop and commercial cover',
-      'Travel insurance and claims assistance',
+      'Warehouse, stock and machinery insurance',
+      'Loss of profits (business interruption) cover',
+      'Motor, home and property insurance with claims assistance',
     ],
   },
   {

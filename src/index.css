@@ -198,7 +198,8 @@
       'ins  ins'
       'pms  pms'
       'gi   gi'
-      'ann  bond'
+      'ann  ann'
+      'bond bond'
       'stk  stk'
       'unl  unl';
   }
@@ -210,7 +211,8 @@
     grid-template-areas:
       'mf   mf   ins  ins'
       'mf   mf   pms  pms'
-      'ann  bond gi   gi'
+      'gi   gi   gi   gi'
+      'ann  ann  bond bond'
       'stk  stk  unl  unl';
   }
 }

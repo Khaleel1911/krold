@@ -12,16 +12,41 @@ const glyph = {
 
 const ASSETS = [
   {
-    name: 'Health',
-    icon: <path d="M3 12h4l2-4 4 8 2-4h6" />,
-  },
-  {
-    name: 'Home',
+    name: 'Business',
     icon: (
       <>
-        <path d="M4 11 12 4l8 7" />
-        <path d="M6 9.5V20h12V9.5" />
-        <path d="M10 20v-5h4v5" />
+        <rect x="3.5" y="8" width="17" height="11.5" rx="1.5" />
+        <path d="M8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2" />
+        <path d="M3.5 13h17" />
+      </>
+    ),
+  },
+  {
+    name: 'Warehouse',
+    icon: (
+      <>
+        <path d="M3 20V9.5l9-5 9 5V20" />
+        <path d="M7.5 20v-7h9v7" />
+        <path d="M7.5 16.5h9" />
+      </>
+    ),
+  },
+  {
+    name: 'Machinery',
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3M6 6l2.1 2.1M15.9 15.9 18 18M18 6l-2.1 2.1M8.1 15.9 6 18" />
+      </>
+    ),
+  },
+  {
+    name: 'Profits',
+    icon: (
+      <>
+        <path d="M4 4v16h16" />
+        <path d="m7.5 15 3.5-4 3 2.5 5-6" />
+        <path d="M15.5 7.5H19V11" />
       </>
     ),
   },
@@ -37,25 +62,25 @@ const ASSETS = [
     ),
   },
   {
-    name: 'Business',
+    name: 'Home',
     icon: (
       <>
-        <rect x="3.5" y="8" width="17" height="11.5" rx="1.5" />
-        <path d="M8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2" />
-        <path d="M3.5 13h17" />
+        <path d="M4 11 12 4l8 7" />
+        <path d="M6 9.5V20h12V9.5" />
+        <path d="M10 20v-5h4v5" />
       </>
     ),
   },
 ]
 
-// Everyday assets, each picking up a protective tick on hover.
+// What general insurance covers, each picking up a protective tick on hover.
 function AssetGrid() {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-2.5 min-[420px]:grid-cols-3">
       {ASSETS.map((asset, i) => (
         <div
           key={asset.name}
-          className="relative flex flex-col items-center gap-1.5 rounded-2xl bg-white py-3 text-primary-600 ring-1 ring-primary-100 dark:bg-white/5 dark:text-primary-300 dark:ring-white/10"
+          className="relative flex flex-col items-center justify-center gap-1.5 rounded-2xl bg-white px-2 py-4 text-primary-600 ring-1 ring-primary-100 dark:bg-white/5 dark:text-primary-300 dark:ring-white/10"
         >
           <svg {...glyph} aria-hidden="true">
             {asset.icon}
@@ -81,14 +106,14 @@ export default function GeneralInsuranceCard({ service, cardRef }) {
       service={service}
       area="gi"
       cardRef={cardRef}
-      className="bg-gradient-to-b from-primary-50 to-secondary-50 ring-1 ring-primary-100 hover:shadow-2xl hover:shadow-primary-200/60 dark:from-primary-500/10 dark:to-secondary-500/10 dark:ring-primary-400/20 dark:hover:shadow-black/40 sm:flex-row sm:items-stretch sm:gap-6"
+      className="bg-gradient-to-r from-primary-50 to-secondary-50 ring-1 ring-primary-100 hover:shadow-2xl hover:shadow-primary-200/60 dark:from-primary-500/10 dark:to-secondary-500/10 dark:ring-primary-400/20 dark:hover:shadow-black/40 sm:flex-row sm:items-stretch sm:gap-8 lg:gap-12"
     >
       <div className="relative flex flex-1 flex-col">
         <IconBadge name={service.icon} className="bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30" />
         <CardText service={service} className="mt-4" />
         <LearnMore className="text-primary-600 dark:text-primary-400" />
       </div>
-      <div className="relative mt-4 flex flex-col justify-center sm:mt-0 sm:w-[44%] sm:shrink-0">
+      <div className="relative mt-5 flex flex-col justify-center sm:mt-0 sm:w-[54%] sm:shrink-0">
         <AssetGrid />
       </div>
     </CardShell>

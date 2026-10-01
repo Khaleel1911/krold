@@ -10,7 +10,7 @@ export const OFFICES = [
     id: 'kolkata',
     city: 'Kolkata',
     type: 'Head Office',
-    address: 'Room No. 721, Aurora Waterfront, GN 34/1, Sector V, Salt Lake, Kolkata - 700091',
+    address: '721, Aurora Waterfront, GN 34/1, Sector V, Salt Lake, Kolkata - 700091',
     coords: [22.5700465, 88.4289536],
     mapsUrl: 'https://maps.google.com/?cid=17107091593126190035',
   },
