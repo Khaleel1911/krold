@@ -1,10 +1,14 @@
 // Placeholder testimonials — original fictional content (names, companies and locations included) for layout/animation
 // purposes only. Swap in real, approved client quotes and photos before launch.
+//
+// Two kinds of client, each credited differently:
+//   type: 'business'     → name, company and location
+//   type: 'professional' → profession and location (no name)
 export const TESTIMONIALS = [
   {
     id: 't1',
+    type: 'business',
     name: 'Rohan Kapoor',
-    designation: 'Business Owner',
     company: 'Kapoor Textiles',
     location: 'Kolkata',
     description:
@@ -12,17 +16,16 @@ export const TESTIMONIALS = [
   },
   {
     id: 't2',
-    name: 'Anjali Verma',
-    designation: 'IT Professional',
-    company: 'Nexora Technologies',
+    type: 'professional',
+    profession: 'IT Professional',
     location: 'Bengaluru',
     description:
       'What stood out was the patience — every option was explained properly before I had to decide anything. No pressure, just clarity.',
   },
   {
     id: 't3',
+    type: 'business',
     name: 'Devansh Mehta',
-    designation: 'Entrepreneur',
     company: 'Mehta Foods',
     location: 'Mumbai',
     description:
@@ -30,27 +33,24 @@ export const TESTIMONIALS = [
   },
   {
     id: 't4',
-    name: 'Sneha Iyer',
-    designation: 'Marketing Manager',
-    company: 'Brightline Media',
+    type: 'professional',
+    profession: 'Marketing Manager',
     location: 'Chennai',
     description:
       'I finally have a retirement plan that feels realistic. The whole process was simple and genuinely well explained.',
   },
   {
     id: 't5',
-    name: 'Vikram Nair',
-    designation: 'Retired Professional',
-    company: 'Eastern Coastal Shipping',
+    type: 'professional',
+    profession: 'Retired Professional',
     location: 'Kochi',
     description:
       "Managing my savings after retirement felt risky on my own. Having a steady, dependable plan in place gave me real peace of mind.",
   },
   {
     id: 't6',
-    name: 'Priya Chatterjee',
-    designation: 'Chartered Accountant',
-    company: 'Chatterjee & Associates',
+    type: 'professional',
+    profession: 'Chartered Accountant',
     location: 'Kolkata',
     description:
       'Even as a finance professional myself, I value having someone track and rebalance my portfolio objectively.',

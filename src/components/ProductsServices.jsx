@@ -7,20 +7,23 @@ import AnnuityCard from './services/AnnuityCard'
 import BondsCard from './services/BondsCard'
 import StockBrokingCard from './services/StockBrokingCard'
 import UnlistedSharesCard from './services/UnlistedSharesCard'
-import { SERVICES } from '../data/services'
+import ReitsInvitsCard from './services/ReitsInvitsCard'
+import { getServiceBySlug } from '../data/services'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 
 // Each service has its own card; sizes and placement come from `.svc-bento` in index.css.
-const SERVICE_CARDS = {
-  'mutual-funds': MutualFundsCard,
-  insurance: InsuranceCard,
-  'pms-aif': PmsAifCard,
-  'general-insurance': GeneralInsuranceCard,
-  annuity: AnnuityCard,
-  bonds: BondsCard,
-  'stock-broking': StockBrokingCard,
-  'unlisted-shares': UnlistedSharesCard,
-}
+// Listed in on-screen reading order so tab order and the reveal stagger follow the layout.
+const SERVICE_CARDS = [
+  ['mutual-funds', MutualFundsCard],
+  ['insurance', InsuranceCard],
+  ['pms-aif', PmsAifCard],
+  ['general-insurance', GeneralInsuranceCard],
+  ['stock-broking', StockBrokingCard],
+  ['reits-invits', ReitsInvitsCard],
+  ['unlisted-shares', UnlistedSharesCard],
+  ['annuity', AnnuityCard],
+  ['bonds', BondsCard],
+]
 
 export default function ProductsServices() {
   const sectionRef = useRef(null)
@@ -46,10 +49,9 @@ export default function ProductsServices() {
         </div>
 
         <div className="svc-bento mt-12">
-          {SERVICES.map((service, i) => {
-            const Card = SERVICE_CARDS[service.slug]
-            return <Card key={service.slug} service={service} cardRef={(el) => (cardRefs.current[i] = el)} />
-          })}
+          {SERVICE_CARDS.map(([slug, Card], i) => (
+            <Card key={slug} service={getServiceBySlug(slug)} cardRef={(el) => (cardRefs.current[i] = el)} />
+          ))}
         </div>
       </div>
     </section>

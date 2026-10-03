@@ -20,7 +20,7 @@ const SLIDES = [
     highlight: 'before you’re left behind',
     description:
       'Access emerging investment opportunities across REITs, SIFs, PMS, AIFs, ETFs and more — with guidance designed around your goals and risk profile.',
-    spotlight: ['pms-aif', 'stock-broking', 'unlisted-shares'],
+    spotlight: ['pms-aif', 'stock-broking', 'unlisted-shares', 'reits-invits'],
   },
   {
     eyebrow: 'Wealth, built with purpose',
@@ -105,16 +105,19 @@ export default function Hero() {
   // Scroll-tied parallax depth
   useEffect(() => {
     if (prefersReducedMotion()) return
+    // Scope to the element, not the ref: React clears the ref before this cleanup runs,
+    // and killing the triggers refreshes ScrollTrigger against the scope.
+    const section = sectionRef.current
     const ctx = gsap.context(() => {
       const scrollTrigger = {
-        trigger: sectionRef.current,
+        trigger: section,
         start: 'top top',
         end: 'bottom top',
         scrub: 0.6,
       }
       gsap.to(stageWrapRef.current, { yPercent: 10, scale: 0.96, ease: 'none', scrollTrigger })
       gsap.to(textRef.current, { yPercent: 30, opacity: 0.35, ease: 'none', scrollTrigger })
-    }, sectionRef)
+    }, section)
     return () => ctx.revert()
   }, [])
 

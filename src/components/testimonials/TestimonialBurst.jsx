@@ -62,10 +62,11 @@ export default function TestimonialBurst() {
   // Fit the stage to the available width; the wrapper keeps the scaled height.
   useEffect(() => {
     const wrap = wrapRef.current
+    const stage = stageRef.current
     let lastHeight = 0
     const ro = new ResizeObserver(([entry]) => {
       const s = Math.min(1, entry.contentRect.width / STAGE_W)
-      stageRef.current.style.transform = `translateX(-50%) scale(${s})`
+      stage.style.transform = `translateX(-50%) scale(${s})`
       const height = Math.round(STAGE_H * s)
       if (height !== lastHeight) {
         lastHeight = height

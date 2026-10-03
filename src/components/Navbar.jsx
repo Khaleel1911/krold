@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import logo from '../assets/logo.png'
 import ThemeToggle from './ThemeToggle'
 
 const NAV_ITEMS = [
   { name: 'Home', href: '/#home' },
-  { name: 'About Us', href: '/#about' },
+  { name: 'About Us', href: '/about' },
   { name: 'Services', href: '/services' },
-  { name: 'Contact Us', href: '/#contact' },
-  { name: 'Calculators', href: '/#calculators' },
+  { name: 'Calculators', href: '/calculators' },
   { name: 'Blog', href: '/blog' },
   { name: 'NRI', href: '/nri' },
 ]
@@ -25,6 +24,17 @@ export default function Navbar() {
   const mobilePanelRef = useRef(null)
   const mobileItemsRef = useRef([])
   const barsRef = useRef([])
+  const { pathname, hash } = useLocation()
+
+  // Highlight the item for the current page, including on direct visits and back/forward.
+  useEffect(() => {
+    setActiveIndex(
+      NAV_ITEMS.findIndex((item) => {
+        const [path, anchor] = item.href.split('#')
+        return path === pathname && (!anchor || !hash || hash === `#${anchor}`)
+      }),
+    )
+  }, [pathname, hash])
 
   // Entrance animation
   useEffect(() => {
@@ -42,24 +52,9 @@ export default function Navbar() {
     return () => ctx.revert()
   }, [])
 
-  // Scroll shrink / glass effect
+  // Glass effect once the page scrolls; the bar keeps one compact height throughout.
   useEffect(() => {
-    gsap.set(navRef.current, { paddingTop: 28, paddingBottom: 28 })
-
-    const onScroll = () => {
-      const isScrolled = window.scrollY > 8
-      setScrolled((prev) => {
-        if (prev !== isScrolled) {
-          gsap.to(navRef.current, {
-            paddingTop: isScrolled ? 14 : 28,
-            paddingBottom: isScrolled ? 14 : 28,
-            duration: 0.35,
-            ease: 'power2.out',
-          })
-        }
-        return isScrolled
-      })
-    }
+    const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -111,7 +106,7 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-50 w-full py-3.5 transition-all duration-300 ${
         scrolled
           ? 'bg-white/80 dark:bg-neutral-950/80 backdrop-blur-lg shadow-lg shadow-primary-100/50 dark:shadow-black/40'
           : 'bg-white/60 dark:bg-neutral-950/60 backdrop-blur-md'
@@ -161,7 +156,7 @@ export default function Navbar() {
           <ThemeToggle />
           <Link
             to="/#contact"
-            onClick={() => handleNavClick(3)}
+            onClick={() => handleNavClick(-1)}
             className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-2.5 text-[15px] font-semibold text-white shadow-md shadow-primary-200 dark:shadow-black/40 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0"
           >
             Get in Touch
@@ -220,7 +215,7 @@ export default function Navbar() {
           <li ref={(el) => (mobileItemsRef.current[NAV_ITEMS.length] = el)} className="pt-2">
             <Link
               to="/#contact"
-              onClick={() => handleNavClick(3)}
+              onClick={() => handleNavClick(-1)}
               className="block rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-4 py-3 text-center text-base font-semibold text-white shadow-md shadow-primary-200"
             >
               Get in Touch

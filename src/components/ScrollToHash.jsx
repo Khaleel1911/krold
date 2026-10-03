@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export default function ScrollToHash() {
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
 
   useEffect(() => {
     if (hash) {
@@ -22,7 +22,8 @@ export default function ScrollToHash() {
     } else {
       window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
     }
-  }, [pathname, hash])
+    // key changes on every navigation, so re-clicking a hash link scrolls again
+  }, [pathname, hash, key])
 
   return null
 }

@@ -4,7 +4,9 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToHash from './components/ScrollToHash'
 import Home from './pages/Home'
+import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
+import CalculatorsPage from './pages/CalculatorsPage'
 import BlogPage from './pages/BlogPage'
 import NriPage from './pages/NriPage'
 
@@ -15,7 +17,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/calculators" element={<CalculatorsPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/nri" element={<NriPage />} />
       </Routes>

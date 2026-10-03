@@ -1,7 +1,7 @@
 import { memo, useRef } from 'react'
 import { gsap } from 'gsap'
 import { U, iso, pts } from './geometry'
-import { IsoBox, IsoRect, PlaneX, PlaneY, Windows, GableRoof, Cylinder, Tree } from './iso'
+import { IsoBox, IsoRect, PlaneX, PlaneY, Windows, GableRoof, Tree } from './iso'
 import { useCityLoop } from './motion'
 
 const label = { fontWeight: 700, letterSpacing: '0.04em' }
@@ -233,38 +233,74 @@ export const BondsBank = memo(function BondsBank() {
   )
 })
 
-/* ─── Centre plaza (decorative) ─────────────────────────────────────── */
+/* ─── REITs / InvITs — a rent-paying mall & office park with a wind turbine ─ */
 
-export const Plaza = memo(function Plaza() {
-  const sprayRef = useRef(null)
-  const [fx, fy] = iso(6.5, 6.5, 5)
+// The centre block is bounded by the ring road (gx/gy 5.1 to 7.9).
+const REIT_PODIUM = { x: 5.4, y: 5.6, w: 2.0, d: 1.8, h: 16 }
+const REIT_TOWER = { x: 5.6, y: 5.75, w: 1.4, d: 1.15, z: 16, h: 46 }
+
+export const ReitPark = memo(function ReitPark() {
+  const rotorRef = useRef(null)
+  const coinRef = useRef(null)
+  const p = REIT_PODIUM
+  const t = REIT_TOWER
+  const roof = t.z + t.h
+  const [hx, hy] = iso(5.25, 7.7, 60)
+  const [bx, by] = iso(5.25, 7.7, 0)
+  const [cx, cy] = iso(t.x + t.w / 2, t.y + t.d / 2, roof + 6)
+
   useCityLoop(() => {
-    gsap.to(sprayRef.current, {
-      scaleY: 0.7,
-      svgOrigin: `${fx} ${fy}`,
-      duration: 0.8,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-    })
+    gsap.to(rotorRef.current, { rotation: 360, svgOrigin: `${hx} ${hy}`, duration: 4, ease: 'none', repeat: -1 })
+    // Rental income paid out to unitholders.
+    gsap
+      .timeline({ repeat: -1, repeatDelay: 1.4, delay: 1.2 })
+      .fromTo(coinRef.current, { y: 0, opacity: 0 }, { y: -10, opacity: 1, duration: 0.4, ease: 'power2.out' })
+      .to(coinRef.current, { y: -24, opacity: 0, duration: 0.8, ease: 'power1.in' })
   })
+
   return (
     <g>
-      <IsoRect x={5.6} y={5.6} w={1.8} d={1.8} fill="var(--city-plaza)" />
-      <Tree gx={5.55} gy={5.55} s={0.9} />
-      <Tree gx={7.45} gy={5.55} s={0.9} />
-      <Tree gx={5.55} gy={7.45} s={0.9} />
-      <Cylinder gx={6.5} gy={6.5} r={15} h={5} tone="bldg" />
-      <ellipse cx={fx} cy={fy} rx="12" ry="6" fill="var(--city-water)" />
-      <path
-        ref={sprayRef}
-        d={`M${fx - 6},${fy} C${fx - 5},${fy - 14} ${fx - 1},${fy - 18} ${fx},${fy - 18} C${fx + 1},${fy - 18} ${fx + 5},${fy - 14} ${fx + 6},${fy}`}
-        fill="none"
-        stroke="var(--city-water)"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <Tree gx={7.45} gy={7.45} s={0.9} />
+      <IsoBox {...p} />
+      <PlaneX gx={p.x} gy={p.y + p.d} z={p.h}>
+        <rect x="0" y="2" width={p.w * U} height="7" fill="var(--city-green-left)" />
+        <text x={(p.w * U) / 2} y="7.2" textAnchor="middle" fontSize="4.8" fill="#fff" style={label}>
+          REITs · InvITs
+        </text>
+        <Windows y={9} width={p.w * U} height={9} cols={4} rows={1} padY={2} gapX={10} seed={3} />
+        <rect x={(p.w * U) / 2 - 5} y="10" width="10" height="8" fill="var(--city-door)" />
+      </PlaneX>
+      <PlaneY gx={p.x + p.w} gy={p.y + p.d} z={p.h}>
+        <Windows y={4} width={p.d * U} height={14} cols={3} rows={1} padY={2} seed={5} />
+      </PlaneY>
+
+      <IsoBox {...t} tone="glass" />
+      <PlaneX gx={t.x} gy={t.y + t.d} z={roof}>
+        <Windows width={t.w * U} height={t.h} cols={3} rows={6} padX={3} padY={4} gapX={2} gapY={3} seed={4} kind="glass" />
+      </PlaneX>
+      <PlaneY gx={t.x + t.w} gy={t.y + t.d} z={roof}>
+        <Windows width={t.d * U} height={t.h} cols={2} rows={6} padX={3} padY={4} gapX={2} gapY={3} seed={6} kind="glass" />
+      </PlaneY>
+      <IsoBox x={5.9} y={5.95} w={0.8} d={0.65} z={roof} h={5} tone="slab" />
+
+      <g ref={coinRef} opacity="0">
+        <Coin x={cx} y={cy} r={4.5} />
+      </g>
+
+      <Tree gx={7.65} gy={5.5} s={0.7} />
+
+      {/* InvIT wind turbine */}
+      <ellipse cx={bx} cy={by} rx="5" ry="2.5" fill="var(--city-shadow)" />
+      <line x1={bx} y1={by} x2={hx} y2={hy} stroke="#d4e0e8" strokeWidth="2.2" strokeLinecap="round" />
+      <g ref={rotorRef} fill="#f6fafc" stroke="var(--city-edge)" strokeWidth="0.5">
+        {[0, 120, 240].map((a) => (
+          <path
+            key={a}
+            transform={`rotate(${a} ${hx} ${hy})`}
+            d={`M${hx - 1},${hy} C${hx - 2.2},${hy - 8} ${hx - 1},${hy - 16} ${hx},${hy - 18} C${hx + 1.2},${hy - 14} ${hx + 1.4},${hy - 6} ${hx + 1},${hy} Z`}
+          />
+        ))}
+      </g>
+      <circle cx={hx} cy={hy} r="2" fill="var(--city-green-left)" />
     </g>
   )
 })

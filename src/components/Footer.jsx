@@ -8,9 +8,9 @@ import { CONTACT_INFO, OFFICES } from '../data/contactInfo'
 
 const QUICK_LINKS = [
   { name: 'Home', href: '/#home' },
-  { name: 'About Us', href: '/#about' },
+  { name: 'About Us', href: '/about' },
   { name: 'Products & Services', href: '/services' },
-  { name: 'Calculators', href: '/#calculators' },
+  { name: 'Calculators', href: '/calculators' },
   { name: 'Contact Us', href: '/#contact' },
 ]
 

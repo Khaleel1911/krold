@@ -1,90 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import CalculatorPanel from './calculators/CalculatorPanel'
-import { calcSIP, calcLumpsum, calcSWP } from './calculators/calculations'
+import { FEATURED_CALCULATORS } from './calculators/configs'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 
-const CALCULATORS = [
-  {
-    id: 'sip',
-    label: 'SIP',
-    title: 'SIP Calculator',
-    description: 'See how small, regular monthly investments compound into a large corpus over time.',
-    fields: [
-      { key: 'monthly', label: 'Monthly Investment', min: 500, max: 100000, step: 500, prefix: '₹' },
-      { key: 'rate', label: 'Expected Return (p.a.)', min: 1, max: 30, step: 0.5, suffix: '%' },
-      { key: 'years', label: 'Time Period', min: 1, max: 40, step: 1, suffix: 'Yr' },
-    ],
-    defaults: { monthly: 25000, rate: 12, years: 15 },
-    compute: (v) => {
-      const { invested, total, returns } = calcSIP(v.monthly, v.rate, v.years)
-      return {
-        centerValue: total,
-        centerLabel: 'Total Value',
-        segments: [
-          { label: 'Invested Amount', value: invested, colorClass: 'primary' },
-          { label: 'Est. Returns', value: returns, colorClass: 'secondary' },
-        ],
-      }
-    },
-  },
-  {
-    id: 'lumpsum',
-    label: 'Lumpsum',
-    title: 'Lumpsum Calculator',
-    description: 'Estimate how a one-time investment grows with the power of compounding.',
-    fields: [
-      { key: 'principal', label: 'Investment Amount', min: 10000, max: 10000000, step: 10000, prefix: '₹' },
-      { key: 'rate', label: 'Expected Return (p.a.)', min: 1, max: 30, step: 0.5, suffix: '%' },
-      { key: 'years', label: 'Time Period', min: 1, max: 40, step: 1, suffix: 'Yr' },
-    ],
-    defaults: { principal: 500000, rate: 12, years: 15 },
-    compute: (v) => {
-      const { invested, total, returns } = calcLumpsum(v.principal, v.rate, v.years)
-      return {
-        centerValue: total,
-        centerLabel: 'Total Value',
-        segments: [
-          { label: 'Invested Amount', value: invested, colorClass: 'primary' },
-          { label: 'Est. Returns', value: returns, colorClass: 'secondary' },
-        ],
-      }
-    },
-  },
-  {
-    id: 'swp',
-    label: 'SWP',
-    title: 'SWP Calculator',
-    description: 'Plan a systematic withdrawal from your corpus and see how long it lasts.',
-    fields: [
-      { key: 'corpus', label: 'Total Investment', min: 100000, max: 50000000, step: 50000, prefix: '₹' },
-      { key: 'withdrawal', label: 'Monthly Withdrawal', min: 1000, max: 500000, step: 1000, prefix: '₹' },
-      { key: 'rate', label: 'Expected Return (p.a.)', min: 1, max: 20, step: 0.5, suffix: '%' },
-      { key: 'years', label: 'Time Period', min: 1, max: 30, step: 1, suffix: 'Yr' },
-    ],
-    defaults: { corpus: 2000000, withdrawal: 15000, rate: 8, years: 15 },
-    compute: (v) => {
-      const { totalWithdrawn, finalBalance, depletedAtMonth } = calcSWP(v.corpus, v.withdrawal, v.rate, v.years)
-      return {
-        centerValue: finalBalance,
-        centerLabel: depletedAtMonth ? 'Depleted early' : 'Final Balance',
-        segments: [
-          { label: 'Total Withdrawn', value: totalWithdrawn, colorClass: 'primary' },
-          { label: 'Final Balance', value: finalBalance, colorClass: 'secondary' },
-        ],
-        footnote: depletedAtMonth
-          ? `Corpus runs out in ~${Math.floor(depletedAtMonth / 12)} yr ${depletedAtMonth % 12} mo`
-          : null,
-      }
-    },
-  },
-]
-
-export default function Calculators() {
+// `asPage` renders the full calculators page (h1, no "Explore more" link) instead of the home section.
+export default function Calculators({ calculators: CALCULATORS = FEATURED_CALCULATORS, asPage = false }) {
   const [activeId, setActiveId] = useState(CALCULATORS[0].id)
   const [valuesById, setValuesById] = useState(() =>
     Object.fromEntries(CALCULATORS.map((c) => [c.id, { ...c.defaults }])),
   )
+  const Heading = asPage ? 'h1' : 'h2'
 
   const sectionRef = useRef(null)
   const tabRefs = useRef([])
@@ -136,15 +63,15 @@ export default function Calculators() {
   }
 
   return (
-    <section id="calculators" ref={sectionRef} className="relative py-10 lg:py-14">
+    <section id="calculators" ref={sectionRef} className={`relative ${asPage ? 'pb-20 pt-12 lg:pt-16' : 'py-10 lg:py-14'}`}>
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div data-animate className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">
+          <Heading className={`font-semibold text-black dark:text-white ${asPage ? 'text-4xl sm:text-5xl' : 'text-3xl sm:text-4xl'}`}>
             Turn your goals into a{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
               financial plan
             </span>
-          </h2>
+          </Heading>
           <p className="mt-3 text-black/60 dark:text-white/60">
             Interactive calculators that help you understand your investments, model potential outcomes and plan with
             greater clarity.
@@ -182,6 +109,25 @@ export default function Calculators() {
           className="mt-12 rounded-[2rem] border border-primary-100/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.03] p-6 backdrop-blur-sm sm:p-10"
         >
           <CalculatorPanel config={activeConfig} values={valuesById[activeId]} onFieldChange={handleFieldChange} />
+        </div>
+
+        <div className="mt-8 flex flex-col items-center gap-6">
+          {!asPage && (
+            <Link
+              to="/calculators"
+              className="group inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white px-7 py-3 text-[15px] font-semibold text-primary-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white hover:shadow-md hover:shadow-primary-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:border-white/15 dark:bg-transparent dark:text-primary-300 dark:hover:text-white dark:hover:shadow-black/40"
+            >
+              Explore more calculators
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          )}
+          <p className="max-w-2xl text-center text-xs leading-relaxed text-black/45 dark:text-white/45">
+            These calculators are for illustration only and use the returns you assume. Actual returns are not
+            guaranteed and may vary. Mutual fund investments are subject to market risks; read all scheme-related
+            documents carefully.
+          </p>
         </div>
       </div>
     </section>

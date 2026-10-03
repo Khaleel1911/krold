@@ -55,7 +55,7 @@ export default function GetInTouch() {
   }
 
   return (
-    <section id="contact" ref={sectionRef} className="relative py-10 lg:py-14">
+    <section id="contact" ref={sectionRef} className="relative scroll-mt-20 py-10 lg:py-14">
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div data-animate className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">

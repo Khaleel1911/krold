@@ -2,8 +2,8 @@ export const SERVICES = [
   {
     slug: 'mutual-funds',
     icon: 'mutualFunds',
-    title: 'Mutual Fund Distribution',
-    short: 'Goal-based access to diversified mutual fund solutions, tailored to your financial objectives and risk profile.',
+    title: 'Mutual Funds and SIFs',
+    short: 'Access professionally managed Mutual Funds and SIFs designed to help you build long-term wealth.',
     description:
       'We help you choose from a wide universe of Equity, Debt, Hybrid and Tax-Saving (ELSS) mutual funds, matched to your risk profile and financial goals. Onboarding is fully digital, and every portfolio is tracked and reviewed on an ongoing basis so your allocation stays aligned as markets and goals evolve.',
     points: [
@@ -109,6 +109,20 @@ export const SERVICES = [
       'Private, unlisted equity opportunities',
       'Medium-to-long investment horizon',
       'Suited to sophisticated investors',
+    ],
+  },
+  {
+    slug: 'reits-invits',
+    icon: 'reitsInvits',
+    title: 'REITs / InvITs',
+    short: 'Explore REITs and InvITs offering access to income-generating real estate and infrastructure assets.',
+    description:
+      'Real Estate Investment Trusts (REITs) and Infrastructure Investment Trusts (InvITs) let you own a slice of large, income-producing assets — office parks, malls and warehouses, or roads, power transmission and renewable energy projects — without buying them outright. These SEBI-regulated trusts are listed on the stock exchanges and distribute most of their cash flows to unitholders, adding steady income and real-asset diversification to a portfolio.',
+    points: [
+      'Listed REITs — offices, retail and warehousing',
+      'Listed InvITs — roads, power and renewable energy',
+      'Regular distributions from rental and toll income',
+      'SEBI-regulated and traded on NSE / BSE',
     ],
   },
 ]

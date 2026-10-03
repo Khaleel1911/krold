@@ -9,7 +9,7 @@ const COLOR_MAP = {
   secondary: { stroke: '#54ba4f', dot: 'bg-secondary-500' },
 }
 
-export default function DonutResult({ segments, centerValue, centerLabel, footnote }) {
+export default function DonutResult({ segments, centerValue, centerLabel, extras = [], footnote }) {
   const total = segments.reduce((sum, s) => sum + Math.max(s.value, 0), 0) || 1
 
   let cumulative = 0
@@ -55,7 +55,9 @@ export default function DonutResult({ segments, centerValue, centerLabel, footno
           <span className="text-2xl font-bold text-black dark:text-white sm:text-[1.7rem]">
             {formatINRShort(centerValue)}
           </span>
-          <span className="mt-1 text-xs font-medium text-black/50 dark:text-white/50">{centerLabel}</span>
+          <span className="mt-1 max-w-[7.5rem] text-xs font-medium leading-tight text-black/50 dark:text-white/50">
+            {centerLabel}
+          </span>
         </div>
       </div>
 
@@ -69,8 +71,14 @@ export default function DonutResult({ segments, centerValue, centerLabel, footno
             </div>
           </div>
         ))}
+        {extras.map((x) => (
+          <div key={x.label} className="border-t border-black/5 pt-3 pl-5 dark:border-white/10">
+            <p className="text-xs text-black/50 dark:text-white/50">{x.label}</p>
+            <p className="text-sm font-semibold text-black dark:text-white">{formatINR(x.value)}</p>
+          </div>
+        ))}
         {footnote && (
-          <p className="max-w-[220px] text-xs font-medium text-secondary-600 dark:text-secondary-400">{footnote}</p>
+          <p className="max-w-[240px] text-xs font-medium leading-relaxed text-amber-700 dark:text-amber-400">{footnote}</p>
         )}
       </div>
     </div>

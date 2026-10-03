@@ -229,6 +229,10 @@ const Car = memo(function Car({ offset, tone }) {
   const start = loopPoint(offset)
 
   useCityLoop(() => {
+    // Hold the nodes directly: React clears the refs on unmount before the context is
+    // reverted, and reverting renders this tween one last time.
+    const car = ref.current
+    const facings = [...facingRefs.current]
     const state = { t: offset }
     gsap.to(state, {
       t: offset + 1,
@@ -237,8 +241,8 @@ const Car = memo(function Car({ offset, tone }) {
       repeat: -1,
       onUpdate: () => {
         const p = loopPoint(state.t)
-        ref.current.setAttribute('transform', offsetOf(p))
-        facingRefs.current.forEach((g, i) => (g.style.display = i === p.heading ? '' : 'none'))
+        car.setAttribute('transform', offsetOf(p))
+        facings.forEach((g, i) => (g.style.display = i === p.heading ? '' : 'none'))
       },
     })
   })

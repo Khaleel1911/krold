@@ -91,6 +91,18 @@ function GeneralInsuranceIcon(props) {
   )
 }
 
+function ReitsInvitsIcon(props) {
+  return (
+    <svg {...shared} {...props}>
+      <path d="M3 21h18" />
+      <path d="M5 21V8l6-3v16" />
+      <path d="M8 10.5v.01M8 13.5v.01M8 16.5v.01" />
+      <path d="M17 21v-9" />
+      <path d="M17 12l-.5-5M17 12l-3.5 2.5M17 12l4 2" />
+    </svg>
+  )
+}
+
 export const SERVICE_ICONS = {
   mutualFunds: MutualFundsIcon,
   insurance: InsuranceIcon,
@@ -100,6 +112,7 @@ export const SERVICE_ICONS = {
   bonds: BondsIcon,
   stockBroking: StockBrokingIcon,
   unlistedShares: UnlistedSharesIcon,
+  reitsInvits: ReitsInvitsIcon,
 }
 
 export default function ServiceIcon({ name, className }) {
