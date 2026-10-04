@@ -19,7 +19,7 @@ const SLIDES = [
     lead: 'Discover what’s next,',
     highlight: 'before you’re left behind',
     description:
-      'Access emerging investment opportunities across REITs, SIFs, PMS, AIFs, ETFs and more — with guidance designed around your goals and risk profile.',
+      'Access emerging investment opportunities across REITs, SIFs, PMS, AIFs, ETFs and more with guidance designed around your goals and risk profile.',
     spotlight: ['pms-aif', 'stock-broking', 'unlisted-shares', 'reits-invits'],
   },
   {
