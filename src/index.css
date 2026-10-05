@@ -319,6 +319,49 @@ html.hydrating body {
   .tm-lift { transition: none; }
 }
 
+/* ─── About: vision & mission icons (see src/views/AboutPage.jsx) ──── */
+.vm-blink { transform-box: fill-box; transform-origin: center; animation: vm-blink 5s ease-in-out infinite; }
+.vm-look { animation: vm-look 7s ease-in-out infinite; }
+.vm-ray { animation: vm-ray 2.8s ease-in-out infinite; }
+.vm-ring, .vm-hit { transform-box: fill-box; transform-origin: center; }
+.vm-ring { animation: vm-ring 3.6s ease-out infinite; }
+.vm-hit { animation: vm-hit 3.6s ease-out infinite; }
+.vm-arrow { animation: vm-arrow 3.6s cubic-bezier(0.3, 0.7, 0.2, 1) infinite; }
+
+@keyframes vm-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(0.1); }
+}
+@keyframes vm-look {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3.5px); }
+  60% { transform: translateX(3.5px); }
+}
+@keyframes vm-ray {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+/* The arrow flies in from the top right, lands with a small recoil, rests, then fades. */
+@keyframes vm-arrow {
+  0% { opacity: 0; transform: translate(14px, -14px); }
+  22% { opacity: 1; transform: translate(0, 0); }
+  27% { transform: translate(-1px, 1px); }
+  32%, 86% { opacity: 1; transform: translate(0, 0); }
+  100% { opacity: 0; transform: translate(0, 0); }
+}
+@keyframes vm-hit {
+  0%, 21%, 36%, 100% { transform: scale(1); }
+  27% { transform: scale(1.8); }
+}
+@keyframes vm-ring {
+  0%, 21%, 100% { transform: scale(1); opacity: 1; }
+  40% { transform: scale(1.07); opacity: 0.55; }
+  60% { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vm-blink, .vm-look, .vm-ray, .vm-ring, .vm-hit, .vm-arrow { animation: none; }
+}
+
 /* ─── Office map pins (see src/components/contact/OfficeMap.jsx) ───── */
 .office-map { background: #eef4f8; font: inherit; }
 .dark .office-map { background: #1a1f24; }

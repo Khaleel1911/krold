@@ -2,6 +2,7 @@
 
 import Hero from '../components/Hero'
 import ProductsServices from '../components/ProductsServices'
+import WebsiteTools from '../components/WebsiteTools'
 import Testimonials from '../components/Testimonials'
 import Calculators from '../components/Calculators'
 import GetInTouch from '../components/GetInTouch'
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <Calculators />
       <ProductsServices />
+      <WebsiteTools />
       <Testimonials />
       <GetInTouch />
     </>

@@ -5,7 +5,7 @@ import Link from '../components/Link'
 import { gsap } from 'gsap'
 import { GrowthRings, RingMark } from '../components/about/Rings'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
-import founderPhoto from '../assets/owner.png'
+import founderPhoto from '../assets/owner2.png'
 
 // Build → Protect → Grow → Pass Forward is a real sequence, so the steps are numbered,
 // and each emblem gains a ring as wealth matures.
@@ -30,52 +30,85 @@ const STEPS = [
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-function Eyebrow({ children, icon, className = '' }) {
-  return (
-    <p className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] ${className}`}>
-      {icon ?? null}
-      {children}
-    </p>
-  )
+function Eyebrow({ children, className = '' }) {
+  return <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${className}`}>{children}</p>
 }
 
-const iconProps = {
-  viewBox: '0 0 24 24',
+// Icons for the vision and mission cards. Their motion is CSS (`vm-*` in index.css).
+const emblemIcon = {
+  viewBox: '0 0 48 48',
   fill: 'none',
   stroke: 'currentColor',
-  strokeWidth: 1.8,
+  strokeWidth: 2.2,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
-  className: 'h-5 w-5',
+  className: 'h-14 w-14',
   'aria-hidden': true,
 }
 
-// Vision: looking far ahead.
+// Vision: an eye looking far ahead. It glances side to side and blinks now and then.
 function VisionIcon() {
   return (
-    <svg {...iconProps}>
-      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
-      <circle cx="12" cy="12" r="3" />
+    <svg {...emblemIcon}>
+      <path className="vm-ray" d="M24 3.5v3.5M10.5 7.5l2 3M37.5 7.5l-2 3" />
+      <g className="vm-blink">
+        <path d="M4 25s7.5-12 20-12 20 12 20 12-7.5 12-20 12S4 25 4 25Z" />
+        <g className="vm-look">
+          <circle cx="24" cy="25" r="6" />
+          <circle cx="24" cy="25" r="1.8" fill="currentColor" stroke="none" />
+        </g>
+      </g>
     </svg>
   )
 }
 
-// Mission: a clear target to work toward.
+// Mission: a clear target to work toward. An arrow lands in the centre, over and over.
 function MissionIcon() {
   return (
-    <svg {...iconProps}>
-      <circle cx="12" cy="12" r="8.5" />
-      <circle cx="12" cy="12" r="4.5" />
-      <circle cx="12" cy="12" r="0.8" fill="currentColor" />
+    <svg {...emblemIcon}>
+      <circle className="vm-ring" cx="21" cy="27" r="17" />
+      <circle cx="21" cy="27" r="10" />
+      <circle className="vm-hit" cx="21" cy="27" r="3" fill="currentColor" stroke="none" />
+      <path className="vm-arrow" d="M21 27 41 7M41 7h-6M41 7v6" />
     </svg>
   )
 }
 
-function IconBadge({ children, className = '' }) {
+// One card of the vision / mission pair. `tone` picks the brand colour it leans on.
+const TONES = {
+  primary: {
+    card: 'ring-primary-100 hover:shadow-primary-200/50',
+    glow: 'bg-primary-200/60 dark:bg-primary-500/15',
+    icon: 'text-primary-600 dark:text-primary-400',
+    label: 'text-primary-700 dark:text-primary-300',
+  },
+  secondary: {
+    card: 'ring-secondary-100 hover:shadow-secondary-200/50',
+    glow: 'bg-secondary-200/60 dark:bg-secondary-500/15',
+    icon: 'text-secondary-600 dark:text-secondary-400',
+    label: 'text-secondary-700 dark:text-secondary-400',
+  },
+}
+
+function StatementCard({ tone, label, icon, title, children }) {
+  const t = TONES[tone]
   return (
-    <span className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-sm ${className}`}>
-      {children}
-    </span>
+    <article
+      data-reveal
+      className={`relative min-w-0 overflow-hidden rounded-[2rem] bg-white p-8 ring-1 transition-shadow duration-300 hover:shadow-2xl dark:bg-white/[0.03] dark:ring-white/10 dark:hover:shadow-black/40 sm:p-10 ${t.card}`}
+    >
+      <div className={`pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl ${t.glow}`} />
+      <div className="relative">
+        <div className="flex items-center gap-4">
+          <span className={`inline-flex shrink-0 ${t.icon}`}>{icon}</span>
+          <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${t.label}`}>{label}</p>
+        </div>
+        <h2 className="mt-7 text-2xl font-semibold leading-[1.25] tracking-[-0.01em] text-balance text-black dark:text-white sm:text-[1.7rem]">
+          {title}
+        </h2>
+        <p className="mt-4 max-w-md text-base leading-relaxed text-black/65 dark:text-white/65">{children}</p>
+      </div>
+    </article>
   )
 }
 
@@ -258,11 +291,14 @@ export default function AboutPage() {
                 to="var(--color-secondary-300)"
                 className="absolute -inset-[14%] h-[128%] w-[128%] opacity-60 motion-safe:animate-[spin_90s_linear_infinite] dark:opacity-40"
               />
-              <img
-                src={founderPhoto.src}
-                alt="Amit Kumar Mahansaria, founder of KROLD MFINS"
-                className="relative h-full w-full rounded-full object-cover shadow-2xl shadow-primary-200/60 dark:shadow-black/50"
-              />
+              {/* The gradient shows through the padding as a thin ring around the photo. */}
+              <div className="relative h-full w-full rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 p-[3px] shadow-2xl shadow-primary-200/60 dark:shadow-black/50">
+                <img
+                  src={founderPhoto.src}
+                  alt="Amit Kumar Mahansaria, founder of KROLD MFINS"
+                  className="h-full w-full rounded-full object-cover"
+                />
+              </div>
             </div>
             <div className="absolute -bottom-4 left-0 flex items-center gap-3 rounded-2xl border border-primary-100 bg-white px-4 py-3 shadow-lg shadow-primary-100/60 dark:border-white/10 dark:bg-neutral-900 dark:shadow-black/40 sm:-left-4">
               <span className="text-4xl font-bold leading-none text-primary-600 dark:text-primary-400">25+</span>
@@ -322,45 +358,41 @@ export default function AboutPage() {
 
       {/* ─── Vision & Mission ─────────────────────────────────── */}
       <section className="px-5 lg:px-10">
-        <div
-          data-reveal
-          className="mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-50 to-secondary-50 ring-1 ring-primary-100 dark:from-primary-500/10 dark:to-secondary-500/10 dark:ring-white/10 md:grid-cols-2"
-        >
-          <div className="min-w-0 p-7 sm:p-9">
-            <Eyebrow
-              className="text-primary-700 dark:text-primary-300"
-              icon={
-                <IconBadge className="bg-primary-500 text-white shadow-primary-200 dark:shadow-black/30">
-                  <VisionIcon />
-                </IconBadge>
-              }
-            >
-              Our vision
-            </Eyebrow>
-            <p className="mt-5 text-2xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-3xl">
-              To become a trusted financial partner across generations.
-            </p>
-            <p className="mt-5 max-w-md leading-relaxed text-black/65 dark:text-white/65">
-              To help families make informed financial decisions, build lasting wealth and create a stronger financial
-              foundation for the future.
-            </p>
-          </div>
-          <div className="min-w-0 border-t border-primary-200/60 p-7 dark:border-white/10 sm:p-9 md:border-l md:border-t-0">
-            <Eyebrow
-              className="text-secondary-700 dark:text-secondary-400"
-              icon={
-                <IconBadge className="bg-secondary-500 text-white shadow-secondary-200 dark:shadow-black/30">
-                  <MissionIcon />
-                </IconBadge>
-              }
-            >
-              Our mission
-            </Eyebrow>
-            <p className="mt-5 text-lg font-medium leading-relaxed text-black/85 dark:text-white/90 sm:text-xl">
-              To make disciplined saving, informed investing and thoughtful financial planning a part of every family’s
-              journey - helping them build, protect and grow wealth for today and for generations to come.
-            </p>
-          </div>
+        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
+          <StatementCard
+            tone="primary"
+            label="Our vision"
+            icon={<VisionIcon />}
+            title={
+              <>
+                To become a{' '}
+                <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
+                  trusted financial partner
+                </span>{' '}
+                across generations.
+              </>
+            }
+          >
+            To help families make informed financial decisions, build lasting wealth and create a stronger financial
+            foundation for the future.
+          </StatementCard>
+
+          <StatementCard
+            tone="secondary"
+            label="Our mission"
+            icon={<MissionIcon />}
+            title={
+              <>
+                To make{' '}
+                <span className="bg-gradient-to-r from-secondary-600 to-primary-500 bg-clip-text text-transparent">
+                  disciplined saving, informed investing and thoughtful financial planning
+                </span>{' '}
+                a part of every family’s journey.
+              </>
+            }
+          >
+            Helping them build, protect and grow wealth for today and for generations to come.
+          </StatementCard>
         </div>
       </section>
 
