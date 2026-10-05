@@ -1,8 +1,11 @@
+'use client'
+
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedBackground from './hero/AnimatedBackground'
 import KroldCity from './hero/city/KroldCity'
+import { useHydrated } from '../hooks/useHydrated'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -44,7 +47,17 @@ const SLIDE_MS = 6000
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+// The starting slide is random, so the hero renders on the client only: the server sends an
+// empty section of the same size and the real one mounts before the page is revealed.
 export default function Hero() {
+  const hydrated = useHydrated()
+  if (!hydrated) {
+    return <section id="home" className="relative flex min-h-[88vh] items-center overflow-hidden py-10 lg:min-h-[85vh] lg:py-12" />
+  }
+  return <HeroContent />
+}
+
+function HeroContent() {
   const sectionRef = useRef(null)
   const textRef = useRef(null)
   const stageWrapRef = useRef(null)

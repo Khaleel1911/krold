@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import Link from '../components/Link'
 import { gsap } from 'gsap'
 import { GrowthRings, RingMark } from '../components/about/Rings'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
@@ -129,12 +131,12 @@ export default function AboutPage() {
           style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '28px 28px' }}
         />
 
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pb-14 pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:px-10 lg:py-8">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-5 pb-10 pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:px-10 lg:py-8">
           <div ref={heroTextRef} className="min-w-0">
             <Eyebrow className="text-primary-600 dark:text-primary-400">Building wealth that lasts</Eyebrow>
-            <h1 className="mt-5 font-display text-[2.75rem] font-normal leading-[1.04] tracking-[-0.015em] text-balance text-black dark:text-white sm:text-6xl lg:text-[clamp(3.25rem,8.5svh,4.6rem)]">
+            <h1 className="mt-4 text-4xl font-semibold leading-[1.1] text-balance text-black dark:text-white sm:text-5xl lg:text-[clamp(2.6rem,7svh,3.5rem)]">
               For your family today.
-              <span className="mt-1 block bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text pb-2 italic text-transparent">
+              <span className="mt-1 block bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text pb-2 text-transparent">
                 For generations to come.
               </span>
             </h1>
@@ -144,13 +146,13 @@ export default function AboutPage() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
               <Link
-                to="/about#approach"
+                href="/about#approach"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-7 py-3 text-[15px] font-semibold text-white shadow-md shadow-primary-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:shadow-black/40"
               >
                 Our approach
               </Link>
               <Link
-                to="/about#founder"
+                href="/about#founder"
                 className="group inline-flex items-center gap-2 text-[15px] font-semibold text-black/75 transition-colors hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:text-white/75 dark:hover:text-primary-400"
               >
                 Meet the founder
@@ -168,17 +170,17 @@ export default function AboutPage() {
 
       {/* ─── Philosophy ───────────────────────────────────────── */}
       <section className="border-t border-black/5 dark:border-white/10">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:px-10 lg:py-28">
+        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-10 lg:py-16">
           <div data-reveal className="lg:sticky lg:top-32 lg:self-start">
             <Eyebrow className="text-primary-600 dark:text-primary-400">Our philosophy</Eyebrow>
-            <h2 className="mt-5 font-display text-4xl font-normal leading-[1.12] text-balance text-black dark:text-white sm:text-5xl">
+            <h2 className="mt-4 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
               We don’t just manage wealth.{' '}
-              <em className="text-primary-600 dark:text-primary-400">We help build its future.</em>
+              <span className="text-primary-600 dark:text-primary-400">We help build its future.</span>
             </h2>
           </div>
 
-          <div data-reveal className="min-w-0 max-w-[62ch] space-y-6 text-[17px] leading-[1.8] text-black/65 dark:text-white/65">
-            <p className="font-display text-2xl leading-snug text-black/85 dark:text-white/85">
+          <div data-reveal className="min-w-0 max-w-[62ch] space-y-4 text-[17px] leading-relaxed text-black/65 dark:text-white/65">
+            <p className="text-xl font-semibold leading-snug text-black/85 dark:text-white/85">
               Every family’s financial journey is different.
             </p>
             <p>
@@ -207,15 +209,15 @@ export default function AboutPage() {
             className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] opacity-[0.07]"
           />
 
-          <div className="relative px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
+          <div className="relative px-6 py-10 sm:px-10 lg:px-14 lg:py-14">
             <div data-reveal className="max-w-2xl">
               <Eyebrow className="text-primary-300">The KROLD MFINS approach</Eyebrow>
-              <h2 className="mt-5 font-display text-5xl font-normal leading-none tracking-[-0.01em] sm:text-6xl lg:text-7xl">
-                Build. Protect. <em className="text-secondary-400">Grow.</em>
+              <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">
+                Build. Protect. <span className="text-secondary-400">Grow.</span>
               </h2>
             </div>
 
-            <div className="relative mt-14 lg:mt-20">
+            <div className="relative mt-10 lg:mt-12">
               {/* Thread through the emblem centres (desktop only). */}
               <div className="pointer-events-none absolute left-12 right-12 top-12 hidden h-px lg:block">
                 <div className="h-full w-full bg-white/10" />
@@ -225,16 +227,16 @@ export default function AboutPage() {
                 />
               </div>
 
-              <ol className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+              <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
                 {STEPS.map((step, i) => (
                   <li key={step.title} data-step className="relative min-w-0">
                     <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-[#0b1826] text-white">
                       <RingMark count={i + 1} className="h-24 w-24" />
                     </div>
-                    <p className="mt-7 text-xs font-semibold tabular-nums tracking-[0.2em] text-white/40">
+                    <p className="mt-5 text-xs font-semibold tabular-nums tracking-[0.2em] text-white/40">
                       {String(i + 1).padStart(2, '0')}
                     </p>
-                    <h3 className="mt-2 font-display text-3xl font-normal">{step.title}</h3>
+                    <h3 className="mt-2 text-2xl font-semibold">{step.title}</h3>
                     <p className="mt-3 max-w-xs text-[15px] leading-relaxed text-white/65">{step.text}</p>
                   </li>
                 ))}
@@ -246,7 +248,7 @@ export default function AboutPage() {
 
       {/* ─── Founder ──────────────────────────────────────────── */}
       <section id="founder" className="scroll-mt-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:px-10 lg:py-28">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14 lg:px-10 lg:py-16">
           <div data-reveal className="relative mx-auto w-full max-w-[420px]">
             <div className="relative aspect-square">
               <RingMark
@@ -257,13 +259,13 @@ export default function AboutPage() {
                 className="absolute -inset-[14%] h-[128%] w-[128%] opacity-60 motion-safe:animate-[spin_90s_linear_infinite] dark:opacity-40"
               />
               <img
-                src={founderPhoto}
+                src={founderPhoto.src}
                 alt="Amit Kumar Mahansaria, founder of KROLD MFINS"
                 className="relative h-full w-full rounded-full object-cover shadow-2xl shadow-primary-200/60 dark:shadow-black/50"
               />
             </div>
             <div className="absolute -bottom-4 left-0 flex items-center gap-3 rounded-2xl border border-primary-100 bg-white px-4 py-3 shadow-lg shadow-primary-100/60 dark:border-white/10 dark:bg-neutral-900 dark:shadow-black/40 sm:-left-4">
-              <span className="font-display text-4xl leading-none text-primary-600 dark:text-primary-400">25+</span>
+              <span className="text-4xl font-bold leading-none text-primary-600 dark:text-primary-400">25+</span>
               <span className="text-xs font-medium leading-snug text-black/60 dark:text-white/60">
                 years in wealth
                 <br />
@@ -274,11 +276,13 @@ export default function AboutPage() {
 
           <div data-reveal className="min-w-0">
             <Eyebrow className="text-primary-600 dark:text-primary-400">Meet the founder</Eyebrow>
-            <h2 className="mt-5 font-display text-4xl font-normal leading-[1.12] text-balance text-black dark:text-white sm:text-5xl">
-              A philosophy built on <em>patience, discipline</em> and <em>trust</em>
+            <h2 className="mt-4 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
+              A philosophy built on{' '}
+              <span className="text-primary-600 dark:text-primary-400">patience, discipline</span> and{' '}
+              <span className="text-primary-600 dark:text-primary-400">trust</span>
             </h2>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
               <p className="text-xl font-semibold text-black dark:text-white">Amit Kumar Mahansaria</p>
               <div className="flex gap-1.5">
                 {['CFA', 'CPM'].map((c) => (
@@ -292,14 +296,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="mt-6 max-w-[62ch] space-y-6 text-[17px] leading-[1.8] text-black/65 dark:text-white/65">
+            <div className="mt-5 max-w-[62ch] space-y-4 text-[17px] leading-relaxed text-black/65 dark:text-white/65">
               <p>
                 With over 25 years of experience in wealth management and mutual fund distribution, Amit Kumar
                 Mahansaria has helped families navigate changing markets, evolving financial goals and different stages
                 of life.
               </p>
               <blockquote className="border-l-2 border-secondary-500 py-1 pl-6">
-                <p className="font-display text-2xl italic leading-snug text-black/85 dark:text-white/85">
+                <p className="text-xl font-semibold leading-snug text-black/85 dark:text-white/85">
                   His approach is rooted in a simple belief: wealth creation is a long-term journey.
                 </p>
                 <p className="mt-3">
@@ -322,7 +326,7 @@ export default function AboutPage() {
           data-reveal
           className="mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-50 to-secondary-50 ring-1 ring-primary-100 dark:from-primary-500/10 dark:to-secondary-500/10 dark:ring-white/10 md:grid-cols-2"
         >
-          <div className="min-w-0 p-8 sm:p-12">
+          <div className="min-w-0 p-7 sm:p-9">
             <Eyebrow
               className="text-primary-700 dark:text-primary-300"
               icon={
@@ -333,7 +337,7 @@ export default function AboutPage() {
             >
               Our vision
             </Eyebrow>
-            <p className="mt-6 font-display text-3xl leading-tight text-balance text-black dark:text-white sm:text-4xl">
+            <p className="mt-5 text-2xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-3xl">
               To become a trusted financial partner across generations.
             </p>
             <p className="mt-5 max-w-md leading-relaxed text-black/65 dark:text-white/65">
@@ -341,7 +345,7 @@ export default function AboutPage() {
               foundation for the future.
             </p>
           </div>
-          <div className="min-w-0 border-t border-primary-200/60 p-8 dark:border-white/10 sm:p-12 md:border-l md:border-t-0">
+          <div className="min-w-0 border-t border-primary-200/60 p-7 dark:border-white/10 sm:p-9 md:border-l md:border-t-0">
             <Eyebrow
               className="text-secondary-700 dark:text-secondary-400"
               icon={
@@ -352,7 +356,7 @@ export default function AboutPage() {
             >
               Our mission
             </Eyebrow>
-            <p className="mt-6 font-display text-2xl leading-snug text-black dark:text-white sm:text-[1.7rem]">
+            <p className="mt-5 text-lg font-medium leading-relaxed text-black/85 dark:text-white/90 sm:text-xl">
               To make disciplined saving, informed investing and thoughtful financial planning a part of every family’s
               journey - helping them build, protect and grow wealth for today and for generations to come.
             </p>
@@ -361,10 +365,10 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Closing ──────────────────────────────────────────── */}
-      <section className="px-3 py-20 sm:px-5 lg:py-28">
+      <section className="px-3 py-12 sm:px-5 lg:py-16">
         <div
           data-reveal
-          className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-500 px-6 py-16 text-white sm:px-12 lg:rounded-[2.5rem] lg:px-20 lg:py-24 dark:from-primary-700 dark:via-primary-600 dark:to-secondary-600"
+          className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-500 px-6 py-10 text-white sm:px-12 lg:rounded-[2.5rem] lg:px-16 lg:py-14 dark:from-primary-700 dark:via-primary-600 dark:to-secondary-600"
         >
           <RingMark
             count={4}
@@ -376,16 +380,16 @@ export default function AboutPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/75">
               Your wealth journey is longer than today.
             </p>
-            <h2 className="mt-5 font-display text-5xl font-normal leading-[1.05] text-balance sm:text-6xl">
-              Let’s build something that <em>lasts</em>
+            <h2 className="mt-4 text-4xl font-semibold leading-tight text-balance sm:text-5xl">
+              Let’s build something that lasts
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
               Whether you’re starting your investment journey, protecting what you’ve built or planning the financial
               future of your family, we’re here to help you take the next step with clarity and confidence.
             </p>
             <Link
-              to="/#contact"
-              className="group mt-9 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-semibold text-primary-700 shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              href="/#contact"
+              className="group mt-7 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-semibold text-primary-700 shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               Start a Conversation
               <Arrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

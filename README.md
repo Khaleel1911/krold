@@ -1,16 +1,16 @@
-# React + Vite
+# Krold Mfins
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Marketing site for Krold Mfins Private Limited, built with Next.js (App Router), React, Tailwind CSS and GSAP.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `npm run dev` — start the dev server at http://localhost:3000
+- `npm run build` — production build
+- `npm run start` — serve the production build
+- `npm run lint` — run Oxlint
 
-## React Compiler
+## Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- `src/app/` — routes and the root layout (navbar, footer, fonts, theme script)
+- `src/views/` — the page component each route renders
+- `src/components/`, `src/data/`, `src/hooks/` — shared UI, content and hooks

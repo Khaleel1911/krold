@@ -187,6 +187,8 @@ export const SIP_SWP = {
       info: 'The waiting time, in years, between your last SIP and your first withdrawal. Your money stays invested and keeps growing. Enter 0 to start withdrawals as soon as SIPs end.',
     },
     {
+      // Starts the second column: it balances the two columns at five fields each.
+      group: 'Withdraw an income',
       key: 'accRate',
       label: 'Assumed Return (Accumulation Period)',
       min: 4,
@@ -196,7 +198,6 @@ export const SIP_SWP = {
       info: 'The average yearly return you expect while you are investing and during the deferment period.',
     },
     {
-      group: 'Withdraw an income',
       key: 'swpYears',
       label: 'SWP Period',
       min: 1,

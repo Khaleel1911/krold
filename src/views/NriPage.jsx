@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import Link from '../components/Link'
 import { gsap } from 'gsap'
 import HomeArcs from '../components/nri/HomeArcs'
 import WhyIndia from '../components/nri/WhyIndia'
@@ -63,13 +65,13 @@ export default function NriPage() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
               <Link
-                to="/nri#why-india"
+                href="/nri#why-india"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-7 py-3 text-[15px] font-semibold text-white shadow-md shadow-primary-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:shadow-black/40"
               >
                 Why invest in India
               </Link>
               <Link
-                to="/nri#guide"
+                href="/nri#guide"
                 className="group inline-flex items-center gap-2 text-[15px] font-semibold text-black/75 transition-colors hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:text-white/75 dark:hover:text-primary-400"
               >
                 Read the NRI guide

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from './Link'
 import logo from '../assets/logo.png'
 import ServiceIcon from './icons/ServiceIcons'
 import ContactIcon from './icons/ContactIcons'
@@ -35,8 +35,8 @@ export default function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.9fr_1.1fr_1.2fr] lg:gap-10">
           {/* Brand */}
           <div>
-            <Link to="/#home" className="inline-flex items-center rounded-lg bg-white/95 px-3 py-2">
-              <img src={logo} alt="Krold Mfins Private Limited" className="h-8 w-auto" />
+            <Link href="/#home" className="inline-flex items-center rounded-lg bg-white/95 px-3 py-2">
+              <img src={logo.src} alt="Krold Mfins Private Limited" className="h-8 w-auto" />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
               An AMFI-registered wealth management practice helping families save wisely and invest with clarity —
@@ -62,7 +62,7 @@ export default function Footer() {
             <ul className="mt-5 flex flex-col gap-3">
               {QUICK_LINKS.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="text-sm text-white/60 transition-colors duration-200 hover:text-primary-400">
+                  <Link href={link.href} className="text-sm text-white/60 transition-colors duration-200 hover:text-primary-400">
                     {link.name}
                   </Link>
                 </li>
@@ -77,7 +77,7 @@ export default function Footer() {
               {SERVICES.map((service) => (
                 <li key={service.slug}>
                   <Link
-                    to={`/services#${service.slug}`}
+                    href={`/services/${service.slug}`}
                     className="flex items-center gap-2 text-sm text-white/60 transition-colors duration-200 hover:text-primary-400"
                   >
                     <ServiceIcon name={service.icon} className="h-3.5 w-3.5 shrink-0 opacity-70" />

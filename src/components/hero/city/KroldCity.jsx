@@ -1,5 +1,8 @@
+'use client'
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+import Link, { NAVIGATE_EVENT } from '../../Link'
 import { gsap } from 'gsap'
 import { SERVICES } from '../../../data/services'
 import ServiceIcon from '../../icons/ServiceIcons'
@@ -47,7 +50,7 @@ export default function KroldCity({ highlight = [] }) {
   const [active, setActive] = useState(null)
   // A hovered/focused building wins; otherwise spotlight whatever the hero asks for.
   const focus = active ? [active] : highlight
-  const navigate = useNavigate()
+  const router = useRouter()
   const rootRef = useRef(null)
   const groundRef = useRef(null)
   const carsRef = useRef(null)
@@ -99,6 +102,13 @@ export default function KroldCity({ highlight = [] }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [active])
 
+  // Same event Link sends, so a building click made on /services itself still scrolls to its service.
+  const openService = (slug) => {
+    const href = `/services#${slug}`
+    router.push(href, { scroll: false })
+    window.dispatchEvent(new CustomEvent(NAVIGATE_EVENT, { detail: href }))
+  }
+
   const hover = (slug) => (e) => e.pointerType === 'mouse' && setActive(slug)
 
   return (
@@ -130,7 +140,7 @@ export default function KroldCity({ highlight = [] }) {
               <g
                 className={`city-bldg ${slug ? 'is-link' : ''} ${slug && focus.includes(slug) ? 'is-active' : ''}`}
                 onPointerEnter={slug ? hover(slug) : undefined}
-                onClick={slug ? () => navigate(`/services#${slug}`) : undefined}
+                onClick={slug ? () => openService(slug) : undefined}
               >
                 <g className="city-lift">
                   <Building />
@@ -143,11 +153,15 @@ export default function KroldCity({ highlight = [] }) {
         {/* Pins are real links so the city stays keyboard and screen-reader friendly. */}
         <ul className="pointer-events-none absolute inset-0" aria-label="Krold services">
           {PINS.map((spot, i) => (
-            <li key={spot.slug} className="absolute" style={{ left: `${spot.left}%`, top: `${spot.top}%` }}>
+            <li
+              key={spot.slug}
+              className={`city-pin-slot absolute ${focus.includes(spot.slug) ? 'is-active' : ''}`}
+              style={{ left: `${spot.left}%`, top: `${spot.top}%`, '--pin-z': spot.anchor[2] }}
+            >
               <div className="-translate-x-1/2 -translate-y-full">
                 <div ref={(el) => (pinRefs.current[i] = el)}>
                   <Link
-                    to={`/services#${spot.slug}`}
+                    href={`/services#${spot.slug}`}
                     aria-label={spot.service.title}
                     onPointerEnter={hover(spot.slug)}
                     onFocus={(e) => e.currentTarget.matches(':focus-visible') && setActive(spot.slug)}

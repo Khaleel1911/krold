@@ -4,8 +4,12 @@ import TestimonialBurst from './testimonials/TestimonialBurst'
 import { TESTIMONIALS, HAPPY_CLIENTS_COUNT } from '../data/testimonials'
 
 export default function Testimonials() {
+  // One screen tall on desktop: the heading, then the wall of cards filling the rest.
   return (
-    <section id="testimonials" className="relative overflow-hidden py-10 lg:py-14">
+    <section
+      id="testimonials"
+      className="relative scroll-mt-[73px] overflow-hidden py-10 lg:flex lg:h-[calc(100svh-73px)] lg:min-h-[640px] lg:flex-col lg:pb-0 lg:pt-6"
+    >
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">
@@ -20,7 +24,7 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Desktop: cards burst out of the centre count as the section scrolls in */}
+      {/* Desktop: the cards fly out around the count as the section scrolls in */}
       <TestimonialBurst />
 
       <div className="mx-auto max-w-6xl px-5 lg:px-10">

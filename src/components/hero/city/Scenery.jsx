@@ -1,3 +1,5 @@
+'use client'
+
 import { memo, useRef } from 'react'
 import { gsap } from 'gsap'
 import { U, GRID, iso, pts } from './geometry'

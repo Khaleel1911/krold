@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { SectionHeading } from './parts'
 import { FAQ_GROUPS } from '../../data/nri'

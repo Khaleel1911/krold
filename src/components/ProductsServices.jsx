@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef } from 'react'
 import MutualFundsCard from './services/MutualFundsCard'
 import InsuranceCard from './services/InsuranceCard'

@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import Link from './Link'
 import { gsap } from 'gsap'
 
 export default function ComingSoon({ badge, title, highlight, description }) {
@@ -49,13 +51,13 @@ export default function ComingSoon({ badge, title, highlight, description }) {
 
         <div data-animate className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            to="/#home"
+            href="/#home"
             className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-7 py-3 text-[15px] font-semibold text-white shadow-md shadow-primary-200 dark:shadow-black/40 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200 dark:hover:shadow-black/50 hover:-translate-y-0.5"
           >
             Back to Home
           </Link>
           <Link
-            to="/#contact"
+            href="/#contact"
             className="inline-flex items-center rounded-full border border-primary-200 dark:border-white/15 px-7 py-3 text-[15px] font-semibold text-primary-600 dark:text-primary-400 transition-colors duration-300 hover:bg-primary-50 dark:hover:bg-white/5"
           >
             Get in Touch

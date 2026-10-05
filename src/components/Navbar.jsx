@@ -1,5 +1,8 @@
+'use client'
+
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import Link from './Link'
+import { useLocation } from '../hooks/useLocation'
 import { gsap } from 'gsap'
 import logo from '../assets/logo.png'
 import ThemeToggle from './ThemeToggle'
@@ -31,6 +34,7 @@ export default function Navbar() {
     setActiveIndex(
       NAV_ITEMS.findIndex((item) => {
         const [path, anchor] = item.href.split('#')
+        if (path !== '/' && pathname.startsWith(`${path}/`)) return true
         return path === pathname && (!anchor || !hash || hash === `#${anchor}`)
       }),
     )
@@ -116,11 +120,11 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           ref={logoRef}
-          to="/#home"
+          href="/#home"
           onClick={() => handleNavClick(0)}
           className="flex items-center shrink-0 transition-transform duration-300 hover:scale-[1.03]"
         >
-          <img src={logo} alt="Krold Mfins Private Limited" className="h-9 lg:h-11 w-auto" />
+          <img src={logo.src} alt="Krold Mfins Private Limited" className="h-9 lg:h-11 w-auto" />
         </Link>
 
         {/* Desktop nav */}
@@ -132,7 +136,7 @@ export default function Navbar() {
               className="relative"
             >
               <Link
-                to={item.href}
+                href={item.href}
                 onClick={() => handleNavClick(index)}
                 className={`group relative px-4 py-2 text-[15px] font-medium transition-colors duration-300 ${
                   activeIndex === index
@@ -155,7 +159,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-2">
           <ThemeToggle />
           <Link
-            to="/#contact"
+            href="/#contact"
             onClick={() => handleNavClick(-1)}
             className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-2.5 text-[15px] font-semibold text-white shadow-md shadow-primary-200 dark:shadow-black/40 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0"
           >
@@ -200,7 +204,7 @@ export default function Navbar() {
           {NAV_ITEMS.map((item, index) => (
             <li key={item.name} ref={(el) => (mobileItemsRef.current[index] = el)}>
               <Link
-                to={item.href}
+                href={item.href}
                 onClick={() => handleNavClick(index)}
                 className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors duration-300 ${
                   activeIndex === index
@@ -214,7 +218,7 @@ export default function Navbar() {
           ))}
           <li ref={(el) => (mobileItemsRef.current[NAV_ITEMS.length] = el)} className="pt-2">
             <Link
-              to="/#contact"
+              href="/#contact"
               onClick={() => handleNavClick(-1)}
               className="block rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-4 py-3 text-center text-base font-semibold text-white shadow-md shadow-primary-200"
             >

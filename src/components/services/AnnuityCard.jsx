@@ -12,11 +12,12 @@ function PayoutRing() {
       </g>
       {Array.from({ length: MONTHS }, (_, i) => {
         const a = (i / MONTHS) * Math.PI * 2 - Math.PI / 2
+        // Rounded so the server and the browser, whose trig can differ in the last digit, render the same markup.
         return (
           <circle
             key={i}
-            cx={80 + Math.cos(a) * 62}
-            cy={80 + Math.sin(a) * 62}
+            cx={(80 + Math.cos(a) * 62).toFixed(3)}
+            cy={(80 + Math.sin(a) * 62).toFixed(3)}
             r="6"
             className="svc-dot"
             style={{ animationDelay: `${i * 0.3}s` }}

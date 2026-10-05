@@ -1,10 +1,16 @@
+'use client'
+
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from '../hooks/useLocation'
+import { useHydrated } from '../hooks/useHydrated'
 
 export default function ScrollToHash() {
   const { pathname, hash, key } = useLocation()
+  // Wait for client-only sections (the hero) to mount so the target is at its final position.
+  const hydrated = useHydrated()
 
   useEffect(() => {
+    if (!hydrated) return
     if (hash) {
       const id = hash.slice(1)
       const scroll = () => {
@@ -23,7 +29,7 @@ export default function ScrollToHash() {
       window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
     }
     // key changes on every navigation, so re-clicking a hash link scrolls again
-  }, [pathname, hash, key])
+  }, [hydrated, pathname, hash, key])
 
   return null
 }

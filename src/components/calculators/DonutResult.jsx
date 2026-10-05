@@ -1,6 +1,6 @@
 import { formatINR, formatINRShort } from './calculations'
 
-const RADIUS = 70
+const RADIUS = 76
 const STROKE = 20
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 
@@ -23,8 +23,8 @@ export default function DonutResult({ segments, centerValue, centerLabel, extras
   })
 
   return (
-    <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-center">
-      <div className="relative flex h-52 w-52 shrink-0 items-center justify-center">
+    <div className="flex w-full flex-col items-center gap-6">
+      <div className="relative flex h-44 w-44 shrink-0 items-center justify-center xl:h-48 xl:w-48">
         <svg viewBox="0 0 200 200" className="h-full w-full -rotate-90">
           <circle
             cx="100"
@@ -55,30 +55,32 @@ export default function DonutResult({ segments, centerValue, centerLabel, extras
           <span className="text-2xl font-bold text-black dark:text-white sm:text-[1.7rem]">
             {formatINRShort(centerValue)}
           </span>
-          <span className="mt-1 max-w-[7.5rem] text-xs font-medium leading-tight text-black/50 dark:text-white/50">
+          <span className="mt-1 max-w-[6.5rem] text-xs font-medium leading-tight text-black/50 dark:text-white/50">
             {centerLabel}
           </span>
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
-        {segments.map((s) => (
-          <div key={s.label} className="flex items-center gap-3">
-            <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${COLOR_MAP[s.colorClass]?.dot ?? 'bg-primary-500'}`} />
-            <div>
-              <p className="text-xs text-black/50 dark:text-white/50">{s.label}</p>
-              <p className="text-sm font-semibold text-black dark:text-white">{formatINR(s.value)}</p>
+      <div className="flex w-full max-w-[17rem] flex-col gap-3">
+        <div className="grid grid-cols-2 gap-x-4">
+          {segments.map((s) => (
+            <div key={s.label} className="flex min-w-0 items-start gap-2">
+              <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${COLOR_MAP[s.colorClass]?.dot ?? 'bg-primary-500'}`} />
+              <div className="min-w-0">
+                <p className="text-xs text-black/50 dark:text-white/50">{s.label}</p>
+                <p className="text-sm font-semibold text-black dark:text-white">{formatINR(s.value)}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         {extras.map((x) => (
-          <div key={x.label} className="border-t border-black/5 pt-3 pl-5 dark:border-white/10">
+          <div key={x.label} className="border-t border-black/5 pt-3 dark:border-white/10">
             <p className="text-xs text-black/50 dark:text-white/50">{x.label}</p>
             <p className="text-sm font-semibold text-black dark:text-white">{formatINR(x.value)}</p>
           </div>
         ))}
         {footnote && (
-          <p className="max-w-[240px] text-xs font-medium leading-relaxed text-amber-700 dark:text-amber-400">{footnote}</p>
+          <p className="text-xs font-medium leading-relaxed text-amber-700 dark:text-amber-400">{footnote}</p>
         )}
       </div>
     </div>

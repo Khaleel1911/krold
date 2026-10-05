@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
+import Link from '../Link'
 import ServiceIcon from '../icons/ServiceIcons'
 
 // Every service card is a link placed into a named `.svc-bento` grid area.
 export function CardShell({ service, area, cardRef, className = '', children }) {
   return (
     <Link
-      to={`/services#${service.slug}`}
+      href={`/services/${service.slug}`}
       ref={cardRef}
       style={{ gridArea: area }}
       className={`svc-card group relative flex flex-col overflow-hidden rounded-3xl p-6 transition-[translate,box-shadow,filter] duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 ${className}`}

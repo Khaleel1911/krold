@@ -1,3 +1,5 @@
+'use client'
+
 import { useId, useState } from 'react'
 import { formatINRCompact } from './calculations'
 
@@ -28,7 +30,8 @@ function InfoTip({ text }) {
   )
 }
 
-export default function SliderField({ label, value, min, max, step, prefix = '', suffix = '', info, onChange }) {
+// `dense` is for panels with many fields: a slimmer row with no min/max line under the slider.
+export default function SliderField({ label, value, min, max, step, prefix = '', suffix = '', info, dense = false, onChange }) {
   const id = useId()
   // While the box is being typed in, hold the raw text and apply the limits only on commit,
   // so a field with a high minimum (e.g. ₹25 L) can still be typed digit by digit.
@@ -48,12 +51,16 @@ export default function SliderField({ label, value, min, max, step, prefix = '',
     <div className="relative">
       <div className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-1.5">
-          <label htmlFor={id} className="text-sm font-medium text-black/70 dark:text-white/70">
+          <label htmlFor={id} className={`font-medium leading-tight text-black/70 dark:text-white/70 ${dense ? 'text-[13px]' : 'text-sm'}`}>
             {label}
           </label>
           {info && <InfoTip text={info} />}
         </span>
-        <div className="flex shrink-0 items-center gap-1 rounded-lg border border-primary-100 bg-primary-50/60 px-3 py-1.5 focus-within:border-primary-400 dark:border-white/10 dark:bg-white/5">
+        <div
+          className={`flex shrink-0 items-center gap-1 rounded-lg border border-primary-100 bg-primary-50/60 focus-within:border-primary-400 dark:border-white/10 dark:bg-white/5 ${
+            dense ? 'px-2.5 py-0.5' : 'px-3 py-1.5'
+          }`}
+        >
           {prefix && <span className="text-sm font-semibold text-black dark:text-white">{prefix}</span>}
           <input
             id={id}
@@ -64,7 +71,9 @@ export default function SliderField({ label, value, min, max, step, prefix = '',
             onChange={(e) => setDraft(e.target.value)}
             onBlur={commit}
             onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
-            className="w-24 bg-transparent text-right text-sm font-semibold tabular-nums text-black focus:outline-none dark:text-white sm:w-28"
+            className={`bg-transparent text-right text-sm font-semibold tabular-nums text-black focus:outline-none dark:text-white ${
+              dense ? 'w-[5.5rem]' : 'w-24 sm:w-28'
+            }`}
           />
           {suffix && <span className="text-sm font-semibold text-black/60 dark:text-white/60">{suffix}</span>}
         </div>
@@ -81,12 +90,16 @@ export default function SliderField({ label, value, min, max, step, prefix = '',
         style={{
           background: `linear-gradient(to right, var(--color-primary-500) 0%, var(--color-secondary-500) ${pct}%, rgba(148,163,184,0.35) ${pct}%, rgba(148,163,184,0.35) 100%)`,
         }}
-        className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full outline-none [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-primary-600 [&::-moz-range-thumb]:shadow-md [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-primary-600 [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-110"
+        className={`m-0 h-2 w-full cursor-pointer appearance-none rounded-full outline-none [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-primary-600 [&::-moz-range-thumb]:shadow-md [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-primary-600 [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-110 ${
+          dense ? 'mt-2.5' : 'mt-3'
+        }`}
       />
-      <div className="mt-1.5 flex justify-between text-[11px] font-medium tabular-nums text-black/35 dark:text-white/35">
-        <span>{endLabel(min)}</span>
-        <span>{endLabel(max)}</span>
-      </div>
+      {!dense && (
+        <div className="mt-1.5 flex justify-between text-[11px] font-medium tabular-nums text-black/35 dark:text-white/35">
+          <span>{endLabel(min)}</span>
+          <span>{endLabel(max)}</span>
+        </div>
+      )}
     </div>
   )
 }

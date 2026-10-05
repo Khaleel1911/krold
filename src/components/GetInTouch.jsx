@@ -1,10 +1,16 @@
-import { lazy, Suspense, useRef, useState } from 'react'
+'use client'
+
+import { useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 import ContactIcon from './icons/ContactIcons'
 import { CONTACT_INFO as CONTACT_DETAILS, OFFICES } from '../data/contactInfo'
 
-// Leaflet is only needed for the map, so keep it out of the main bundle.
-const OfficeMap = lazy(() => import('./contact/OfficeMap'))
+// Leaflet needs `window` and is only used by the map, so it loads in the browser, in its own chunk.
+const OfficeMap = dynamic(() => import('./contact/OfficeMap'), {
+  ssr: false,
+  loading: () => <div className="office-map h-[320px] w-full" />,
+})
 
 const CONTACT_INFO = [
   { icon: 'phone', label: 'Call us', value: CONTACT_DETAILS.phoneDisplay, href: CONTACT_DETAILS.phoneHref },
@@ -148,9 +154,7 @@ export default function GetInTouch() {
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-primary-100/60 dark:border-white/10">
-              <Suspense fallback={<div className="office-map h-[320px] w-full" />}>
-                <OfficeMap selected={mapFocus} onSelect={selectOffice} onReset={() => setMapFocus(null)} />
-              </Suspense>
+              <OfficeMap selected={mapFocus} onSelect={selectOffice} onReset={() => setMapFocus(null)} />
             </div>
           </div>
 
