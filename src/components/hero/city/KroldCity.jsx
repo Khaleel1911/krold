@@ -166,7 +166,7 @@ export default function KroldCity({ highlight = [] }) {
                     onPointerEnter={hover(spot.slug)}
                     onFocus={(e) => e.currentTarget.matches(':focus-visible') && setActive(spot.slug)}
                     onBlur={() => setActive(null)}
-                    className={`city-pin pointer-events-auto group flex items-center gap-1.5 rounded-full border bg-white/95 p-1 shadow-md shadow-primary-700/10 backdrop-blur transition-all duration-300 dark:bg-neutral-900/90 dark:shadow-black/40 sm:pr-2.5 ${
+                    className={`city-pin pointer-events-auto group flex items-center gap-1.5 rounded-full border bg-white/95 p-1 shadow-md shadow-primary-700/10 transition-all duration-300 dark:bg-neutral-900/90 dark:shadow-black/40 sm:pr-2.5 ${
                       focus.includes(spot.slug)
                         ? 'border-primary-400 -translate-y-1 dark:border-primary-400'
                         : 'border-primary-100 dark:border-white/10'

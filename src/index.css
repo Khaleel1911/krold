@@ -53,15 +53,6 @@ html.hydrating body {
   }
 }
 
-@keyframes marquee-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
 /* ─── Hero city palette (see src/components/hero/city) ─────────────── */
 .krold-city {
   --city-plate-top: #f3f9fd;
@@ -298,25 +289,6 @@ html.hydrating body {
 @media (prefers-reduced-motion: reduce) {
   .svc-card,
   .svc-card * { animation: none !important; transition: none !important; }
-}
-
-/* ─── Testimonial burst (see src/components/testimonials/TestimonialBurst.jsx) ─ */
-/* Nearer (bigger) cards sit above farther ones; hovering brings any card to the front at full size
-   and slides it fully into view (--tm-dx/--tm-dy are worked out on hover). */
-.tm-depth-far { z-index: 5; }
-.tm-depth-mid { z-index: 6; }
-.tm-depth-near { z-index: 7; }
-.tm-burst-card:hover { z-index: 40; }
-.tm-lift { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease, opacity 0.35s ease; }
-.tm-depth-far .tm-lift { filter: blur(0.6px) saturate(0.85); opacity: 0.85; }
-.tm-depth-mid .tm-lift { opacity: 0.95; }
-.tm-burst-card:hover .tm-lift {
-  transform: translate(var(--tm-dx, 0px), var(--tm-dy, 0px)) scale(var(--tm-grow));
-  filter: none;
-  opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .tm-lift { transition: none; }
 }
 
 /* ─── About: vision & mission icons (see src/views/AboutPage.jsx) ──── */

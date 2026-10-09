@@ -1,18 +1,47 @@
 import Avatar from './Avatar'
 
+// Bubbles alternate by index: a plain white one, then one filled with the brand gradient.
+// The gradient uses the dark end of both ramps so white text stays readable on it, and runs
+// left to right so the tail (a flat colour) matches the bubble's left edge.
+const TONES = {
+  plain: {
+    bubble: 'bg-white dark:bg-neutral-900',
+    tail: 'bg-white dark:bg-neutral-900',
+    body: 'text-black/70 dark:text-white/70',
+    stars: 'text-secondary-500',
+  },
+  gradient: {
+    bubble: 'bg-gradient-to-r from-primary-700 to-secondary-700',
+    tail: 'bg-primary-700',
+    body: 'text-white',
+    stars: 'text-white',
+  },
+}
+
+const STAR = 'M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9L12 2.5Z'
+
+// A speech bubble holding the quote, with whoever said it credited underneath its tail.
 export default function TestimonialCard({ testimonial, index = 0, className = '' }) {
   const isBusiness = testimonial.type === 'business'
+  const tone = index % 2 === 1 ? TONES.gradient : TONES.plain
   return (
-    <div
-      className={`flex w-72 shrink-0 flex-col rounded-2xl border border-primary-100/60 dark:border-white/10 bg-white/90 dark:bg-neutral-900/90 p-5 shadow-xl shadow-primary-200/30 dark:shadow-black/40 backdrop-blur-sm ${className}`}
-    >
-      <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6 text-primary-300 dark:text-primary-500/40">
-        <path d="M7.17 6C4.87 6 3 7.87 3 10.17c0 2.3 1.87 4.16 4.17 4.16.4 0 .78-.06 1.14-.16C7.92 16.1 6.32 17.5 4 18v2.5c4.5-.5 7.5-3.5 7.5-8.83V10.17C11.5 7.87 9.63 6 7.33 6h-.16Zm10 0C14.87 6 13 7.87 13 10.17c0 2.3 1.87 4.16 4.17 4.16.4 0 .78-.06 1.14-.16-.39 1.93-1.99 3.33-4.31 3.83v2.5c4.5-.5 7.5-3.5 7.5-8.83V10.17C21.5 7.87 19.63 6 17.33 6h-.16Z" />
-      </svg>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-black/70 dark:text-white/70">
-        {testimonial.description}
-      </p>
-      <div className="mt-4 flex items-center gap-3 border-t border-black/5 dark:border-white/10 pt-4">
+    <figure className={`flex w-72 shrink-0 flex-col ${className}`}>
+      {/* The shadow is a filter so it follows the tail as well as the bubble. */}
+      <div className="relative flex flex-1 flex-col drop-shadow-[0_10px_18px_rgb(39_116_157/0.16)] dark:drop-shadow-[0_10px_18px_rgb(0_0_0/0.45)]">
+        <blockquote className={`flex flex-1 flex-col rounded-3xl rounded-bl-none p-6 ${tone.bubble}`}>
+          <p className={`flex-1 text-sm leading-relaxed ${tone.body}`}>{testimonial.description}</p>
+          <div className={`mt-5 flex gap-0.5 ${tone.stars}`} role="img" aria-label="5 out of 5 stars">
+            {[0, 1, 2, 3, 4].map((n) => (
+              <svg key={n} viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                <path d={STAR} />
+              </svg>
+            ))}
+          </div>
+        </blockquote>
+        <span className={`absolute left-0 top-full -mt-px h-5 w-6 [clip-path:polygon(0_0,100%_0,0_100%)] ${tone.tail}`} aria-hidden="true" />
+      </div>
+
+      <figcaption className="mt-3 flex items-center gap-3 pl-8">
         <Avatar name={isBusiness ? testimonial.name : undefined} index={index} className="h-10 w-10 text-sm" />
         <div className="min-w-0">
           {/* Business owners: name, then company · location. Professionals: profession, then location. */}
@@ -35,7 +64,7 @@ export default function TestimonialCard({ testimonial, index = 0, className = ''
             </span>
           </p>
         </div>
-      </div>
-    </div>
+      </figcaption>
+    </figure>
   )
 }

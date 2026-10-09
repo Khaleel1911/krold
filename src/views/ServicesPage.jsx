@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Link from '../components/Link'
 import { gsap } from 'gsap'
 import AnimatedBackground from '../components/hero/AnimatedBackground'
@@ -12,6 +12,15 @@ import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 // Scroll distance given to each service while the showcase stays pinned.
 const STEP_VH = 70
 const COUNT = SERVICES.length
+// A service starts fading this far from the middle of its step (its step ends at 0.5).
+const FADE_FROM = 0.3
+// Pixels a service's text drifts per step of scroll, the extra it travels while fading
+// out, and the drift of the big numeral behind it.
+const DRIFT = 36
+const EXIT = 40
+const NUMERAL_DRIFT = 90
+// Memoised so the city only re-renders when the highlighted service changes.
+const City = memo(KroldCity)
 const pad = (n) => String(n).padStart(2, '0')
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -29,31 +38,21 @@ export default function ServicesPage() {
   const trackRef = useRef(null)
   const panelRef = useRef(null)
   const textRef = useRef(null)
-  const slidesWrapRef = useRef(null)
   const slideRefs = useRef([])
   const numeralRef = useRef(null)
-  const cityRef = useRef(null)
-  const shownRef = useRef(null)
   const [index, setIndex] = useState(0)
-
-  // Show only the first service before first paint.
-  useLayoutEffect(() => {
-    slideRefs.current.forEach((el, i) => gsap.set(el, { autoAlpha: i === index ? 1 : 0 }))
-    shownRef.current = index
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount only
-  }, [])
+  const highlight = useMemo(() => [SERVICES[index].slug], [index])
 
   // The track is taller than the screen and the panel inside it is sticky, so the page
-  // scrolls while the showcase stays put. How far the track has scrolled picks the service;
-  // the position within a step drives a slight drift, each layer at its own speed.
-  useEffect(() => {
+  // scrolls while the showcase stays put. Everything is positioned straight from how far
+  // the track has scrolled, with no tweens in between: each service drifts up through its
+  // step and fades out as the next one fades in, so the text moves exactly as the page does.
+  // A layout effect, so only the first service is showing at first paint.
+  useLayoutEffect(() => {
     const track = trackRef.current
     const panel = panelRef.current
+    const numeral = numeralRef.current
     const reduce = prefersReducedMotion()
-    const drift = (el, duration) => gsap.quickTo(el, 'y', { duration, ease: 'power2.out' })
-    const moveText = drift(slidesWrapRef.current, 0.5)
-    const moveNumeral = drift(numeralRef.current, 0.7)
-    const moveCity = drift(cityRef.current, 0.8)
 
     let frame = 0
     const update = () => {
@@ -62,13 +61,28 @@ export default function ServicesPage() {
       const panelRect = panel.getBoundingClientRect()
       const distance = trackRect.height - panelRect.height
       const progress = Math.min(Math.max((panelRect.top - trackRect.top) / distance, 0), 1)
-      const next = Math.min(COUNT - 1, Math.floor(progress * COUNT))
+      const position = progress * COUNT
+      const next = Math.min(COUNT - 1, Math.floor(position))
       setIndex(next)
-      if (reduce) return
-      const within = Math.min(progress * COUNT - next, 1)
-      moveText((0.5 - within) * 28)
-      moveNumeral((0.5 - within) * 110)
-      moveCity((0.5 - progress) * 36)
+
+      slideRefs.current.forEach((el, i) => {
+        // How far the scroll is from the middle of this service's step: ±0.5 at its edges.
+        // The first and last services have nothing to hand over to, so they hold still there.
+        let offset = position - (i + 0.5)
+        if (i === 0) offset = Math.max(offset, 0)
+        if (i === COUNT - 1) offset = Math.min(offset, 0)
+        const away = Math.abs(offset)
+        const leaving = Math.min(Math.max((away - FADE_FROM) / (0.5 - FADE_FROM), 0), 1)
+        const opacity = reduce ? Number(i === next) : 1 - leaving
+        el.style.opacity = opacity
+        el.style.visibility = opacity ? 'visible' : 'hidden'
+        if (reduce) return
+        el.style.transform = `translate3d(0, ${-Math.sign(offset) * (away * DRIFT + leaving * EXIT)}px, 0)`
+        if (i === next) {
+          numeral.style.opacity = opacity
+          numeral.style.transform = `translate3d(0, ${-offset * NUMERAL_DRIFT}px, 0)`
+        }
+      })
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -83,32 +97,6 @@ export default function ServicesPage() {
       window.removeEventListener('resize', onScroll)
     }
   }, [])
-
-  // Swap services: the old one leaves in the scroll direction and the new one follows it in.
-  useEffect(() => {
-    const prev = shownRef.current
-    if (prev === null || prev === index) return
-    shownRef.current = index
-    const slides = slideRefs.current
-    const out = slides[prev]
-    const next = slides[index]
-    const dir = index > prev ? 1 : -1
-    gsap.killTweensOf(slides)
-    // A jump across several services (a dot or a city pin) can interrupt earlier swaps.
-    slides.forEach((el, i) => i !== prev && i !== index && gsap.set(el, { autoAlpha: 0, y: 0 }))
-    if (prefersReducedMotion()) {
-      gsap.set(out, { autoAlpha: 0, y: 0 })
-      gsap.set(next, { autoAlpha: 1, y: 0 })
-      return
-    }
-    gsap.to(out, { autoAlpha: 0, y: -32 * dir, duration: 0.3, ease: 'power2.in' })
-    gsap.fromTo(
-      next,
-      { autoAlpha: 0, y: 44 * dir },
-      { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 0.18 },
-    )
-    gsap.fromTo(numeralRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' })
-  }, [index])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -155,7 +143,7 @@ export default function ServicesPage() {
               <span
                 ref={numeralRef}
                 aria-hidden="true"
-                className="pointer-events-none absolute -left-2 -top-24 hidden select-none bg-gradient-to-b from-primary-500/15 to-secondary-500/0 bg-clip-text text-[13rem] font-semibold leading-none tracking-tighter text-transparent lg:block"
+                className="pointer-events-none absolute -left-2 -top-24 hidden select-none will-change-[transform,opacity] bg-gradient-to-b from-primary-500/15 to-secondary-500/0 bg-clip-text text-[13rem] font-semibold leading-none tracking-tighter text-transparent lg:block"
               >
                 {pad(index + 1)}
               </span>
@@ -165,13 +153,13 @@ export default function ServicesPage() {
               </h1>
 
               {/* All services share one grid cell so the block is as tall as the longest one. */}
-              <div ref={slidesWrapRef} className="relative mt-4 grid lg:mt-6">
+              <div className="relative mt-4 grid lg:mt-6">
                 {SERVICES.map((service, i) => (
                   <article
                     key={service.slug}
                     ref={(el) => (slideRefs.current[i] = el)}
                     inert={i !== index}
-                    className="[grid-area:1/1]"
+                    className="will-change-[transform,opacity] [grid-area:1/1]"
                   >
                     <div className="flex items-center gap-3">
                       <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30 lg:h-14 lg:w-14">
@@ -225,11 +213,10 @@ export default function ServicesPage() {
             {/* Service city: sized from the screen height, leaving headroom for the enlarged building and its pin. */}
             <div className="flex min-h-0 min-w-0 items-end justify-center self-stretch lg:items-center">
               <div
-                ref={cityRef}
                 className="w-full [--city-dim:0.35] [--city-focus-scale:1.45] [--city-pin-dim:0.4] [--reserve:495px] lg:[--reserve:230px]"
                 style={{ maxWidth: 'max(220px, calc((100svh - var(--reserve)) * 1.357))' }}
               >
-                <KroldCity highlight={[SERVICES[index].slug]} />
+                <City highlight={highlight} />
               </div>
             </div>
           </div>
