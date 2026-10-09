@@ -10,9 +10,9 @@ const RAIN = [
 ]
 
 // A family sheltered under one umbrella while the rain falls around them.
-function Shelter() {
+export function Shelter({ className = 'h-full max-h-40 w-full' }) {
   return (
-    <svg viewBox="0 0 184 150" className="h-full max-h-40 w-full" aria-hidden="true">
+    <svg viewBox="0 0 184 150" className={className} aria-hidden="true">
       <defs>
         <linearGradient id="svc-canopy" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#36a1da" />

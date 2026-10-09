@@ -73,8 +73,9 @@ const ASSETS = [
   },
 ]
 
-// What general insurance covers, each picking up a protective tick on hover.
-function AssetGrid() {
+// What general insurance covers, each picking up a protective tick on hover (or wearing
+// it from the start, with `ticked`).
+export function AssetGrid({ ticked = false }) {
   return (
     <div className="grid grid-cols-2 gap-2.5 min-[420px]:grid-cols-3">
       {ASSETS.map((asset, i) => (
@@ -87,7 +88,9 @@ function AssetGrid() {
           </svg>
           <span className="text-[11px] font-semibold text-black/60 dark:text-white/60">{asset.name}</span>
           <span
-            className="absolute -right-1 -top-1 flex h-5 w-5 scale-0 items-center justify-center rounded-full bg-secondary-500 text-white shadow transition-transform duration-300 group-hover:scale-100"
+            className={`absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-secondary-500 text-white shadow transition-transform duration-300 ${
+              ticked ? '' : 'scale-0 group-hover:scale-100'
+            }`}
             style={{ transitionDelay: `${i * 70}ms` }}
           >
             <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">

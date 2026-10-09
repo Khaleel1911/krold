@@ -14,7 +14,23 @@ const TOWERS = [
   [256, 30, 64],
 ]
 
-function Skyline() {
+// The minimum ticket for each product.
+export function Minimums() {
+  return (
+    <dl className="relative divide-y divide-[#d9b25f]/20 rounded-xl border border-[#d9b25f]/25 bg-white/[0.03] text-xs">
+      <div className="flex items-center justify-between px-3 py-2">
+        <dt className="text-white/70">PMS</dt>
+        <dd className="font-semibold text-[#e8c97c]">Min ₹50 Lacs</dd>
+      </div>
+      <div className="flex items-center justify-between px-3 py-2">
+        <dt className="text-white/70">AIF</dt>
+        <dd className="font-semibold text-[#e8c97c]">Min ₹1 Crore</dd>
+      </div>
+    </dl>
+  )
+}
+
+export function Skyline() {
   return (
     <svg viewBox="0 0 280 150" preserveAspectRatio="xMidYMax slice" className="h-full w-full" aria-hidden="true">
       {TOWERS.map(([x, w, h], t) => (
@@ -62,16 +78,7 @@ export default function PmsAifCard({ service, cardRef }) {
       </div>
 
       <div className="relative mt-4 flex flex-col sm:mt-0 sm:w-[44%] sm:shrink-0">
-        <dl className="relative divide-y divide-[#d9b25f]/20 rounded-xl border border-[#d9b25f]/25 bg-white/[0.03] text-xs">
-          <div className="flex items-center justify-between px-3 py-2">
-            <dt className="text-white/70">PMS</dt>
-            <dd className="font-semibold text-[#e8c97c]">Min ₹50 Lacs</dd>
-          </div>
-          <div className="flex items-center justify-between px-3 py-2">
-            <dt className="text-white/70">AIF</dt>
-            <dd className="font-semibold text-[#e8c97c]">Min ₹1 Crore</dd>
-          </div>
-        </dl>
+        <Minimums />
         <div className="relative mt-3 h-28 overflow-hidden rounded-xl sm:h-auto sm:min-h-24 sm:flex-1">
           <div className="absolute inset-0 opacity-90 transition-transform duration-500 group-hover:-translate-y-1">
             <Skyline />

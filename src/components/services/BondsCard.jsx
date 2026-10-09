@@ -1,16 +1,16 @@
 import { CardShell, CardText, LearnMore } from './CardParts'
 
-const BOND_TYPES = ['Government', 'Corporate', 'Tax-Free', 'RBI Floating Rate', 'NCDs']
+export const BOND_TYPES = ['Government', 'Corporate', 'Tax-Free', 'RBI Floating Rate', 'NCDs']
 
 // Scalloped certificate seal with a ₹ centre and two ribbon tails.
-function Seal() {
+export function Seal({ className = 'h-20 w-16' }) {
   const points = Array.from({ length: 24 }, (_, i) => {
     const a = (i / 24) * Math.PI * 2
     const r = i % 2 ? 19 : 22
     return `${26 + Math.cos(a) * r},${24 + Math.sin(a) * r}`
   }).join(' ')
   return (
-    <svg viewBox="0 0 52 64" className="h-20 w-16 transition-transform duration-500 group-hover:rotate-12" aria-hidden="true">
+    <svg viewBox="0 0 52 64" className={`${className} transition-transform duration-500 group-hover:rotate-12`} aria-hidden="true">
       <path d="M16 38 L10 62 L18 56 L24 62 L26 42 Z" fill="#c9962a" />
       <path d="M36 38 L42 62 L34 56 L28 62 L26 42 Z" fill="#b5841f" />
       <polygon points={points} fill="#e5b64a" />

@@ -2,10 +2,11 @@ import { CardShell, IconBadge, CardText, LearnMore } from './CardParts'
 
 const MONTHS = 12
 
-// A year as a ring of twelve payouts that light up one after another, forever.
-function PayoutRing() {
+// A year as a ring of twelve payouts that light up one after another, forever. The dot
+// colours come from --svc-dot-off / --svc-dot-on on an ancestor.
+export function PayoutRing({ className = 'h-36 w-36' }) {
   return (
-    <svg viewBox="0 0 160 160" className="h-36 w-36" aria-hidden="true">
+    <svg viewBox="0 0 160 160" className={className} aria-hidden="true">
       <circle cx="80" cy="80" r="62" fill="none" className="stroke-secondary-200 dark:stroke-secondary-400/25" strokeWidth="2" />
       <g className="svc-spin">
         <circle cx="80" cy="80" r="72" fill="none" className="stroke-secondary-400/60" strokeWidth="1.5" strokeDasharray="3 7" />

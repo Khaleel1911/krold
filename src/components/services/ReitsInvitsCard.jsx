@@ -3,9 +3,9 @@ import { CardShell, IconBadge, CardText, Chips, LearnMore } from './CardParts'
 const HUB = [50, 16]
 
 // An income-paying office block beside a wind turbine: real estate and infrastructure.
-function RealAssets() {
+export function RealAssets({ className = 'h-14 w-16' }) {
   return (
-    <svg viewBox="0 0 64 56" className="h-14 w-16" aria-hidden="true">
+    <svg viewBox="0 0 64 56" className={className} aria-hidden="true">
       <path d="M2 52 H62" className="stroke-primary-200 dark:stroke-white/15" strokeWidth="1.5" />
       <rect x="6" y="18" width="26" height="34" rx="1.5" className="fill-primary-500 dark:fill-primary-500/80" />
       {[0, 1, 2, 3].map((r) =>

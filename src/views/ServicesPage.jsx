@@ -12,6 +12,10 @@ import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 // Scroll distance given to each service while the showcase stays pinned.
 const STEP_VH = 70
 const COUNT = SERVICES.length
+// How long the glide from one service to the next takes, and how long after the text
+// changes the city spotlights the new service's building (ms).
+const STEP_SECONDS = 0.7
+const CITY_DELAY = 260
 // A service starts fading this far from the middle of its step (its step ends at 0.5).
 const FADE_FROM = 0.3
 // Pixels a service's text drifts per step of scroll, the extra it travels while fading
@@ -40,13 +44,23 @@ export default function ServicesPage() {
   const textRef = useRef(null)
   const slideRefs = useRef([])
   const numeralRef = useRef(null)
+  const stepToRef = useRef(null)
   const [index, setIndex] = useState(0)
-  const highlight = useMemo(() => [SERVICES[index].slug], [index])
+  // The city follows the text a beat later, so its (paint-heavy) spotlight change never
+  // lands in the middle of the scroll between two services.
+  const [spot, setSpot] = useState(0)
+  const highlight = useMemo(() => [SERVICES[spot].slug], [spot])
+
+  useEffect(() => {
+    const timer = setTimeout(() => setSpot(index), CITY_DELAY)
+    return () => clearTimeout(timer)
+  }, [index])
 
   // The track is taller than the screen and the panel inside it is sticky, so the page
   // scrolls while the showcase stays put. Everything is positioned straight from how far
-  // the track has scrolled, with no tweens in between: each service drifts up through its
-  // step and fades out as the next one fades in, so the text moves exactly as the page does.
+  // the track has scrolled: each service drifts up through its step and fades out as the
+  // next one fades in. While the panel is pinned, a swipe, wheel flick or arrow key doesn't
+  // scroll freely; it glides the page to the next service's stop, one service per gesture.
   // A layout effect, so only the first service is showing at first paint.
   useLayoutEffect(() => {
     const track = trackRef.current
@@ -54,14 +68,25 @@ export default function ServicesPage() {
     const numeral = numeralRef.current
     const reduce = prefersReducedMotion()
 
+    // Where the pinned stretch starts, how long it is, and how far through it the page is
+    // (0 to COUNT, each service owning one unit).
+    const measure = () => {
+      const trackRect = track.getBoundingClientRect()
+      const distance = trackRect.height - panel.offsetHeight
+      const start = window.scrollY + trackRect.top - (parseFloat(getComputedStyle(panel).top) || 0)
+      const travelled = window.scrollY - start
+      return {
+        start,
+        distance,
+        position: (Math.min(Math.max(travelled, 0), distance) / distance) * COUNT,
+        pinned: travelled >= -1 && travelled <= distance + 1,
+      }
+    }
+
     let frame = 0
     const update = () => {
       frame = 0
-      const trackRect = track.getBoundingClientRect()
-      const panelRect = panel.getBoundingClientRect()
-      const distance = trackRect.height - panelRect.height
-      const progress = Math.min(Math.max((panelRect.top - trackRect.top) / distance, 0), 1)
-      const position = progress * COUNT
+      const { position } = measure()
       const next = Math.min(COUNT - 1, Math.floor(position))
       setIndex(next)
 
@@ -84,17 +109,141 @@ export default function ServicesPage() {
         }
       })
     }
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update)
+
+    // Each service rests in the middle of its step; the first rests at the very top.
+    let tween = null
+    const stepTo = (i) => {
+      const { start, distance, position } = measure()
+      const top = start + (i === 0 ? 0 : ((i + 0.5) / COUNT) * distance)
+      tween?.kill()
+      if (reduce) {
+        window.scrollTo(0, top)
+        return
+      }
+      const state = { y: window.scrollY }
+      const steps = Math.abs(i + 0.5 - position)
+      tween = gsap.to(state, {
+        y: top,
+        duration: Math.min(STEP_SECONDS + Math.max(steps - 1, 0) * 0.12, 1.4),
+        ease: 'power2.inOut',
+        // Drawn here rather than on the scroll event, so the text never trails the page by a frame.
+        onUpdate: () => {
+          window.scrollTo(0, state.y)
+          update()
+        },
+        onComplete: () => (tween = null),
+      })
+    }
+    stepToRef.current = stepTo
+
+    // The service a gesture in this direction leads to, or -1 when the page should scroll
+    // on freely: the panel isn't pinned, or there is no service left that way.
+    const neighbour = (direction) => {
+      const { position, pinned } = measure()
+      if (!pinned) return -1
+      const at = Math.min(Math.max(position, 0.5), COUNT - 0.5) - 0.5
+      const i = direction > 0 ? Math.floor(at + 0.01) + 1 : Math.ceil(at - 0.01) - 1
+      return i >= 0 && i < COUNT ? i : -1
     }
 
+    // After a free scroll (scrollbar, a link to one service) comes to rest between two stops.
+    let settleTimer = 0
+    let touch = null
+    const settle = () => {
+      if (tween || touch || reduce) return
+      const { position, pinned } = measure()
+      if (!pinned || position <= 0.5 || position >= COUNT - 0.5) return
+      const nearest = Math.round(position - 0.5)
+      if (Math.abs(position - 0.5 - nearest) > 0.02) stepTo(nearest)
+    }
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+      clearTimeout(settleTimer)
+      settleTimer = setTimeout(settle, 140)
+    }
+
+    // A touchpad keeps sending ever-smaller wheel events after the fingers lift. Only a
+    // pause, a harder push, or the steady clicks of a mouse wheel count as a new gesture,
+    // so that tail can't carry the page on past the next service.
+    let lastWheel = { time: 0, size: 0, held: false }
+    const onWheel = (e) => {
+      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY) || !e.deltaY) return
+      const size = Math.abs(e.deltaY) * (e.deltaMode === 1 ? 40 : 1)
+      const fresh =
+        e.timeStamp - lastWheel.time > 160 ||
+        size > lastWheel.size * 1.3 + 2 ||
+        (lastWheel.held && size === lastWheel.size && size >= 50)
+      const target = tween ? -1 : neighbour(Math.sign(e.deltaY))
+      const held = Boolean(tween) || target >= 0
+      lastWheel = { time: e.timeStamp, size, held }
+      if (!held) return
+      e.preventDefault()
+      if (fresh && target >= 0) stepTo(target)
+    }
+
+    // A touch gesture is either ours or the browser's from its first move: once native
+    // scrolling has begun it can no longer be cancelled.
+    const onTouchStart = (e) => {
+      touch = e.touches.length === 1 ? { y: e.touches[0].clientY, mode: null, stepped: false } : null
+    }
+    const onTouchMove = (e) => {
+      if (!touch || e.touches.length !== 1) return
+      const moved = touch.y - e.touches[0].clientY
+      if (!moved) return
+      if (!touch.mode) touch.mode = tween || neighbour(Math.sign(moved)) >= 0 ? 'held' : 'free'
+      if (touch.mode === 'free') return
+      if (e.cancelable) e.preventDefault()
+      if (touch.stepped || tween || Math.abs(moved) < 12) return
+      const target = neighbour(Math.sign(moved))
+      if (target < 0) return
+      touch.stepped = true
+      stepTo(target)
+    }
+    const onTouchEnd = () => {
+      touch = null
+      onScroll()
+    }
+
+    const onKey = (e) => {
+      const direction = { ArrowDown: 1, PageDown: 1, ArrowUp: -1, PageUp: -1 }[e.key]
+      if (!direction || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return
+      if (e.target.closest?.('input, textarea, select, [contenteditable]')) return
+      const target = tween ? -1 : neighbour(direction)
+      if (!tween && target < 0) return
+      e.preventDefault()
+      if (target >= 0) stepTo(target)
+    }
+
+    // Arriving at /services#<slug> (say, back from that service's page): start on that
+    // service, city included, rather than on the first one.
+    if (SERVICES.some((service) => `#${service.slug}` === window.location.hash)) {
+      document.getElementById(window.location.hash.slice(1)).scrollIntoView({ behavior: 'instant', block: 'start' })
+    }
     update()
+    setSpot(Math.min(COUNT - 1, Math.floor(measure().position)))
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
+    if (!reduce) {
+      window.addEventListener('wheel', onWheel, { passive: false })
+      window.addEventListener('touchstart', onTouchStart, { passive: true })
+      window.addEventListener('touchmove', onTouchMove, { passive: false })
+      window.addEventListener('touchend', onTouchEnd)
+      window.addEventListener('touchcancel', onTouchEnd)
+      window.addEventListener('keydown', onKey)
+    }
     return () => {
       cancelAnimationFrame(frame)
+      clearTimeout(settleTimer)
+      tween?.kill()
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
+      window.removeEventListener('wheel', onWheel)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend', onTouchEnd)
+      window.removeEventListener('touchcancel', onTouchEnd)
+      window.removeEventListener('keydown', onKey)
     }
   }, [])
 
@@ -107,15 +256,14 @@ export default function ServicesPage() {
 
   useRevealOnScroll(pageRef, (root) => root.querySelectorAll('[data-animate]'), { y: 20, duration: 0.7 })
 
-  const goTo = (slug) => document.getElementById(slug)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
   return (
     <main ref={pageRef} className="relative">
       <section
         ref={trackRef}
         aria-label="Products and services"
-        className="relative"
-        style={{ height: `calc(100svh + ${COUNT * STEP_VH}vh)` }}
+        className="relative [--nav:69px] lg:[--nav:73px]"
+        style={{ height: `calc(100svh - var(--nav) + ${COUNT * STEP_VH}vh)` }}
       >
         {/* Scroll targets for /services#<slug> links, the dots and the city pins: one per step. */}
         {SERVICES.map((service, i) => (
@@ -178,6 +326,8 @@ export default function ServicesPage() {
                     <Link
                       href={`/services/${service.slug}`}
                       aria-label={`Learn more about ${service.title}`}
+                      // So the browser's Back button returns to this service, not the top of the list.
+                      onClick={() => window.history.replaceState(null, '', `#${service.slug}`)}
                       className="group mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-2.5 text-[15px] font-semibold text-white shadow-md shadow-primary-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:shadow-black/40 dark:hover:shadow-black/50 lg:mt-7 lg:px-7 lg:py-3"
                     >
                       Learn more
@@ -194,7 +344,7 @@ export default function ServicesPage() {
                       type="button"
                       aria-label={`Show ${service.title}`}
                       aria-current={i === index}
-                      onClick={() => goTo(service.slug)}
+                      onClick={() => stepToRef.current?.(i)}
                       className="group flex h-6 items-center"
                     >
                       <span

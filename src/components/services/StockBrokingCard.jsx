@@ -56,6 +56,33 @@ function Chart() {
   )
 }
 
+// A trading screen: scrolling ticker over a live candlestick chart. Sits on a dark background.
+export function MarketPanel({ className = '' }) {
+  return (
+    <div className={`relative flex min-h-[150px] flex-col overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10 ${className}`}>
+      <div className="flex overflow-hidden border-b border-white/10 py-1.5">
+        <div className="flex shrink-0 animate-[marquee-left_16s_linear_infinite] gap-5 pr-5 text-[10px] font-semibold">
+          {[...TICKER, ...TICKER].map(([name, move, up], i) => (
+            <span key={i} className="whitespace-nowrap text-white/70">
+              {name} <span style={{ color: up ? UP : DOWN }}>{move}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="flex items-center justify-between px-3 pt-2 text-[10px]">
+        <span className="font-semibold text-white/80">NIFTY 50 · 1D</span>
+        <span className="flex items-center gap-1 font-semibold" style={{ color: UP }}>
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: UP }} />
+          Live
+        </span>
+      </div>
+      <div className="min-h-0 flex-1 px-2 pb-2 pt-1">
+        <Chart />
+      </div>
+    </div>
+  )
+}
+
 export default function StockBrokingCard({ service, cardRef }) {
   return (
     <CardShell
@@ -71,27 +98,7 @@ export default function StockBrokingCard({ service, cardRef }) {
         <LearnMore className="text-[#6fd66a]" />
       </div>
 
-      <div className="relative mt-4 flex min-h-[150px] flex-col overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10 sm:mt-0 sm:w-[48%] sm:shrink-0">
-        <div className="flex overflow-hidden border-b border-white/10 py-1.5">
-          <div className="flex shrink-0 animate-[marquee-left_16s_linear_infinite] gap-5 pr-5 text-[10px] font-semibold">
-            {[...TICKER, ...TICKER].map(([name, move, up], i) => (
-              <span key={i} className="whitespace-nowrap text-white/70">
-                {name} <span style={{ color: up ? UP : DOWN }}>{move}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="flex items-center justify-between px-3 pt-2 text-[10px]">
-          <span className="font-semibold text-white/80">NIFTY 50 · 1D</span>
-          <span className="flex items-center gap-1 font-semibold" style={{ color: UP }}>
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: UP }} />
-            Live
-          </span>
-        </div>
-        <div className="min-h-0 flex-1 px-2 pb-2 pt-1">
-          <Chart />
-        </div>
-      </div>
+      <MarketPanel className="mt-4 sm:mt-0 sm:w-[48%] sm:shrink-0" />
     </CardShell>
   )
 }

@@ -3,13 +3,17 @@
 // Each page has a `hero` (headline, supporting text, button label), an ordered list of
 // `sections`, and a `closing` call to action (its button falls back to "Get in Touch").
 // A section has a heading and any of:
-//   text   – paragraphs
-//   points – a plain bulleted list
-//   items  – cards, each with a title and a line of text
-//   groups – titled sets of cards (e.g. "With Mutual Funds" / "With SIFs")
-//   steps  – numbered steps, each with a title and a line of text
-//   faqs   – questions and answers
-//   note   – a closing line under the section
+//   text    – paragraphs
+//   callout – a one-line analogy, set apart from the paragraphs
+//   points  – a plain bulleted list
+//   items   – cards, each with a title and a line of text
+//   groups  – titled sets of items (e.g. "With Mutual Funds" / "With SIFs"), one panel each
+//   steps   – a left-to-right flow of numbered steps, each with a title and a line of text
+//   faqs    – questions and answers
+//   note    – a closing line under the section
+// and may name a `kind` ('intro', 'benefits', 'fit', 'why') to get that section's own layout.
+// Where a page covers two products, they are always listed in the same order: the first
+// is shown in blue and the second in green throughout the page.
 const HOW_IT_WORKS = 'How it works'
 const BENEFITS = 'How you benefit'
 const FIT = 'Is this right for you?'
@@ -26,6 +30,7 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         items: [
           {
             title: 'Mutual Funds',
@@ -60,6 +65,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         groups: [
           {
             title: 'With Mutual Funds',
@@ -103,6 +109,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'Mutual Funds may suit you if you’re starting your investment journey, or building wealth for goals three or more years away, such as a home, your children’s education, or retirement.',
           'SIFs may suit you if you have ₹10 lakh or more to invest, already hold a core portfolio, and are comfortable with more complex strategies and higher risk.',
@@ -110,6 +117,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'Goals first, products second.',
@@ -156,6 +164,7 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         items: [
           {
             title: 'Life Insurance',
@@ -190,6 +199,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         groups: [
           {
             title: 'With Life Insurance',
@@ -230,6 +240,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'Life insurance is essential if anyone depends on your income, such as a spouse, children, or parents, or if you have loans like a home loan.',
           'Health insurance is essential for everyone. Even if your employer covers you, a personal policy keeps you protected when you change jobs or retire.',
@@ -237,6 +248,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'Unbiased comparison.',
@@ -289,6 +301,7 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         items: [
           {
             title: 'Portfolio Management Services (PMS)',
@@ -323,6 +336,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         groups: [
           {
             title: 'With PMS',
@@ -366,6 +380,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'PMS may suit you if you have ₹50 lakh or more to invest, prefer a personalised portfolio, and are investing for at least 3–5 years.',
           'AIFs may suit you if you can commit ₹1 crore or more, already have a well-diversified core portfolio, and can stay invested for several years. Many AIFs have fixed tenures with limited early exit.',
@@ -373,6 +388,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           { title: 'Rigorous due diligence.', text: 'We assess managers on far more than past returns.' },
           {
@@ -422,6 +438,7 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         text: [
           'General insurance protects everything that isn’t life or health: your buildings, machines, stock, goods in transit, vehicles, and your legal liabilities. For a business owner, it’s the safety net that turns a potential disaster into a manageable setback.',
         ],
@@ -501,6 +518,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         items: [
           {
             title: 'Business continuity.',
@@ -522,12 +540,14 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'This is for you if you own or run a factory, manufacturing unit, warehouse, or trading business, or if you want your personal assets protected by someone who understands your whole financial picture.',
         ],
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'We understand manufacturing.',
@@ -577,10 +597,11 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         text: [
           'An annuity is a plan from a life insurance company that converts a lump sum into regular income. You invest once, or over a few years, and the insurer pays you a fixed amount monthly, quarterly, or yearly, for life or for a chosen period.',
-          'Think of it as buying your own pension: the salary stops when you retire, but your income doesn’t.',
         ],
+        callout: 'Think of it as buying your own pension: the salary stops when you retire, but your income doesn’t.',
       },
       {
         heading: HOW_IT_WORKS,
@@ -605,6 +626,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         items: [
           {
             title: 'Guaranteed income for life.',
@@ -630,6 +652,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: ['An annuity may suit you if you are:'],
         points: [
           'Nearing or in retirement and want a steady, predictable income.',
@@ -640,6 +663,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'We compare across insurers.',
@@ -689,10 +713,11 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         text: [
           'A bond is a loan you give to a government or a company. In return, they pay you a fixed interest rate (called the coupon) at regular intervals, and return your original amount on a fixed maturity date.',
-          'Think of it as being the bank: you lend, you earn interest, and you get your principal back at the end.',
         ],
+        callout: 'Think of it as being the bank: you lend, you earn interest, and you get your principal back at the end.',
       },
       {
         heading: 'Types of bonds we help you with',
@@ -742,6 +767,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         items: [
           {
             title: 'Predictable income.',
@@ -767,12 +793,14 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'Bonds may suit you if you want regular income, such as monthly or yearly interest; are looking for an alternative to fixed deposits; have recently sold land, property, or a building and want to save capital gains tax; or want to balance an equity-heavy portfolio.',
         ],
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'Credit research first.',
@@ -822,6 +850,7 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         text: [
           'Stock broking gives you direct access to the stock market. With a trading account, you buy and sell shares; with a demat account, your shares are held safely in electronic form.',
           'When you buy a company’s shares, you become a part-owner of that business and share in its growth over time. As a business owner, you already know the value of building something. Equity lets you own a stake in many more businesses.',
@@ -868,6 +897,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         items: [
           {
             title: 'Direct ownership.',
@@ -893,12 +923,14 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'This may suit you if you want to build long-term wealth through equity, enjoy following markets and companies, want to apply for IPOs, or prefer to invest with a trusted team behind you rather than on your own.',
         ],
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'Hassle-free onboarding.',
@@ -955,6 +987,7 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         text: [
           'Unlisted shares are shares of companies that aren’t traded on the stock exchange yet. They include well-known, profitable businesses that are still privately held, and companies preparing for an IPO.',
           'Investors usually buy these shares from existing shareholders, such as early investors or employees holding stock options. The shares are transferred directly into your demat account, just like listed shares.',
@@ -983,6 +1016,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         items: [
           {
             title: 'Early access.',
@@ -1004,12 +1038,14 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'Unlisted shares may suit you if you’re an experienced investor with a long-term view, already have a well-diversified portfolio, and are comfortable keeping a small portion of your wealth in a higher-risk, less liquid investment.',
         ],
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'Focus on quality.',
@@ -1062,11 +1098,13 @@ export const SERVICE_DETAILS = {
     sections: [
       {
         heading: 'What it is',
+        kind: 'intro',
         text: [
           'REITs (Real Estate Investment Trusts) own income-generating properties such as large office parks and shopping malls. Tenants pay rent, and most of that income is passed on to you as a unitholder.',
           'InvITs (Infrastructure Investment Trusts) work the same way, but own infrastructure assets such as highways, power transmission lines, and gas pipelines. They earn from tolls, tariffs, and usage fees.',
-          'Think of it as being a landlord to India’s biggest companies, without buying, managing, or maintaining a single building.',
         ],
+        callout:
+          'Think of it as being a landlord to India’s biggest companies, without buying, managing, or maintaining a single building.',
       },
       {
         heading: HOW_IT_WORKS,
@@ -1091,6 +1129,7 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: BENEFITS,
+        kind: 'benefits',
         items: [
           {
             title: 'Regular income.',
@@ -1116,12 +1155,14 @@ export const SERVICE_DETAILS = {
       },
       {
         heading: FIT,
+        kind: 'fit',
         text: [
           'REITs and InvITs may suit you if you want regular income from real assets, are looking to diversify beyond stocks, FDs, and physical property, or want real estate exposure without the large investment and effort of owning property.',
         ],
       },
       {
         heading: WHY,
+        kind: 'why',
         items: [
           {
             title: 'We look under the hood.',

@@ -1,9 +1,9 @@
 import { CardShell, CardText, LearnMore } from './CardParts'
 
 // A seedling drawn on blueprint paper: a company that hasn't been listed yet.
-function Seedling() {
+export function Seedling({ className = 'h-14 w-14' }) {
   return (
-    <svg viewBox="0 0 56 56" className="h-14 w-14" aria-hidden="true">
+    <svg viewBox="0 0 56 56" className={className} aria-hidden="true">
       <path d="M8 50 H48" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeDasharray="3 3" />
       <g className="svc-sprout">
         <path d="M28 50 V26" stroke="#84cd80" strokeWidth="2.5" strokeLinecap="round" />
