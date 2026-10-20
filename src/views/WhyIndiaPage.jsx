@@ -26,8 +26,8 @@ import {
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-const H2 = 'mt-4 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl'
-const BODY = 'text-[17px] leading-relaxed text-black/65 dark:text-white/65'
+const H2 = 'mt-3 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl'
+const BODY = 'text-base leading-relaxed text-black/65 dark:text-white/65'
 const STRONG = 'font-semibold text-black/85 dark:text-white/90'
 
 const SECTIONS = [
@@ -51,11 +51,25 @@ function Arrow({ className = '', flip = false }) {
   )
 }
 
-function SectionHead({ id, title, children, light = false }) {
+// `split` puts the text beside the heading on large screens, to save height.
+function SectionHead({ id, title, children, light = false, split = false }) {
+  const heading = (
+    <>
+      <Eyebrow className={light ? 'text-primary-300' : undefined}>{tag(id)}</Eyebrow>
+      <h2 className={light ? 'mt-3 text-3xl font-semibold leading-tight text-balance sm:text-4xl' : H2}>{title}</h2>
+    </>
+  )
+  if (split) {
+    return (
+      <div data-reveal className="lg:flex lg:items-end lg:justify-between lg:gap-12">
+        <div className="max-w-xl shrink-0">{heading}</div>
+        <div className="max-w-xl lg:[&>*:first-child]:mt-0">{children}</div>
+      </div>
+    )
+  }
   return (
     <div data-reveal className="max-w-3xl">
-      <Eyebrow className={light ? 'text-primary-300' : undefined}>{tag(id)}</Eyebrow>
-      <h2 className={light ? 'mt-4 text-3xl font-semibold leading-tight text-balance sm:text-4xl' : H2}>{title}</h2>
+      {heading}
       {children}
     </div>
   )
@@ -84,7 +98,7 @@ export default function WhyIndiaPage() {
           className="pointer-events-none absolute inset-0 -z-10 text-black/[0.035] dark:text-white/[0.05]"
           style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '28px 28px' }}
         />
-        <div ref={heroRef} className="mx-auto max-w-6xl px-5 pb-14 pt-10 lg:px-10 lg:pb-20 lg:pt-16">
+        <div ref={heroRef} className="mx-auto max-w-6xl px-5 py-10 lg:px-10 lg:py-12">
           <Link
             href="/nri"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-black/60 transition-colors hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:text-white/60 dark:hover:text-primary-400"
@@ -92,13 +106,13 @@ export default function WhyIndiaPage() {
             <Arrow flip className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
             Back to NRI services
           </Link>
-          <Eyebrow className="mt-8 text-primary-600 dark:text-primary-400">Why India</Eyebrow>
+          <Eyebrow className="mt-6 text-primary-600 dark:text-primary-400">Why India</Eyebrow>
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.1] text-balance text-black dark:text-white sm:text-5xl lg:text-[3.5rem]">
             The case for investing{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text pb-2 text-transparent">back home</span>
           </h1>
-          <p className={`mt-6 max-w-3xl ${BODY}`}>{INTRO}</p>
-          <nav aria-label="On this page" className="mt-9">
+          <p className={`mt-4 max-w-3xl ${BODY}`}>{INTRO}</p>
+          <nav aria-label="On this page" className="mt-7">
             <ul className="flex flex-wrap gap-2">
               {SECTIONS.map(([id, label], i) => (
                 <li key={id}>
@@ -118,9 +132,9 @@ export default function WhyIndiaPage() {
 
       {/* ─── 01 Economy ───────────────────────────────────────── */}
       <section id="economy" className="scroll-mt-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 lg:grid-cols-[1fr_1fr] lg:gap-14 lg:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 lg:grid-cols-[1fr_1fr] lg:gap-12 lg:px-10">
           <SectionHead id="economy" title="Robust Economic Growth">
-            <div className={`mt-5 space-y-4 ${BODY}`}>
+            <div className={`mt-3 space-y-3 ${BODY}`}>
               <p>
                 India’s economy grew an estimated <strong className={STRONG}>7.8% in FY 2025-26</strong>. In its October
                 2026 World Economic Outlook, the IMF raised India’s 2026 forecast to <strong className={STRONG}>7.0%</strong>,
@@ -132,7 +146,7 @@ export default function WhyIndiaPage() {
                 a Middle East conflict and higher energy prices. India now accounts for about 8.2% of world GDP.
               </p>
             </div>
-            <p className="mt-5 text-xs leading-relaxed text-black/45 dark:text-white/45">Sources: {GDP_GROWTH.textSource}</p>
+            <p className="mt-4 text-xs leading-relaxed text-black/45 dark:text-white/45">Sources: {GDP_GROWTH.textSource}</p>
           </SectionHead>
           <ChartCard title={GDP_GROWTH.title} source={GDP_GROWTH.source}>
             <ColumnChart bars={GDP_GROWTH.bars} />
@@ -142,9 +156,9 @@ export default function WhyIndiaPage() {
 
       {/* ─── 02 People ────────────────────────────────────────── */}
       <section id="people" className="scroll-mt-20 border-t border-black/5 bg-primary-50/40 dark:border-white/10 dark:bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-24">
-          <SectionHead id="people" title="Demographic Dividend">
-            <p className={`mt-5 ${BODY}`}>
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
+          <SectionHead id="people" title="Demographic Dividend" split>
+            <p className={`mt-3 ${BODY}`}>
               India has the world’s largest population and one of its youngest workforces. About{' '}
               <strong className={STRONG}>58% of Indians are under 35</strong>, and the working-age share is still rising.
               The Economic Survey estimates India must create nearly{' '}
@@ -153,16 +167,16 @@ export default function WhyIndiaPage() {
             </p>
           </SectionHead>
 
-          <dl className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {PEOPLE_STATS.map((s) => (
-              <div key={s.label} data-reveal className={`${CARD} bg-white p-6 dark:bg-white/[0.03]`}>
+              <div key={s.label} data-reveal className={`${CARD} bg-white p-5 dark:bg-white/[0.03]`}>
                 <dd className="text-3xl font-semibold leading-none text-primary-600 dark:text-primary-400">{s.value}</dd>
-                <dt className="mt-3 text-[15px] leading-relaxed text-black/65 dark:text-white/65">{s.label}</dt>
+                <dt className="mt-2 text-sm leading-relaxed text-black/65 dark:text-white/65">{s.label}</dt>
               </div>
             ))}
           </dl>
 
-          <ChartCard title={AGE_GROUPS.title} source={AGE_GROUPS.source} className="mt-5">
+          <ChartCard title={AGE_GROUPS.title} source={AGE_GROUPS.source} className="mt-4">
             <StackedShare groups={AGE_GROUPS.groups} />
           </ChartCard>
         </div>
@@ -170,9 +184,9 @@ export default function WhyIndiaPage() {
 
       {/* ─── 03 Digital ───────────────────────────────────────── */}
       <section id="digital" className="scroll-mt-20 border-t border-black/5 dark:border-white/10">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 lg:grid-cols-[1fr_1fr] lg:gap-14 lg:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 lg:grid-cols-[1fr_1fr] lg:gap-12 lg:px-10">
           <SectionHead id="digital" title="Digital Transformation: the UPI Revolution">
-            <p className={`mt-5 ${BODY}`}>
+            <p className={`mt-3 ${BODY}`}>
               The Unified Payments Interface (UPI) has made India the world leader in real-time digital payments. In ten
               years, annual UPI transactions grew almost <strong className={STRONG}>13,000-fold</strong>, from 1.78 crore in
               FY 2016-17 to more than <strong className={STRONG}>24,162 crore in FY 2025-26</strong>, worth about{' '}
@@ -187,7 +201,7 @@ export default function WhyIndiaPage() {
       </section>
 
       {/* ─── 04 Make in India ─────────────────────────────────── */}
-      <section id="make-in-india" className="scroll-mt-20 px-3 pb-20 sm:px-5 lg:pb-24">
+      <section id="make-in-india" className="scroll-mt-20 px-3 pb-12 sm:px-5">
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[#0b1826] text-white ring-1 ring-white/5 lg:rounded-[2.5rem]">
           <RingMark
             count={4}
@@ -195,9 +209,9 @@ export default function WhyIndiaPage() {
             to="var(--color-secondary-500)"
             className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] opacity-[0.07]"
           />
-          <div className="relative px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
-            <SectionHead id="make-in-india" title="From importer to manufacturing hub" light>
-              <p className="mt-5 text-[17px] leading-relaxed text-white/65">
+          <div className="relative px-6 py-10 sm:px-10 lg:px-14">
+            <SectionHead id="make-in-india" title="From importer to manufacturing hub" light split>
+              <p className="mt-3 text-[15px] leading-relaxed text-white/65">
                 Launched in September 2014 and backed since 2020 by Production Linked Incentive (PLI) schemes across 14
                 sectors, Make in India has transformed electronics and defence manufacturing. India is now the world’s
                 second-largest mobile phone maker, and mobile phones have become its largest export item.
@@ -205,7 +219,7 @@ export default function WhyIndiaPage() {
             </SectionHead>
 
             {/* Phones: one row per sector */}
-            <ul data-reveal className="mt-10 divide-y divide-white/10 border-y border-white/10 md:hidden">
+            <ul data-reveal className="mt-7 divide-y divide-white/10 border-y border-white/10 md:hidden">
               {MAKE_IN_INDIA.rows.map((row) => (
                 <li key={row.sector} className="py-4">
                   <div className="flex items-baseline justify-between gap-4">
@@ -220,53 +234,53 @@ export default function WhyIndiaPage() {
               ))}
             </ul>
 
-            <div data-reveal className="mt-10 hidden md:block">
+            <div data-reveal className="mt-7 hidden md:block">
               <table className="w-full border-collapse text-left">
                 <thead>
                   <tr className="border-b border-white/15 text-sm font-semibold text-primary-300">
-                    <th scope="col" className="py-3 pr-4">Sector</th>
-                    <th scope="col" className="px-4 py-3">FY 2014-15</th>
-                    <th scope="col" className="px-4 py-3">FY 2025-26</th>
-                    <th scope="col" className="py-3 pl-4 text-right">Growth</th>
+                    <th scope="col" className="py-2.5 pr-4">Sector</th>
+                    <th scope="col" className="px-4 py-2.5">FY 2014-15</th>
+                    <th scope="col" className="px-4 py-2.5">FY 2025-26</th>
+                    <th scope="col" className="py-2.5 pl-4 text-right">Growth</th>
                   </tr>
                 </thead>
                 <tbody>
                   {MAKE_IN_INDIA.rows.map((row) => (
                     <tr key={row.sector} className="border-b border-white/10 text-[15px]">
-                      <th scope="row" className="py-4 pr-4 font-medium text-white/90">{row.sector}</th>
-                      <td className="px-4 py-4 tabular-nums text-white/70">{row.from}</td>
-                      <td className="px-4 py-4 tabular-nums text-white/85">{row.to}</td>
-                      <td className="py-4 pl-4 text-right font-semibold tabular-nums text-secondary-400">{row.growth}</td>
+                      <th scope="row" className="py-3 pr-4 font-medium text-white/90">{row.sector}</th>
+                      <td className="px-4 py-3 tabular-nums text-white/70">{row.from}</td>
+                      <td className="px-4 py-3 tabular-nums text-white/85">{row.to}</td>
+                      <td className="py-3 pl-4 text-right font-semibold tabular-nums text-secondary-400">{row.growth}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <dl className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <dl className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {MAKE_IN_INDIA.pli.map((p) => (
-                <div key={p.label} data-reveal className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+                <div key={p.label} data-reveal className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
                   <dd className="text-2xl font-semibold leading-tight text-white">{p.value}</dd>
                   <dt className="mt-2 text-sm leading-snug text-white/65">{p.label}</dt>
                 </div>
               ))}
             </dl>
-            <p className="mt-6 text-xs leading-relaxed text-white/45">Sources: {MAKE_IN_INDIA.source}</p>
+            <p className="mt-4 text-xs leading-relaxed text-white/45">Sources: {MAKE_IN_INDIA.source}</p>
           </div>
         </div>
       </section>
 
       {/* ─── 05 Institutions ──────────────────────────────────── */}
       <section id="institutions" className="scroll-mt-20 border-t border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-24">
-          <SectionHead id="institutions" title="Stable Political Environment">
-            <p className={`mt-5 ${BODY}`}>
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
+          <SectionHead id="institutions" title="Stable Political Environment" split>
+            <p className={`mt-3 ${BODY}`}>
               India has been a functioning democracy since independence in 1947, with regular elections, peaceful
               transfers of power, a written constitution and an independent judiciary. Reform policy has shown
               continuity across governments.
             </p>
           </SectionHead>
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {STABILITY.map((s) => (
               <li key={s.title} data-reveal className={`${CARD} border-t-4 border-t-secondary-500 p-6 dark:border-t-secondary-500`}>
                 <h3 className="text-lg font-semibold text-black dark:text-white">{s.title}</h3>
@@ -279,16 +293,16 @@ export default function WhyIndiaPage() {
 
       {/* ─── 06 Markets ───────────────────────────────────────── */}
       <section id="markets" className="scroll-mt-20 border-t border-black/5 bg-primary-50/40 dark:border-white/10 dark:bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-24">
-          <SectionHead id="markets" title="Financial Stock Market Performance">
-            <p className={`mt-5 ${BODY}`}>
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
+          <SectionHead id="markets" title="Financial Stock Market Performance" split>
+            <p className={`mt-3 ${BODY}`}>
               Over the long run, Indian equities have compounded at double-digit rates. The Sensex rose from 3,972 at the
               end of 2000 to 85,221 at the end of 2025. Markets are volatile, though: 2026 has been a difficult year,
               with the Sensex down about 14% from its 2025 close as of mid-October, amid foreign investor outflows,
               higher energy prices and global uncertainty.
             </p>
           </SectionHead>
-          <ChartCard title={SENSEX.title} className="mt-10">
+          <ChartCard title={SENSEX.title} className="mt-7">
             <SensexLine points={SENSEX.points} latest={SENSEX.latest} />
           </ChartCard>
         </div>
@@ -296,32 +310,34 @@ export default function WhyIndiaPage() {
 
       {/* ─── 07 Global view ───────────────────────────────────── */}
       <section id="global" className="scroll-mt-20 border-t border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-24">
-          <SectionHead id="global" title={INDICES.title}>
-            <p className={`mt-5 ${BODY}`}>{INDICES.subtitle}.</p>
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
+          <SectionHead id="global" title={INDICES.title} split>
+            <p className={`mt-3 ${BODY}`}>{INDICES.subtitle}.</p>
           </SectionHead>
-          <div data-reveal className={`${CARD} mt-10 bg-white p-6 dark:bg-white/[0.03] sm:p-8`}>
-            <ChangeBars rows={INDICES.rows} />
+          <div className="mt-7 grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
+            <div data-reveal className={`${CARD} bg-white p-5 dark:bg-white/[0.03] sm:p-6`}>
+              <ChangeBars rows={INDICES.rows} />
+            </div>
+            <aside
+              data-reveal
+              className="rounded-3xl bg-gradient-to-br from-primary-50 to-secondary-50 p-6 ring-1 ring-primary-100 dark:from-primary-500/10 dark:to-secondary-500/10 dark:ring-white/10"
+            >
+              <h3 className="text-lg font-semibold text-black dark:text-white">In US-dollar terms</h3>
+              <p className="mt-2 text-sm leading-relaxed text-black/70 dark:text-white/70">{DOLLAR_TERMS}</p>
+            </aside>
           </div>
-          <div data-reveal className="mt-5 space-y-2 text-xs leading-relaxed text-black/50 dark:text-white/50">
-            <p className="text-sm text-black/60 dark:text-white/60">{INDICES.note}</p>
+          <div data-reveal className="mt-4 space-y-1.5 text-xs leading-relaxed text-black/50 dark:text-white/50">
+            <p className="text-black/60 dark:text-white/60">{INDICES.note}</p>
             <p>{INDICES.levels}</p>
           </div>
-          <aside
-            data-reveal
-            className="mt-8 rounded-3xl bg-gradient-to-br from-primary-50 to-secondary-50 p-7 ring-1 ring-primary-100 dark:from-primary-500/10 dark:to-secondary-500/10 dark:ring-white/10 sm:p-9"
-          >
-            <h3 className="text-xl font-semibold text-black dark:text-white">In US-dollar terms</h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-black/70 dark:text-white/70">{DOLLAR_TERMS}</p>
-          </aside>
         </div>
       </section>
 
       {/* ─── 08 Portfolio ─────────────────────────────────────── */}
       <section id="portfolio" className="scroll-mt-20 border-t border-black/5 bg-primary-50/40 dark:border-white/10 dark:bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-24">
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
           <SectionHead id="portfolio" title="Diversification & Risk Management" />
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {DIVERSIFICATION.map((d) => (
               <li key={d.title} data-reveal className={`${CARD} bg-white p-6 dark:bg-white/[0.03]`}>
                 <h3 className="text-lg font-semibold text-black dark:text-white">{d.title}</h3>
@@ -333,8 +349,8 @@ export default function WhyIndiaPage() {
       </section>
 
       {/* ─── Conclusion ───────────────────────────────────────── */}
-      <section className="px-3 py-20 sm:px-5 lg:py-24">
-        <div data-reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-[#0b1826] px-6 py-14 text-white ring-1 ring-white/5 sm:px-12 lg:px-16">
+      <section className="px-3 py-12 sm:px-5">
+        <div data-reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-[#0b1826] px-6 py-10 text-white ring-1 ring-white/5 sm:px-12 lg:px-14">
           <RingMark
             count={4}
             from="var(--color-primary-500)"
@@ -343,11 +359,11 @@ export default function WhyIndiaPage() {
           />
           <div className="relative">
             <Eyebrow className="text-primary-300">Conclusion</Eyebrow>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight text-balance sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-semibold leading-tight text-balance sm:text-4xl">
               A compelling <span className="text-secondary-400">long-term</span> opportunity
             </h2>
-            <p className="mt-5 max-w-3xl text-[17px] leading-relaxed text-white/75">{CONCLUSION}</p>
-            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-white/75">{CONCLUSION}</p>
+            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
               <Link
                 href="/nri/why-invest-in-india#contact"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-7 py-3 text-[15px] font-semibold text-white shadow-md shadow-black/30 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"

@@ -9,7 +9,7 @@ import { CONTACT_INFO as CONTACT_DETAILS, OFFICES } from '../data/contactInfo'
 // Leaflet needs `window` and is only used by the map, so it loads in the browser, in its own chunk.
 const OfficeMap = dynamic(() => import('./contact/OfficeMap'), {
   ssr: false,
-  loading: () => <div className="office-map h-[320px] w-full" />,
+  loading: () => <div className="office-map h-[260px] w-full lg:h-[210px]" />,
 })
 
 const CONTACT_INFO = [
@@ -61,7 +61,7 @@ export default function GetInTouch() {
   }
 
   return (
-    <section id="contact" ref={sectionRef} className="relative scroll-mt-20 py-10 lg:py-14">
+    <section id="contact" ref={sectionRef} className="relative scroll-mt-20 py-12">
       <div className="mx-auto max-w-6xl px-5 lg:px-10">
         <div data-animate className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-semibold text-black dark:text-white sm:text-4xl">
@@ -75,17 +75,17 @@ export default function GetInTouch() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:gap-10">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:gap-8">
           {/* Info + map */}
-          <div data-animate className="flex flex-col gap-6">
-            <div className="rounded-3xl border border-primary-100/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03] p-6 sm:p-8">
-              <ul className="flex flex-col gap-5">
+          <div data-animate className="flex flex-col gap-4">
+            <div className="rounded-3xl border border-primary-100/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03] p-5 sm:p-6">
+              <ul className="grid gap-4 sm:grid-cols-2">
                 {CONTACT_INFO.map((item) => (
                   <li key={item.label} className="flex items-start gap-4">
                     <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30">
                       <ContactIcon name={item.icon} className="h-5 w-5" />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs font-medium uppercase tracking-wide text-black/40 dark:text-white/40">
                         {item.label}
                       </p>
@@ -102,7 +102,7 @@ export default function GetInTouch() {
                     </div>
                   </li>
                 ))}
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 sm:col-span-2">
                   <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30">
                     <ContactIcon name="pin" className="h-5 w-5" />
                   </span>
@@ -161,7 +161,7 @@ export default function GetInTouch() {
           {/* Form */}
           <div
             data-animate
-            className="rounded-3xl border border-primary-100/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03] p-6 sm:p-8"
+            className="rounded-3xl border border-primary-100/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03] p-5 sm:p-6"
           >
             {submitted ? (
               <div className="flex h-full min-h-[420px] flex-col items-center justify-center text-center">
@@ -186,8 +186,8 @@ export default function GetInTouch() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                <div className="grid gap-5 sm:grid-cols-2">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <Field
                     label="Full Name"
                     name="name"
@@ -206,7 +206,7 @@ export default function GetInTouch() {
                     required
                   />
                 </div>
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <Field
                     label="Phone"
                     type="tel"
@@ -239,13 +239,13 @@ export default function GetInTouch() {
                   value={form.message}
                   onChange={handleChange}
                   placeholder="Tell us a bit about what you're looking for..."
-                  rows={5}
+                  rows={3}
                   textarea
                   required
                 />
                 <button
                   type="submit"
-                  className="mt-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-7 py-3 text-[15px] font-semibold text-white shadow-md shadow-primary-200 dark:shadow-black/40 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0"
+                  className="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 px-7 py-3 text-[15px] font-semibold text-white shadow-md shadow-primary-200 dark:shadow-black/40 transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   Send Message
                 </button>

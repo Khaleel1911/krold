@@ -78,9 +78,9 @@ function Skyline() {
 export default function GiftCity() {
   return (
     <section id="gift-city" className="scroll-mt-20 border-t border-black/5 dark:border-white/10">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch lg:gap-14 lg:px-10 lg:py-28">
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch lg:gap-12 lg:px-10">
         {/* Illustration, with the headline figures laid over it */}
-        <div data-reveal className="relative isolate min-h-[420px] overflow-hidden rounded-3xl ring-1 ring-black/5 dark:ring-white/10 sm:min-h-[480px]">
+        <div data-reveal className="relative isolate min-h-[380px] overflow-hidden rounded-3xl ring-1 ring-black/5 dark:ring-white/10 lg:min-h-0">
           <Skyline />
           <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/10 bg-[#0b1826]/70 p-5 text-white backdrop-blur-sm sm:inset-x-6 sm:bottom-6">
             <dl className="grid grid-cols-3 gap-3">
@@ -95,21 +95,21 @@ export default function GiftCity() {
           </div>
         </div>
 
-        <div className="min-w-0 lg:py-4">
+        <div className="min-w-0">
           <div data-reveal className="max-w-2xl">
             <Eyebrow>Why invest in India · GIFT City</Eyebrow>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
               GIFT City: invest in India, <Accent>in dollars</Accent>
             </h2>
-            <p className="mt-4 text-[17px] leading-relaxed text-black/65 dark:text-white/65">
+            <p className="mt-3 text-base leading-relaxed text-black/65 dark:text-white/65">
               India’s international financial centre, built for overseas investors.
             </p>
           </div>
 
-          <ul className="mt-9 space-y-7">
+          <ul className="mt-7 grid gap-x-8 gap-y-6 sm:grid-cols-2">
             {GIFT_CITY.features.map((f) => (
-              <li key={f.title} data-reveal className="flex items-start gap-5">
-                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary-600 ring-1 ring-primary-100 dark:bg-primary-500/10 dark:text-primary-300 dark:ring-white/10">
+              <li key={f.title} data-reveal className="flex items-start gap-4">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary-600 ring-1 ring-primary-100 dark:bg-primary-500/10 dark:text-primary-300 dark:ring-white/10">
                   <NriIcon name={f.icon} className="h-6 w-6" />
                 </span>
                 <div className="min-w-0">
@@ -120,7 +120,7 @@ export default function GiftCity() {
             ))}
           </ul>
 
-          <p data-reveal className="mt-9 border-t border-black/10 pt-5 text-xs leading-relaxed text-black/50 dark:border-white/10 dark:text-white/50">
+          <p data-reveal className="mt-7 border-t border-black/10 pt-4 text-xs leading-relaxed text-black/50 dark:border-white/10 dark:text-white/50">
             {GIFT_CITY.note}
           </p>
         </div>

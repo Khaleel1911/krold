@@ -68,14 +68,34 @@ export function Eyebrow({ children, className = 'text-primary-600 dark:text-prim
   return <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${className}`}>{children}</p>
 }
 
-export function SectionHeading({ eyebrow, children, intro, className = '' }) {
-  return (
-    <div data-reveal className={`max-w-2xl ${className}`}>
+// `split` puts the intro beside the heading on large screens, to save height.
+export function SectionHeading({ eyebrow, children, intro, aside, split = false, className = '' }) {
+  const heading = (
+    <>
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-4 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
+      <h2 className="mt-3 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
         {children}
       </h2>
-      {intro ? <p className="mt-4 text-[17px] leading-relaxed text-black/65 dark:text-white/65">{intro}</p> : null}
+    </>
+  )
+  const introText = intro ? <p className="text-base leading-relaxed text-black/65 dark:text-white/65">{intro}</p> : null
+
+  if (split) {
+    return (
+      <div data-reveal className={`lg:flex lg:items-end lg:justify-between lg:gap-12 ${className}`}>
+        <div className="max-w-xl shrink-0">{heading}</div>
+        <div className="mt-3 max-w-lg space-y-3 lg:mt-0">
+          {introText}
+          {aside}
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div data-reveal className={`max-w-2xl ${className}`}>
+      {heading}
+      {introText ? <div className="mt-3">{introText}</div> : null}
+      {aside}
     </div>
   )
 }

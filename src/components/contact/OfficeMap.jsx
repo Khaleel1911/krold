@@ -69,7 +69,7 @@ export default function OfficeMap({ selected, onSelect, onReset }) {
 
   return (
     <div className="relative isolate">
-      <div ref={elRef} className="office-map h-[320px] w-full" aria-label="Map of Krold Mfins offices" />
+      <div ref={elRef} className="office-map h-[260px] w-full lg:h-[210px]" aria-label="Map of Krold Mfins offices" />
       {selected && (
         <button
           type="button"

@@ -6,30 +6,33 @@ export default function InvestGuide() {
   return (
     <>
       {/* ─── Where you can invest ─────────────────────────────── */}
-      <section id="guide" className="scroll-mt-20 border-t border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-28">
+      <section id="guide" className="scroll-mt-20">
+        <div className="mx-auto max-w-6xl px-5 pb-12 lg:px-10">
           <SectionHeading
+            split
             eyebrow="The NRI investment guide"
             intro="Whether you are aiming for growth in equity markets or prioritising safety with deposits and bonds, it helps to know what is open to you and which account each investment runs through."
           >
             Where you can invest, and <Accent>how</Accent>
           </SectionHeading>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
             {ASSET_CLASSES.map((asset, i) => (
               <article
                 key={asset.title}
                 data-reveal
-                className={`${CARD} flex flex-col p-7 transition-shadow duration-300 hover:shadow-lg hover:shadow-primary-100/70 dark:hover:shadow-black/40 ${
+                className={`${CARD} flex flex-col p-5 transition-shadow duration-300 hover:shadow-lg hover:shadow-primary-100/70 dark:hover:shadow-black/40 ${
                   i < 2 ? 'lg:col-span-3' : 'lg:col-span-2'
                 }`}
               >
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30">
-                  <NriIcon name={asset.icon} className="h-6 w-6" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold text-black dark:text-white">{asset.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-black/65 dark:text-white/65">{asset.text}</p>
-                <ul className="mt-auto flex flex-wrap gap-1.5 pt-5" aria-label="Accounts you can invest through">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-md shadow-primary-200 dark:shadow-black/30">
+                    <NriIcon name={asset.icon} className="h-5 w-5" />
+                  </span>
+                  <h3 className="text-lg font-semibold text-black dark:text-white">{asset.title}</h3>
+                </div>
+                <p className="mt-3 text-[15px] leading-relaxed text-black/65 dark:text-white/65">{asset.text}</p>
+                <ul className="mt-auto flex flex-wrap gap-1.5 pt-4" aria-label="Accounts you can invest through">
                   {asset.route.map((r) => (
                     <li
                       key={r}
@@ -54,27 +57,30 @@ export default function InvestGuide() {
             to="var(--color-secondary-500)"
             className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] opacity-[0.07]"
           />
-          <div className="relative px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-            <div data-reveal className="max-w-2xl">
-              <Eyebrow className="text-primary-300">It starts with the right account</Eyebrow>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
-                NRE, NRO or <span className="text-secondary-400">FCNR?</span>
-              </h2>
-              <p className="mt-4 text-[17px] leading-relaxed text-white/65">
+          {/* Kept compact so the whole comparison fits on one laptop screen. */}
+          <div className="relative px-6 py-14 sm:px-10 lg:px-14 lg:py-10">
+            <div data-reveal className="lg:flex lg:items-end lg:justify-between lg:gap-12">
+              <div>
+                <Eyebrow className="text-primary-300">It starts with the right account</Eyebrow>
+                <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
+                  NRE, NRO or <span className="text-secondary-400">FCNR?</span>
+                </h2>
+              </div>
+              <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white/65 lg:mt-0">
                 The account you invest from decides how your money is taxed and how easily it can go back abroad.
               </p>
             </div>
 
             {/* Desktop: comparison table */}
-            <div data-reveal className="mt-12 hidden md:block">
+            <div data-reveal className="mt-8 hidden md:block">
               <table className="w-full table-fixed border-collapse text-left">
                 <thead>
                   <tr>
-                    <th className="w-[22%] pb-5" />
+                    <th className="w-[20%] pb-3" />
                     {ACCOUNTS.map((a) => (
-                      <th key={a.key} scope="col" className="pb-5 pl-6 align-bottom font-normal">
-                        <span className="block text-3xl font-semibold">{a.name}</span>
-                        <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-white/45">{a.full}</span>
+                      <th key={a.key} scope="col" className="pb-3 pl-6 align-bottom font-normal">
+                        <span className="block text-2xl font-semibold">{a.name}</span>
+                        <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.16em] text-white/45">{a.full}</span>
                       </th>
                     ))}
                   </tr>
@@ -82,11 +88,11 @@ export default function InvestGuide() {
                 <tbody>
                   {ACCOUNT_ROWS.map((row) => (
                     <tr key={row.key} className="border-t border-white/10">
-                      <th scope="row" className="py-5 pr-4 align-top text-sm font-semibold text-white/50">
+                      <th scope="row" className="py-3 pr-4 align-top text-sm font-semibold text-white/50">
                         {row.label}
                       </th>
                       {ACCOUNTS.map((a) => (
-                        <td key={a.key} className="py-5 pl-6 align-top text-[15px] leading-relaxed text-white/85">
+                        <td key={a.key} className="py-3 pl-6 align-top text-[15px] leading-snug text-white/85">
                           {a.rows[row.key]}
                         </td>
                       ))}
@@ -118,13 +124,13 @@ export default function InvestGuide() {
       </section>
 
       {/* ─── Steps ────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-28">
+      <section className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
         <SectionHeading eyebrow="Getting started">
           Four steps, and we handle the <Accent>paperwork</Accent>
         </SectionHeading>
-        <ol className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, i) => (
-            <li key={step.title} data-reveal className="border-t-2 border-primary-200 pt-6 dark:border-white/15">
+            <li key={step.title} data-reveal className="border-t-2 border-primary-200 pt-5 dark:border-white/15">
               <p className="text-4xl font-semibold leading-none text-primary-500/70 dark:text-primary-400/70">
                 {String(i + 1).padStart(2, '0')}
               </p>

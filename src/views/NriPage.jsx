@@ -91,7 +91,7 @@ export default function NriPage() {
       </section>
 
       {/* ─── Headline figures, each with where it comes from ──── */}
-      <section className="mx-auto max-w-7xl px-5 pb-16 lg:px-10 lg:pb-20">
+      <section className="mx-auto max-w-7xl px-5 pb-12 lg:px-10">
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {HERO_STATS.map((stat) => (
             <li key={stat.label} data-reveal className={`${CARD} flex flex-col p-6`}>
@@ -111,13 +111,13 @@ export default function NriPage() {
 
       {/* ─── Reasons ──────────────────────────────────────────── */}
       <section className="border-t border-black/5 dark:border-white/10">
-        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-10 lg:py-28">
+        <div className="mx-auto max-w-6xl px-5 py-12 lg:px-10">
           <SectionHeading eyebrow="Why NRIs invest in India">
             Four reasons that <Accent>outlast</Accent> any market cycle
           </SectionHeading>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {REASONS.map((reason) => (
-              <article key={reason.title} data-reveal className={`${CARD} flex items-start gap-5 p-7`}>
+              <article key={reason.title} data-reveal className={`${CARD} flex items-start gap-4 p-6`}>
                 <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-600 ring-1 ring-primary-100 dark:bg-primary-500/10 dark:text-primary-300 dark:ring-white/10">
                   <NriIcon name={reason.icon} className="h-6 w-6" />
                 </span>
@@ -128,7 +128,7 @@ export default function NriPage() {
               </article>
             ))}
           </div>
-          <div data-reveal className="mt-10">
+          <div data-reveal className="mt-6">
             <Link
               href="/nri/why-invest-in-india"
               className="group inline-flex items-center gap-2 text-[15px] font-semibold text-primary-600 transition-colors hover:text-primary-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:text-primary-400 dark:hover:text-primary-300"

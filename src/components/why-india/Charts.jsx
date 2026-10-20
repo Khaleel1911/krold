@@ -10,10 +10,10 @@ const TIP =
 
 export function ChartCard({ title, source, children, className = '' }) {
   return (
-    <figure data-reveal className={`rounded-3xl border border-primary-100/70 bg-white p-6 dark:border-white/10 dark:bg-white/[0.03] sm:p-7 ${className}`}>
+    <figure data-reveal className={`rounded-3xl border border-primary-100/70 bg-white p-6 dark:border-white/10 dark:bg-white/[0.03] sm:p-6 ${className}`}>
       <figcaption className="font-semibold text-black dark:text-white">{title}</figcaption>
-      <div className="mt-6">{children}</div>
-      {source ? <p className="mt-5 text-xs leading-relaxed text-black/45 dark:text-white/45">Source: {source}</p> : null}
+      <div className="mt-5">{children}</div>
+      {source ? <p className="mt-4 text-xs leading-relaxed text-black/45 dark:text-white/45">Source: {source}</p> : null}
     </figure>
   )
 }
@@ -105,7 +105,7 @@ export function ChangeBars({ rows }) {
           <li
             key={r.name}
             tabIndex={0}
-            className="group relative grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 border-b border-black/5 py-3 outline-none last:border-0 dark:border-white/5 sm:grid-cols-[10rem_1fr_auto]"
+            className="group relative grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 border-b border-black/5 py-2.5 outline-none last:border-0 dark:border-white/5 sm:grid-cols-[10rem_1fr_auto]"
           >
             <span className={`text-[15px] ${r.highlight ? 'font-semibold text-black dark:text-white' : 'text-black/75 dark:text-white/75'}`}>{r.name}</span>
             {/* Every bar is a share of the same track; the padding keeps room for the largest label. */}
@@ -151,7 +151,7 @@ export function SensexLine({ points, latest }) {
     return () => ro.disconnect()
   }, [])
 
-  const H = width < 480 ? 240 : 300
+  const H = width < 480 ? 240 : 270
   const pad = { top: 28, right: width < 480 ? 12 : 24, bottom: 28, left: 38 }
   const x0 = points[0][0]
   const x1 = points[points.length - 1][0] + 1

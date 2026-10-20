@@ -23,7 +23,7 @@ export default function NriFaq() {
 
   return (
     <section id="faq" className="scroll-mt-20 border-t border-black/5 dark:border-white/10">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-10 lg:py-28">
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-10 lg:py-12">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
             eyebrow="Questions NRIs ask us"
@@ -32,7 +32,7 @@ export default function NriFaq() {
             Clear answers, <Accent>no jargon</Accent>
           </SectionHeading>
 
-          <div data-reveal role="tablist" aria-label="FAQ topics" className="mt-8 flex flex-wrap gap-2">
+          <div data-reveal role="tablist" aria-label="FAQ topics" className="mt-6 flex flex-wrap gap-2">
             {FAQ_GROUPS.map((g) => {
               const selected = g.key === active
               return (
@@ -70,7 +70,7 @@ export default function NriFaq() {
         >
           {group.items.map((item, i) => (
             <details key={item.q} open={i === 0} className="group">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left text-[17px] font-semibold text-black transition-colors hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:text-white dark:hover:text-primary-400 [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-3.5 text-left text-base font-semibold text-black transition-colors hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:text-white dark:hover:text-primary-400 [&::-webkit-details-marker]:hidden">
                 {item.q}
                 <svg
                   viewBox="0 0 24 24"
@@ -83,7 +83,7 @@ export default function NriFaq() {
                   <path d="M12 5v14M5 12h14" strokeLinecap="round" />
                 </svg>
               </summary>
-              <div className="max-w-[62ch] pb-6 text-[15px] leading-[1.75] text-black/70 dark:text-white/70">
+              <div className="max-w-[62ch] pb-4 text-[15px] leading-relaxed text-black/70 dark:text-white/70">
                 <Answer a={item.a} />
               </div>
             </details>
