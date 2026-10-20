@@ -21,9 +21,9 @@ const LEGAL_LINKS = [
 ]
 
 const SOCIAL_LINKS = [
-  { name: 'Facebook', href: '#', icon: 'facebook' },
-  { name: 'Instagram', href: '#', icon: 'instagram' },
-  { name: 'LinkedIn', href: '#', icon: 'linkedin' },
+  { name: 'Facebook', href: 'https://www.facebook.com/KroldMfins', icon: 'facebook' },
+  { name: 'Instagram', href: 'https://www.instagram.com/kroldmfins', icon: 'instagram' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/company/krold-mfin-pvt-ltd', icon: 'linkedin' },
 ]
 
 export default function Footer() {
@@ -47,7 +47,9 @@ export default function Footer() {
                 <a
                   key={social.name}
                   href={social.href}
-                  aria-label={social.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Krold Mfins on ${social.name}`}
                   className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:bg-gradient-to-br hover:from-primary-500 hover:to-secondary-500 hover:text-white"
                 >
                   <SocialIcon name={social.icon} className="h-4 w-4" />

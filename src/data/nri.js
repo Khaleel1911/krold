@@ -4,11 +4,37 @@ export const AS_OF = 'October 2026'
 export const TAX_YEAR = 'Tax Year 2026-27'
 
 export const HERO_STATS = [
-  { value: '$4.15T', label: 'Size of the Indian economy', source: 'IMF, April 2026' },
-  { value: '7%+', label: 'Real GDP growth, FY 2025-26', source: 'MoSPI estimates' },
-  { value: '$144.8B', label: 'Sent home from abroad, FY 2025-26', source: 'RBI, net private transfers' },
-  { value: '₹87L Cr', label: 'Mutual fund assets under management', source: 'AMFI, August 2026' },
+  {
+    badge: 'On track to be world’s #4 in 2027',
+    value: '$4.06T',
+    label: 'Size of the Indian economy, 2026',
+    note: '6th largest today, rising to 4th in 2027 ($4.52T). Already 3rd largest by purchasing power.',
+    source: 'IMF World Economic Outlook, Oct 2026',
+  },
+  {
+    badge: 'Fastest-growing major economy',
+    value: '7.7%',
+    label: 'Real GDP growth, FY 2025-26',
+    note: 'IMF projects 7.0% for 2026, more than twice the world’s 3.1%.',
+    source: 'MoSPI, June 2026; IMF WEO, Oct 2026',
+  },
+  {
+    badge: 'World’s #1 remittance recipient',
+    value: '$144.8B',
+    label: 'Sent home from abroad, FY 2025-26',
+    note: 'A record, up from $125.6B the year before.',
+    source: 'RBI, net private transfers',
+  },
+  {
+    badge: 'World’s #1 working-age population',
+    value: '1.01 bn',
+    label: 'People aged 15–64, 2026',
+    note: 'Ahead of China, and still growing for decades to come.',
+    source: 'UN World Population Prospects 2024',
+  },
 ]
+
+export const HERO_ROUTE = ['New York', 'London', 'Dubai', 'Singapore', 'Sydney']
 
 // Rough positions on a 600×600 canvas; this is an illustration, not a map.
 export const CORRIDORS = [
@@ -19,38 +45,6 @@ export const CORRIDORS = [
   { city: 'Sydney', x: 515, y: 520 },
 ]
 export const INDIA_POINT = { x: 400, y: 330 }
-
-export const STABILITY_POINTS = [
-  { title: 'Democratic governance', text: 'Regular elections at national, state and local level, with orderly transitions of power.' },
-  { title: 'Policy continuity', text: 'Economic reform has stayed on course across changes of government.' },
-  { title: 'Rule of law', text: 'An independent judiciary protects the rights of individuals and businesses.' },
-  { title: 'Regulated markets', text: 'SEBI, RBI and IRDAI oversee the products and intermediaries you invest through.' },
-]
-
-export const RECENT_CHANGES = [
-  {
-    date: 'April 2026',
-    title: 'A new Income-tax Act',
-    text: 'The Income-tax Act, 2025 replaced the 1961 Act. A single “tax year” replaces previous year and assessment year, and sections are renumbered. The residency tests are unchanged.',
-  },
-  {
-    date: 'Budget 2026',
-    title: 'Higher equity limits for NRIs',
-    text: 'The Union Budget raised the limit for an individual investor resident outside India in a listed company from 5% to 10%, and the combined limit from 10% to 24%.',
-  },
-  {
-    date: 'October 2026',
-    title: 'Simpler property sales',
-    text: 'A resident buying property from an NRI can now deduct and deposit tax using their PAN, with no need to obtain a TAN.',
-  },
-]
-
-export const DIVERSIFICATION = [
-  'Exposure to a different growth cycle from the country you live in',
-  'Mutual funds and ETFs spread money across sectors and asset classes',
-  'Rupee assets to match rupee goals: family support, property, retirement in India',
-  'A balanced mix across geographies makes a portfolio more resilient',
-]
 
 export const ASSET_CLASSES = [
   {
@@ -174,47 +168,52 @@ export const REASONS = [
   },
 ]
 
-export const TAX_RATES = [
-  {
-    title: 'Equity funds and listed shares',
-    lines: [
-      { label: 'Held under 12 months', value: '20%' },
-      { label: 'Held 12 months or more', value: '12.5%' },
-    ],
-    note: 'Long-term gains are taxed above ₹1.25 lakh a year. TDS is deducted at the same rates on redemption.',
-  },
-  {
-    title: 'Debt funds',
-    lines: [
-      { label: 'Tax on gains', value: 'Slab rate' },
-      { label: 'TDS on redemption', value: '30%' },
-    ],
-    note: 'For debt-oriented funds bought on or after 1 April 2023, whatever the holding period. No indexation.',
-  },
-  {
-    title: 'Bank interest',
-    lines: [
-      { label: 'NRE and FCNR(B)', value: 'Exempt' },
-      { label: 'NRO, TDS', value: '30%' },
-    ],
-    note: 'NRO interest has TDS from the first rupee, with no threshold.',
-  },
-  {
-    title: 'Dividends',
-    lines: [
-      { label: 'Tax', value: 'Slab rate' },
-      { label: 'TDS', value: '20%' },
-    ],
-    note: 'A lower rate may apply under your country’s tax treaty with India.',
-  },
+export const CAPITAL_GAINS = {
+  rows: [
+    { asset: 'Listed shares, equity mutual funds', short: '20% (held ≤12 months)', long: '12.5% on gains above ₹1.25 lakh a year' },
+    { asset: 'Debt mutual funds (bought from 1 Apr 2023)', both: 'Taxed at slab rates, regardless of holding period' },
+    { asset: 'Property', short: 'Slab rates (≤24 months)', long: '12.5%, no indexation for NRIs' },
+    { asset: 'Share buybacks (from TY 2026-27)', short: '20%', long: '12.5%, now taxed as capital gains, not dividend' },
+  ],
+  note: 'TDS is deducted at source on NRIs’ capital gains, dividends and NRO interest; excess TDS can be reclaimed by filing a return.',
+}
+
+export const EXEMPT_INCOME = [
+  'Interest earned on Non-Resident External (NRE) accounts and Foreign Currency Non-Resident (FCNR) deposits.',
+  'Any sum received, including bonus, under a life insurance policy on maturity or premature withdrawal, provided the policy was issued after 1 April 2012 and the yearly premium does not exceed 10% of the sum assured.',
 ]
 
-export const RESIDENCY_TESTS = [
-  { value: '182 days', text: 'or more in India during the tax year makes you a resident.' },
-  { value: '60 + 365', text: '60 days in the year and 365 days over the previous four years also does. For Indian citizens and people of Indian origin visiting India, the 60 becomes 182.' },
-  { value: '120 days', text: 'replaces that 182 if your Indian income is above ₹15 lakh. You then count as resident but not ordinarily resident.' },
-  { value: 'Deemed', text: 'An Indian citizen with Indian income above ₹15 lakh who is not liable to tax in any other country is treated as resident.' },
-]
+export const GIFT_CITY = {
+  stats: [
+    { value: '$111B', label: 'Banking assets' },
+    { value: '217', label: 'Fund managers' },
+    { value: '$39B', label: 'Fund commitments' },
+  ],
+  statsSource: 'GIFT IFSC, March 2026',
+  features: [
+    {
+      icon: 'dollar',
+      title: 'Invest in US dollars',
+      text: 'Hold investments in foreign currency, with no rupee conversion. Principal and returns are freely repatriable.',
+    },
+    {
+      icon: 'bank',
+      title: 'Tax-free bank interest',
+      text: 'Interest on foreign-currency deposits with IFSC Banking Units is exempt from Indian tax for non-residents.',
+    },
+    {
+      icon: 'percent',
+      title: 'Lower tax on funds and trades',
+      text: 'No STT on IFSC exchange trades. Gains on specified IFSC funds held by NRIs are exempt; dividends taxed at 10%.',
+    },
+    {
+      icon: 'globe',
+      title: 'India and the world, in one place',
+      text: 'Indian and global funds, GIFT Nifty, bonds and insurance, under a single regulator, IFSCA.',
+    },
+  ],
+  note: 'Tax treatment depends on the product and your country of residence; please consult a tax adviser. Sources: IFSCA / GIFT City data as of March 2026; Income-tax Act provisions as amended by Finance Act 2025. Image: illustration.',
+}
 
 export const FAQ_GROUPS = [
   {

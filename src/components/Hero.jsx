@@ -35,7 +35,7 @@ const SLIDES = [
   },
   {
     eyebrow: 'Protection that matters',
-    lead: 'Protect today.',
+    lead: 'Protect today.', 
     highlight: 'Prepare for tomorrow.',
     description:
       'Life, health and general insurance solutions tailored to protect your family, business and assets.',

@@ -1,5 +1,7 @@
-import { CARD, SectionHeading } from './parts'
-import { AS_OF, RESIDENCY_TESTS, TAX_RATES, TAX_YEAR } from '../../data/nri'
+import { Accent, CARD, SectionHeading } from './parts'
+import { AS_OF, CAPITAL_GAINS, EXEMPT_INCOME, TAX_YEAR } from '../../data/nri'
+
+const CELL = 'px-4 py-4 align-top text-[15px] leading-relaxed text-black/70 dark:text-white/70'
 
 export default function TaxGlance() {
   return (
@@ -10,7 +12,7 @@ export default function TaxGlance() {
             eyebrow="Tax at a glance"
             intro="Tax is deducted at source on most NRI income in India. Knowing the rates up front means no surprises when you redeem."
           >
-            What you keep, <em className="text-primary-600 dark:text-primary-400">after tax</em>
+            What you keep, <Accent>after tax</Accent>
           </SectionHeading>
           <p
             data-reveal
@@ -20,56 +22,92 @@ export default function TaxGlance() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {TAX_RATES.map((card) => (
-            <article key={card.title} data-reveal className={`${CARD} flex flex-col bg-white p-6 dark:bg-white/[0.03]`}>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-black/55 dark:text-white/55">
-                {card.title}
-              </h3>
-              <dl className="mt-5 space-y-4">
-                {card.lines.map((line) => (
-                  <div key={line.label}>
-                    <dd className="font-display text-4xl leading-none text-primary-600 dark:text-primary-400">{line.value}</dd>
-                    <dt className="mt-1.5 text-sm text-black/65 dark:text-white/65">{line.label}</dt>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-auto pt-5 text-xs leading-relaxed text-black/50 dark:text-white/50">{card.note}</p>
-            </article>
-          ))}
-        </div>
-        <p data-reveal className="mt-4 text-xs text-black/50 dark:text-white/50">
-          Surcharge, where applicable, and 4% health and education cess are added to all rates.
-        </p>
+        <div className="mt-12 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+          {/* Capital gains */}
+          <article data-reveal className={`${CARD} bg-white p-6 dark:bg-white/[0.03] sm:p-8`}>
+            <h3 className="text-xl font-semibold text-black dark:text-white">Capital gains for NRIs</h3>
 
-        <div className="mt-16 grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-14">
-          <div data-reveal>
-            <h3 className="font-display text-3xl text-black dark:text-white">Are you a non-resident for tax?</h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-black/65 dark:text-white/65">
-              Your status is decided afresh each tax year by the number of days you spend in India.
-            </p>
-            <dl className="mt-7 divide-y divide-black/10 border-y border-black/10 dark:divide-white/10 dark:border-white/10">
-              {RESIDENCY_TESTS.map((test) => (
-                <div key={test.value} className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-6">
-                  <dt className="font-display text-2xl text-primary-600 dark:text-primary-400">{test.value}</dt>
-                  <dd className="text-[15px] leading-relaxed text-black/70 dark:text-white/70">{test.text}</dd>
+            <table className="mt-6 hidden w-full table-fixed border-collapse text-left sm:table">
+              <thead>
+                <tr className="bg-primary-50 text-sm font-semibold text-black/80 dark:bg-white/5 dark:text-white/80">
+                  <th scope="col" className="w-[34%] rounded-l-xl px-4 py-3">Asset</th>
+                  <th scope="col" className="w-[28%] px-4 py-3">Short term</th>
+                  <th scope="col" className="rounded-r-xl px-4 py-3">Long term</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-black/5 dark:divide-white/10">
+                {CAPITAL_GAINS.rows.map((row) => (
+                  <tr key={row.asset}>
+                    <th scope="row" className={`${CELL} font-medium text-black/85 dark:text-white/85`}>{row.asset}</th>
+                    {row.both ? (
+                      <td colSpan={2} className={CELL}>{row.both}</td>
+                    ) : (
+                      <>
+                        <td className={CELL}>{row.short}</td>
+                        <td className={CELL}>{row.long}</td>
+                      </>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Phones: one block per asset */}
+            <dl className="mt-5 divide-y divide-black/5 dark:divide-white/10 sm:hidden">
+              {CAPITAL_GAINS.rows.map((row) => (
+                <div key={row.asset} className="py-4">
+                  <dt className="font-semibold text-black/85 dark:text-white/85">{row.asset}</dt>
+                  {row.both ? (
+                    <dd className="mt-1 text-[15px] leading-relaxed text-black/70 dark:text-white/70">{row.both}</dd>
+                  ) : (
+                    <>
+                      <dd className="mt-1 text-[15px] leading-relaxed text-black/70 dark:text-white/70">
+                        <span className="font-medium text-black/50 dark:text-white/50">Short term: </span>
+                        {row.short}
+                      </dd>
+                      <dd className="mt-0.5 text-[15px] leading-relaxed text-black/70 dark:text-white/70">
+                        <span className="font-medium text-black/50 dark:text-white/50">Long term: </span>
+                        {row.long}
+                      </dd>
+                    </>
+                  )}
                 </div>
               ))}
             </dl>
-          </div>
 
-          <aside
-            data-reveal
-            className="self-start rounded-3xl bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-500 p-8 text-white dark:from-primary-700 dark:via-primary-600 dark:to-secondary-600"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/75">Avoiding double tax</p>
-            <p className="mt-4 font-display text-6xl leading-none">85+</p>
-            <p className="mt-2 text-lg font-semibold">countries have a tax treaty with India</p>
-            <p className="mt-4 text-[15px] leading-relaxed text-white/85">
-              A Double Taxation Avoidance Agreement stops the same income being taxed in both countries, usually by
-              giving credit for tax paid in India. You will need a Tax Residency Certificate from where you live.
+            <p className="mt-5 border-t border-black/5 pt-4 text-xs leading-relaxed text-black/50 dark:border-white/10 dark:text-white/50">
+              {CAPITAL_GAINS.note} Surcharge, where applicable, and 4% health and education cess are added to all rates.
             </p>
-          </aside>
+          </article>
+
+          <div className="grid content-start gap-5">
+            <aside
+              data-reveal
+              className="rounded-3xl bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-500 p-8 text-white dark:from-primary-700 dark:via-primary-600 dark:to-secondary-600"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/75">Avoiding double tax</p>
+              <p className="mt-4 text-5xl font-semibold leading-none">85+</p>
+              <p className="mt-3 text-lg font-semibold">countries have a tax treaty with India</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-white/85">
+                A Double Taxation Avoidance Agreement stops the same income being taxed in both countries, usually by
+                giving credit for tax paid in India. You will need a Tax Residency Certificate from where you live.
+              </p>
+            </aside>
+
+            <article data-reveal className={`${CARD} bg-white p-7 dark:bg-white/[0.03]`}>
+              <h3 className="text-lg font-semibold text-black dark:text-white">Exempt income</h3>
+              <ul className="mt-4 space-y-3">
+                {EXEMPT_INCOME.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-black/70 dark:text-white/70">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="mt-1 h-4 w-4 shrink-0 text-secondary-500" aria-hidden="true">
+                      <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </div>
         </div>
       </div>
     </section>

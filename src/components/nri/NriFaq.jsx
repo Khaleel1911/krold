@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { SectionHeading } from './parts'
+import { Accent, SectionHeading } from './parts'
 import { FAQ_GROUPS } from '../../data/nri'
 
 function Answer({ a }) {
@@ -29,7 +29,7 @@ export default function NriFaq() {
             eyebrow="Questions NRIs ask us"
             intro="Short answers to the questions that come up most. For anything specific to your situation, ask us directly."
           >
-            Clear answers, <em className="text-primary-600 dark:text-primary-400">no jargon</em>
+            Clear answers, <Accent>no jargon</Accent>
           </SectionHeading>
 
           <div data-reveal role="tablist" aria-label="FAQ topics" className="mt-8 flex flex-wrap gap-2">

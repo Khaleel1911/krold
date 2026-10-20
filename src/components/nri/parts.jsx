@@ -39,6 +39,21 @@ const ICONS = {
     </>
   ),
   assets: <path d="M12 3l8 4-8 4-8-4 8-4ZM4 12l8 4 8-4M4 16.500l8 4 8-4" />,
+  dollar: <path d="M12 3v18M16.500 7.500C16 6 14.300 5 12 5S7.500 6.200 7.500 8.200c0 4.300 9 2.500 9 7 0 2-2 3.300-4.500 3.300S7.600 17.300 7.300 15.800" />,
+  bank: <path d="M3.500 9.500L12 4l8.500 5.500M5 9.500h14M6.500 9.500v7.500M10 9.500v7.500M14 9.500v7.500M17.500 9.500v7.500M4 20h16" />,
+  percent: (
+    <>
+      <path d="M18.500 5.500l-13 13" />
+      <circle cx="7" cy="7" r="2.500" />
+      <circle cx="17" cy="17" r="2.500" />
+    </>
+  ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="8.500" />
+      <path d="M3.500 12h17M12 3.500c2.300 2.400 3.500 5.200 3.500 8.500s-1.200 6.100-3.500 8.500c-2.300-2.400-3.500-5.200-3.500-8.500s1.200-6.100 3.500-8.500Z" />
+    </>
+  ),
 }
 
 export function NriIcon({ name, className = 'h-5 w-5' }) {
@@ -50,23 +65,28 @@ export function NriIcon({ name, className = 'h-5 w-5' }) {
 }
 
 export function Eyebrow({ children, className = 'text-primary-600 dark:text-primary-400' }) {
-  return <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${className}`}>{children}</p>
+  return <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${className}`}>{children}</p>
 }
 
 export function SectionHeading({ eyebrow, children, intro, className = '' }) {
   return (
     <div data-reveal className={`max-w-2xl ${className}`}>
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-5 font-display text-4xl font-normal leading-[1.12] text-balance text-black dark:text-white sm:text-5xl">
+      <h2 className="mt-4 text-3xl font-semibold leading-tight text-balance text-black dark:text-white sm:text-4xl">
         {children}
       </h2>
-      {intro ? <p className="mt-5 text-[17px] leading-relaxed text-black/65 dark:text-white/65">{intro}</p> : null}
+      {intro ? <p className="mt-4 text-[17px] leading-relaxed text-black/65 dark:text-white/65">{intro}</p> : null}
     </div>
   )
 }
 
 export function Source({ children, className = '' }) {
-  return <p className={`text-xs text-black/45 dark:text-white/45 ${className}`}>Source: {children}</p>
+  return <p className={`text-xs leading-relaxed text-black/45 dark:text-white/45 ${className}`}>Source: {children}</p>
+}
+
+// The highlighted words inside a heading, as on the other pages: brand colour, upright.
+export function Accent({ children }) {
+  return <span className="text-primary-600 dark:text-primary-400">{children}</span>
 }
 
 export const CARD =
