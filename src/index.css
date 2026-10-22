@@ -367,3 +367,158 @@ html.hydrating body {
 }
 .office-pin:hover .office-pin-label { transform: translateY(-2px); }
 .office-pin.is-active .office-pin-label { background: linear-gradient(90deg, #36a1da, #54ba4f); color: #fff; }
+
+/* ─── Blog article body (public posts, the admin editor and its preview) ─── */
+/* One stylesheet for all three, so what the admin writes is exactly what readers see. */
+.blog-prose {
+  --prose-text: rgba(0, 0, 0, 0.78);
+  --prose-strong: #000;
+  --prose-muted: rgba(0, 0, 0, 0.5);
+  --prose-border: rgba(39, 116, 157, 0.16);
+  --prose-head: var(--color-primary-50);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--prose-text);
+  overflow-wrap: break-word;
+}
+.dark .blog-prose {
+  --prose-text: rgba(255, 255, 255, 0.78);
+  --prose-strong: #fff;
+  --prose-muted: rgba(255, 255, 255, 0.5);
+  --prose-border: rgba(255, 255, 255, 0.1);
+  --prose-head: rgba(54, 161, 218, 0.1);
+}
+.blog-prose::after { content: ''; display: table; clear: both; }
+.blog-prose > * + * { margin-top: 1.25em; }
+.blog-prose > :first-child { margin-top: 0; }
+
+.blog-prose h2,
+.blog-prose h3,
+.blog-prose h4 { color: var(--prose-strong); font-weight: 600; line-height: 1.3; clear: both; }
+.blog-prose h2 { font-size: 1.6em; margin-top: 2em; letter-spacing: -0.01em; }
+.blog-prose h3 { font-size: 1.3em; margin-top: 1.8em; }
+.blog-prose h4 { font-size: 1.1em; margin-top: 1.6em; }
+.blog-prose h2 + *,
+.blog-prose h3 + *,
+.blog-prose h4 + * { margin-top: 0.75em; }
+
+.blog-prose strong { color: var(--prose-strong); font-weight: 600; }
+.blog-prose a { color: var(--color-primary-600); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.dark .blog-prose a { color: var(--color-primary-400); }
+.blog-prose a:hover { text-decoration-thickness: 2px; }
+.blog-prose mark { border-radius: 0.2em; padding: 0.05em 0.2em; background: #fef08a; color: inherit; }
+.dark .blog-prose mark:not([style]) { background: rgba(250, 204, 21, 0.3); }
+.blog-prose code { border-radius: 0.35em; background: var(--prose-head); padding: 0.15em 0.4em; font-size: 0.88em; }
+.blog-prose pre { overflow-x: auto; border-radius: 1rem; background: #0f1b24; padding: 1.1em 1.3em; color: #e6eef4; font-size: 0.9em; line-height: 1.6; }
+.blog-prose pre code { background: none; padding: 0; }
+.blog-prose hr { border: 0; border-top: 1px solid var(--prose-border); margin: 2.5em 0; clear: both; }
+
+.blog-prose ul,
+.blog-prose ol { padding-left: 1.4em; }
+.blog-prose ul { list-style: disc; }
+.blog-prose ol { list-style: decimal; }
+.blog-prose li + li { margin-top: 0.5em; }
+.blog-prose li::marker { color: var(--color-primary-500); font-weight: 600; }
+.blog-prose li > p { margin: 0; }
+
+.blog-prose blockquote {
+  border-left: 3px solid var(--color-primary-500);
+  padding: 0.2em 0 0.2em 1.3em;
+  font-size: 1.12em;
+  font-style: italic;
+  color: var(--prose-strong);
+}
+.blog-prose blockquote > * + * { margin-top: 0.6em; }
+
+/* Tables scroll sideways on narrow screens instead of squeezing their columns. */
+.blog-prose table,
+.blog-prose .tableWrapper { display: block; width: 100%; overflow-x: auto; }
+.blog-prose .tableWrapper table { overflow: visible; }
+.blog-prose table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--prose-border);
+  border-radius: 1rem;
+  font-size: 0.94em;
+  line-height: 1.5;
+}
+.blog-prose table > tbody,
+.blog-prose table > colgroup { width: 100%; }
+.blog-prose th,
+.blog-prose td { min-width: 6em; padding: 0.8em 1.1em; text-align: left; vertical-align: top; border-bottom: 1px solid var(--prose-border); }
+.blog-prose th { background: var(--prose-head); color: var(--prose-strong); font-weight: 600; }
+.blog-prose tr:last-child > td { border-bottom: 0; }
+/* Cell backgrounds would otherwise square off the table's rounded corners. */
+.blog-prose tr:first-child > :first-child { border-top-left-radius: calc(1rem - 1px); }
+.blog-prose tr:first-child > :last-child { border-top-right-radius: calc(1rem - 1px); }
+.blog-prose td > p,
+.blog-prose th > p { margin: 0; }
+@media (min-width: 640px) {
+  .blog-prose table { display: table; }
+  .blog-prose .tableWrapper > table { display: table; }
+}
+
+/* Images and videos: width is a percentage of the column, alignment floats them beside the text. */
+.blog-prose figure { margin: 2em auto; max-width: 100%; }
+.blog-prose figure[data-align='left'] { float: left; margin: 0.4em 1.75em 1em 0; }
+.blog-prose figure[data-align='right'] { float: right; margin: 0.4em 0 1em 1.75em; }
+.blog-prose figure img,
+.blog-prose figure video { display: block; width: 100%; height: auto; border-radius: 1rem; }
+.blog-prose figure video { background: #000; }
+.blog-prose figcaption { margin-top: 0.7em; text-align: center; font-size: 0.85em; line-height: 1.5; color: var(--prose-muted); }
+@media (max-width: 639px) {
+  .blog-prose figure[data-align] { float: none; width: 100% !important; margin: 1.75em 0; }
+}
+
+.blog-prose div[data-youtube-video] { margin: 2em 0; }
+.blog-prose div[data-youtube-video] iframe { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; border-radius: 1rem; }
+
+.blog-prose .file-card {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  border: 1px solid var(--prose-border);
+  border-radius: 1rem;
+  padding: 0.9em 1.1em;
+  text-decoration: none;
+  color: var(--prose-strong);
+  background: rgba(255, 255, 255, 0.5);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.dark .blog-prose .file-card { background: rgba(255, 255, 255, 0.03); }
+.blog-prose .file-card:hover { border-color: var(--color-primary-400); transform: translateY(-1px); }
+.blog-prose .file-card-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75em;
+  height: 2.75em;
+  border-radius: 0.75em;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  color: #fff;
+  font-size: 0.7em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.blog-prose .file-card-body { display: flex; min-width: 0; flex-direction: column; line-height: 1.35; }
+.blog-prose .file-card-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.blog-prose .file-card-meta { font-size: 0.82em; color: var(--prose-muted); }
+
+/* ─── Blog editor (see src/components/admin/editor) ─────────────────── */
+.blog-editor .tiptap { min-height: 420px; outline: none; }
+.blog-editor .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--prose-muted);
+}
+.blog-editor .tiptap .ProseMirror-selectednode:not(figure, .react-renderer) { outline: 2px solid var(--color-primary-400); outline-offset: 3px; border-radius: 0.75rem; }
+.blog-editor .tiptap .selectedCell { background: rgba(54, 161, 218, 0.14); }
+.blog-editor .tiptap .column-resize-handle { position: absolute; top: 0; right: -2px; bottom: 0; width: 4px; background: var(--color-primary-400); pointer-events: none; }
+.blog-editor .tiptap.resize-cursor { cursor: col-resize; }
+.blog-editor .tiptap th,
+.blog-editor .tiptap td { position: relative; }
+.blog-editor .tiptap div[data-youtube-video] { cursor: move; }
+.blog-editor .tiptap div[data-youtube-video] iframe { pointer-events: none; }
+.blog-editor .tiptap .file-card { cursor: default; }

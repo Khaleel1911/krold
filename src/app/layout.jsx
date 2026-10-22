@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ScrollToHash from '../components/ScrollToHash'
 import HydrationReveal from '../components/HydrationReveal'
+import SiteChrome from '../components/SiteChrome'
 
 export const metadata = {
   title: 'Krold Mfins | Wealth & Insurance',
@@ -37,9 +38,13 @@ export default function RootLayout({ children }) {
       <body>
         <div id="root">
           <ScrollToHash />
-          <Navbar />
+          <SiteChrome>
+            <Navbar />
+          </SiteChrome>
           {children}
-          <Footer />
+          <SiteChrome>
+            <Footer />
+          </SiteChrome>
         </div>
         <HydrationReveal />
       </body>

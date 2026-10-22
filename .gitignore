@@ -26,3 +26,10 @@ dist-ssr
 # Next.js
 .next
 out
+
+# Blog posts saved locally in development when Cloudinary is not configured
+.blog-data
+
+# Environment
+.env*
+!.env.example
