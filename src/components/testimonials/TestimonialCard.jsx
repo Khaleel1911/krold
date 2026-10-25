@@ -52,16 +52,18 @@ export default function TestimonialCard({ testimonial, index = 0, className = ''
             {isBusiness && (
               <>
                 <span className="font-medium text-primary-600 dark:text-primary-400">{testimonial.company}</span>
-                <span className="text-black/25 dark:text-white/25" aria-hidden="true">·</span>
+                {testimonial.location && <span className="text-black/25 dark:text-white/25" aria-hidden="true">·</span>}
               </>
             )}
-            <span className="inline-flex items-center gap-1">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3 shrink-0" aria-hidden="true">
-                <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" strokeLinejoin="round" />
-                <circle cx="12" cy="10" r="2.2" />
-              </svg>
-              {testimonial.location}
-            </span>
+            {testimonial.location && (
+              <span className="inline-flex items-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3 shrink-0" aria-hidden="true">
+                  <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" strokeLinejoin="round" />
+                  <circle cx="12" cy="10" r="2.2" />
+                </svg>
+                {testimonial.location}
+              </span>
+            )}
           </p>
         </div>
       </figcaption>

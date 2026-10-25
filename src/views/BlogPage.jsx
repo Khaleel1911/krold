@@ -23,9 +23,9 @@ function FeaturedPost({ post }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group grid overflow-hidden rounded-3xl border border-primary-100/70 bg-white/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-100/60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:border-white/10 dark:bg-white/[0.03] dark:hover:shadow-black/40 lg:grid-cols-[1.15fr_1fr]"
+      className="group grid overflow-hidden rounded-3xl border border-primary-100/70 bg-white/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-100/60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500 dark:border-white/10 dark:bg-white/[0.03] dark:hover:shadow-black/40 lg:grid-cols-[0.8fr_1fr]"
     >
-      <div className="aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[340px]">
+      <div className="aspect-[16/9] max-h-72 overflow-hidden lg:aspect-auto lg:max-h-none">
         <BlogCover post={post} width={1200} className="transition-transform duration-700 group-hover:scale-[1.03]" />
       </div>
       <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">

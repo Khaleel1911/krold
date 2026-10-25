@@ -1,59 +1,57 @@
-// Placeholder testimonials — original fictional content (names, companies and locations included) for layout/animation
-// purposes only. Swap in real, approved client quotes and photos before launch.
+// Client testimonials, as published on kroldmfins.com.
 //
 // Two kinds of client, each credited differently:
-//   type: 'business'     → name, company and location
+//   type: 'business'     → name, company and (optionally) location
 //   type: 'professional' → profession and location (no name)
 export const TESTIMONIALS = [
   {
     id: 't1',
     type: 'business',
-    name: 'Rohan Kapoor',
-    company: 'Kapoor Textiles',
-    location: 'Kolkata',
+    name: 'Manmeet Singh',
+    company: 'TRS Realtors',
     description:
-      'Planning my investments used to feel overwhelming. Now I get clear, honest advice and I actually understand where my money is going.',
+      'Mr. Amit Mahansaria of Krold Mfins introduced me to the world of SIP. He explained to me how important it was for me to start doing it for future security and building a corpus. I have been regularly doing it for last 6 years and I am super happy with the advice and returns which Amit has been able to provide me.',
   },
   {
     id: 't2',
-    type: 'professional',
-    profession: 'IT Professional',
-    location: 'Bengaluru',
+    type: 'business',
+    name: 'Sanjeev Mishra',
+    company: 'Sea Leader DMCC',
+    location: 'Dubai',
     description:
-      'What stood out was the patience — every option was explained properly before I had to decide anything. No pressure, just clarity.',
+      'It’s been more than 4 years of association/relationship with Krold MFins Pvt. Ltd. They have an excellent team with very good support system and expertise for Customers of all range. My portfolio has grown more than expected under the guidance of this team. Wish the Company to grow in manifolds in future.',
   },
   {
     id: 't3',
     type: 'business',
-    name: 'Devansh Mehta',
-    company: 'Mehta Foods',
-    location: 'Mumbai',
+    name: 'Bandana Khanna',
+    company: 'HR Department, Larsen & Toubro Ltd',
     description:
-      'My SIPs have been running smoothly for three years now, with regular reviews that actually make sense for my goals.',
+      'I have been associated with Krold MFins Pvt Ltd for the last 1.5 years. Their team has consistently demonstrated professionalism & integrity. The advice & strategies provided by them has helped me grow my portfolio. I would confidently recommend them to anyone seeking investment planning.',
   },
   {
     id: 't4',
-    type: 'professional',
-    profession: 'Marketing Manager',
-    location: 'Chennai',
+    type: 'business',
+    name: 'Shweta Dalmiya',
+    company: 'CA, CS, S Dalmiya and Associates',
     description:
-      'I finally have a retirement plan that feels realistic. The whole process was simple and genuinely well explained.',
+      'I’ve been extremely happy with the way Krold Mfins has managed my mutual fund portfolio. Their smart strategies and timely advice have given me great returns, and I truly trust their expertise. Highly recommended for anyone looking to grow their investments with confidence.',
   },
   {
     id: 't5',
-    type: 'professional',
-    profession: 'Retired Professional',
-    location: 'Kochi',
+    type: 'business',
+    name: 'Barnali Sarkar',
+    company: 'Sr GM, Godrej Properties Ltd',
     description:
-      "Managing my savings after retirement felt risky on my own. Having a steady, dependable plan in place gave me real peace of mind.",
+      'Mr. Amit Mahansaria is a knowledgeable investment consultant who understands client goals and offers tailored, transparent solutions based on risk appetite. Over the years, he has guided me and my husband, helping grow our investments without ever push-selling.',
   },
   {
     id: 't6',
-    type: 'professional',
-    profession: 'Chartered Accountant',
-    location: 'Kolkata',
+    type: 'business',
+    name: 'Ankit Somani',
+    company: 'Director, Travel Dabble Pvt Ltd',
     description:
-      'Even as a finance professional myself, I value having someone track and rebalance my portfolio objectively.',
+      'Krold Mfins has completely changed the way I think about money and investing. Their advice is practical, disciplined, and always tailored to my needs. I feel confident knowing my finances are being managed by a team that truly understands long-term wealth creation not just short-term gains.',
   },
 ]
 
