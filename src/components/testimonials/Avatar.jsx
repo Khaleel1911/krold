@@ -13,8 +13,27 @@ function getInitials(name) {
     .toUpperCase()
 }
 
-export default function Avatar({ name, index = 0, className = '' }) {
+export default function Avatar({ name, photo, index = 0, className = '' }) {
   const palette = PALETTES[index % PALETTES.length]
+  if (photo) {
+    // Zooming about the focus point keeps the face where object-position put it while cropping in.
+    return (
+      <span className={`relative inline-block shrink-0 overflow-hidden rounded-full bg-neutral-200 ring-2 ring-white shadow-sm dark:bg-neutral-800 dark:ring-neutral-800 ${className}`}>
+        <img
+          src={photo.src.src}
+          alt={name ? `Photo of ${name}` : ''}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+          style={{
+            objectPosition: photo.focus,
+            transform: `scale(${photo.zoom ?? 1})`,
+            transformOrigin: photo.focus,
+          }}
+        />
+      </span>
+    )
+  }
   return (
     <span
       className={`inline-flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${palette} font-semibold text-white ${className}`}

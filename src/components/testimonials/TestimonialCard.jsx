@@ -42,7 +42,12 @@ export default function TestimonialCard({ testimonial, index = 0, className = ''
       </div>
 
       <figcaption className="mt-3 flex items-center gap-3 pl-8">
-        <Avatar name={isBusiness ? testimonial.name : undefined} index={index} className="h-10 w-10 text-sm" />
+        <Avatar
+          name={isBusiness ? testimonial.name : undefined}
+          photo={testimonial.photo}
+          index={index}
+          className="h-12 w-12 text-sm"
+        />
         <div className="min-w-0">
           {/* Business owners: name, then company · location. Professionals: profession, then location. */}
           <p className="text-sm font-semibold text-black dark:text-white">
