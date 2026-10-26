@@ -205,7 +205,7 @@ function HeroContent() {
               <span className="relative">Get Started</span>
             </a>
             <a
-              href="#services"
+              href="/services"
               className="cta-swap group/explore relative inline-flex items-center overflow-hidden rounded-full border border-primary-200 bg-white px-7 py-3 text-[15px] font-semibold text-black/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:text-white hover:shadow-md hover:shadow-primary-200 active:translate-y-0 dark:border-white/15 dark:bg-transparent dark:text-white/80 dark:hover:border-transparent dark:hover:text-white dark:hover:shadow-black/40"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 opacity-0 transition-opacity duration-300 group-hover/explore:opacity-100" />
