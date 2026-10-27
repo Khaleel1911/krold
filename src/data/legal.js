@@ -107,7 +107,7 @@ export const LEGAL_PAGES = {
             facts: [
               ['ARN', '266592'],
               ['Date of Registration', '25/03/2025'],
-              ['Current Validity', '24/03/2026'],
+              ['Current Validity', '25/03/2026 – 24/03/2029'],
             ],
           },
           { p: 'We suggest investment products keeping in mind the suitability profile of the client.' },
