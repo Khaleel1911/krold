@@ -15,9 +15,9 @@ const QUICK_LINKS = [
 ]
 
 const LEGAL_LINKS = [
-  { name: 'Privacy Policy', href: '#' },
-  { name: 'Terms of Service', href: '#' },
-  { name: 'Disclosure', href: '#' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
+  { name: 'Terms & Conditions', href: '/terms-condition' },
+  { name: 'Disclosure', href: '/disclosure' },
 ]
 
 const SOCIAL_LINKS = [
@@ -132,9 +132,9 @@ export default function Footer() {
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {LEGAL_LINKS.map((link) => (
               <li key={link.name}>
-                <a href={link.href} className="text-xs text-white/50 transition-colors duration-200 hover:text-primary-400">
+                <Link href={link.href} className="text-xs text-white/50 transition-colors duration-200 hover:text-primary-400">
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
